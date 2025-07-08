@@ -10,9 +10,6 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        .hero-gradient {
-            background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
-        }
         .section-title {
             @apply text-3xl font-bold text-gray-800 text-center sm:text-4xl;
         }
@@ -20,10 +17,11 @@
             @apply mt-2 text-lg text-gray-600 text-center max-w-2xl mx-auto;
         }
         .cta-button {
-            @apply px-8 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition-transform transform hover:scale-105 duration-300;
+            @apply px-8 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300;
         }
         .feature-card {
-            @apply bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300;
+            /* Removed p-6 to allow image to be flush with card edges */
+            @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden;
         }
         /* Added for the scrolling animation */
         @keyframes infinite-scroll {
@@ -71,80 +69,88 @@
 
     <!-- Hero Section -->
     <main>
-        <section class="relative text-white py-24 sm:py-32">
-            <div class="absolute inset-0 hero-gradient opacity-90"></div>
-            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('Image_cleanup.png'); opacity: 0.1;"></div>
-            <div class="container mx-auto px-6 text-center relative z-10">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Precision-Built Software at Unmatched Speed</h1>
-                <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
-                    We turn your complex business challenges into simple, scalable, and high-performance digital solutions—fast.
-                </p>
-                <div class="mt-10">
-                    <a href="#contact" class="cta-button">Turn Your Idea Into Software</a>
-                </div>
-            </div>
-        </section>
+        <section class="relative bg-white py-20 sm:py-28" style="background-image: url('img443.png'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    
+    <div class="relative container mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight text-white">Precision-Built Software at Unmatched Speed</h1>
+        <p class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
+            We turn your complex business challenges into simple, scalable, and high-performance digital solutions—fast.
+        </p>
+        <div class="mt-10">
+            <a href="#contact" class="inline-block mt-2 px-5 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">Turn Your Idea Into Software Now!</a>
+        </div>
+    </div>
+</section>
 
         <!-- What We Do Section -->
-        <section id="what-we-do" class="py-20 bg-white">
+        <section id="what-we-do" class="py-16 bg-gray-50">
             <div class="container mx-auto px-6">
                 <h2 class="section-title">What We Do</h2>
                 <p class="section-subtitle">We don’t just write code—we deliver business leverage. Our specialties are designed to solve your exact problems and fuel your growth.</p>
                 <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     <!-- Card 1: Rapid Development -->
                     <div class="feature-card">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <img src="444_cleanup.png" alt="Rapid Custom Development" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Rapid Custom Development</h3>
+                            <p class="mt-2 text-gray-600">End-to-end software delivery in weeks, not months, using agile pods and proven rapid development frameworks.</p>
                         </div>
-                        <h3 class="mt-5 text-xl font-semibold text-gray-800">Rapid Custom Development</h3>
-                        <p class="mt-2 text-gray-600">End-to-end software delivery in weeks, not months, using agile pods and proven rapid development frameworks.</p>
                     </div>
                     <!-- Card 2: Industry Solutions -->
                     <div class="feature-card">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600">
-                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        <img src="333.png" alt="Industry-Specific Solutions" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Industry-Specific Solutions</h3>
+                            <p class="mt-2 text-gray-600">Accelerated delivery for manufacturing, healthcare, retail, and fintech with tailored, not templated, solutions.</p>
                         </div>
-                        <h3 class="mt-5 text-xl font-semibold text-gray-800">Industry-Specific Solutions</h3>
-                        <p class="mt-2 text-gray-600">Accelerated delivery for manufacturing, healthcare, retail, and fintech with tailored, not templated, solutions.</p>
                     </div>
                     <!-- Card 3: Legacy Modernization -->
                     <div class="feature-card">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        <img src="666_cleanup.png" alt="Legacy Modernization" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Legacy Modernization</h3>
+                            <p class="mt-2 text-gray-600">Transition from clunky, outdated systems to sleek, modern platforms with minimal business disruption.</p>
                         </div>
-                        <h3 class="mt-5 text-xl font-semibold text-gray-800">Legacy Modernization</h3>
-                        <p class="mt-2 text-gray-600">Transition from clunky, outdated systems to sleek, modern platforms with minimal business disruption.</p>
                     </div>
                      <!-- Card 4: Integration-First -->
                     <div class="feature-card">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600">
-                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                        <img src="777_cleanup.png" alt="Integration-First Architecture" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Integration-First Architecture</h3>
+                            <p class="mt-2 text-gray-600">We build APIs and systems that plug seamlessly into your existing workflows, ERPs, or third-party apps.</p>
                         </div>
-                        <h3 class="mt-5 text-xl font-semibold text-gray-800">Integration-First Architecture</h3>
-                        <p class="mt-2 text-gray-600">We build APIs and systems that plug seamlessly into your existing workflows, ERPs, or third-party apps.</p>
                     </div>
                      <!-- Card 5: UI/UX Excellence -->
                     <div class="feature-card">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        <img src="888_cleanup.png" alt="UI/UX Excellence" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">UI/UX Excellence</h3>
+                            <p class="mt-2 text-gray-600">We combine functional clarity with visual simplicity to create software people actually enjoy using.</p>
                         </div>
-                        <h3 class="mt-5 text-xl font-semibold text-gray-800">UI/UX Excellence</h3>
-                        <p class="mt-2 text-gray-600">We combine functional clarity with visual simplicity to create software people actually enjoy using.</p>
                     </div>
                      <!-- Card 6: Scalability -->
                     <div class="feature-card">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path></svg>
+                        <img src="999.png" alt="Scalability for Growth" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Scalability for Growth</h3>
+                            <p class="mt-2 text-gray-600">Start with an MVP delivered in weeks, with an architecture built from the ground up to scale as your business grows.</p>
                         </div>
-                        <h3 class="mt-5 text-xl font-semibold text-gray-800">Scalability for Growth</h3>
-                        <p class="mt-2 text-gray-600">Start with an MVP delivered in weeks, with an architecture built from the ground up to scale as your business grows.</p>
+                    </div>
+                    <!-- Card 7: Seamless Multi-Platform -->
+                    <div class="feature-card">
+                       <img src="img221.png" alt="Seamless Multi-Platform Experience" class="w-full h-48 object-cover">
+                       <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Seamless Multi-Platform Experience</h3>
+                            <p class="mt-2 text-gray-600">Experience fluid and consistent performance across PC, Android, and iOS with our unified development approach.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Why Us Section -->
-        <section id="why-us" class="py-20 bg-gray-50">
+        <section id="why-us" class="py-16 bg-white">
             <div class="container mx-auto px-6">
                 <h2 class="section-title">What Makes Us Different</h2>
                 <p class="section-subtitle">Our approach is simple: deliver exceptional value with speed and transparency. We are problem-led, not tech-led.</p>
@@ -179,15 +185,17 @@
                         </div>
                     </div>
                     <div class="mt-10 md:mt-0">
-    <img src="img112.png" alt="A team collaborating on a project" style="width: 600px; height: 400px;" class="rounded-lg shadow-xl object-cover">
-</div>
+                        <img src="img112.png" alt="A team collaborating on a project" style="width: 600px; height: 400px;" class="rounded-lg shadow-xl object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E2E8F0/4A5568?text=Team+Collaboration';">
+                    </div>
 
                 </div>
             </div>
         </section>
 
+      
+
         <!-- Services Overview -->
-        <section id="services" class="py-20 bg-white">
+        <section id="services" class="py-16 bg-gray-50">
             <div class="container mx-auto px-6">
                 <h2 class="section-title">Our Services</h2>
                 <p class="section-subtitle">A complete suite of services to build, launch, and scale your digital products.</p>
@@ -207,7 +215,7 @@
         </section>
 
         <!-- Tech Stack Section -->
-        <section id="tech-stack" class="py-20 bg-gray-50">
+        <section id="tech-stack" class="py-16 bg-white">
             <div class="container mx-auto px-6">
                 <h2 class="section-title">Our Tech Stack Expertise</h2>
                 <p class="section-subtitle">We use modern, robust, and scalable technologies to build future-proof software.</p>
@@ -245,13 +253,13 @@
 
         <!-- CTA Section -->
         <section id="contact" class="bg-blue-700">
-            <div class="container mx-auto px-6 py-20 text-center">
+            <div class="container mx-auto px-6 py-16 text-center">
                 <h2 class="text-3xl font-extrabold text-white sm:text-4xl">Ready to Build Your Next Big Idea?</h2>
                 <p class="mt-4 text-lg leading-6 text-blue-100 max-w-2xl mx-auto">
                     Let's talk about how we can help you achieve your business goals with custom software.
                 </p>
-                <a href="mailto:contact@nfinityinfotech.com" class="mt-8 inline-block px-10 py-4 text-lg font-semibold text-blue-600 bg-white rounded-lg shadow-lg hover:bg-gray-100 transition-transform transform hover:scale-105 duration-300">
-                    Contact Us Today
+                <a href="mailto:sumeet@nfinityinfotech.com" class="mt-8 inline-block px-10 py-4 text-lg font-semibold text-blue-600 bg-white rounded-lg shadow-lg hover:bg-gray-100 transition-transform transform hover:scale-105 duration-300">
+                    Turn Your Idea Into Software
                 </a>
             </div>
         </section>
