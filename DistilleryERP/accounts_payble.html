@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Accounts Payable</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #ef4444; /* red-500 */
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25em 0.6em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+        .status-paid { background-color: #dcfce7; color: #166534; }
+        .status-pending { background-color: #ffedd5; color: #9a3412; }
+        .status-overdue { background-color: #fee2e2; color: #991b1b; }
+
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-8">
+                <a href="finance.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Finance & Accounting
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Accounts Payable</h1>
+                <p class="mt-1 text-md text-gray-500">Manage all money owed to suppliers, from vendor bills to payments.</p>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-red-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-red-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Payables</dt><dd id="totalPayables" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-orange-100 rounded-md p-3"><i data-lucide="alert-triangle" class="h-6 w-6 text-orange-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Overdue Bills</dt><dd id="overdueBills" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="calendar-clock" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Due This Week</dt><dd class="text-3xl font-bold text-gray-900">₹12.5L</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-gray-100 rounded-md p-3"><i data-lucide="briefcase" class="h-6 w-6 text-gray-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Days Payable (DPO)</dt><dd class="text-3xl font-bold text-gray-900">42</dd></dl></div></div></div>
+            </div>
+
+            <!-- Vendor Bills Table -->
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-gray-800">Vendor Bills</h2>
+                    <button id="openNewBillModalBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">
+                        <i data-lucide="plus" class="h-4 w-4 mr-2"></i>Enter New Bill
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vendor</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bill #</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Due Date</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Amount (₹)</th><th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+                        <tbody id="billsTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="newBillModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Enter New Vendor Bill</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="newBillForm"><div class="space-y-4"><div><label for="vendorName" class="block text-sm font-medium">Vendor Name</label><input type="text" id="vendorName" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div class="grid grid-cols-2 gap-4"><div><label for="billNumber" class="block text-sm font-medium">Bill Number</label><input type="text" id="billNumber" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="billDate" class="block text-sm font-medium">Bill Date</label><input type="date" id="billDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="grid grid-cols-2 gap-4"><div><label for="dueDate" class="block text-sm font-medium">Due Date</label><input type="date" id="dueDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="billAmount" class="block text-sm font-medium">Amount (₹)</label><input type="number" id="billAmount" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-red-600 hover:bg-red-700 py-2 px-4 rounded-md">Save Bill</button></div></form></div></div>
+    <div id="viewBillModal" class="modal-backdrop"><div id="viewBillModalContent" class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl"></div></div>
+    
+    <script>
+        lucide.createIcons();
+
+        let billsData = [
+            { id: 1, vendor: 'Sahyadri Agro Traders', billNo: 'SA-245', dueDate: '2025-07-15', amount: 525000, status: 'Pending' },
+            { id: 2, vendor: 'Deccan Grains Pvt. Ltd.', billNo: 'DG-881', dueDate: '2025-06-25', amount: 1250000, status: 'Overdue' },
+            { id: 3, vendor: 'Reliable Transports', billNo: 'RT-056', dueDate: '2025-06-28', amount: 85000, status: 'Paid' },
+            { id: 4, vendor: 'Modern Lab Supplies', billNo: 'MLS-1098', dueDate: '2025-07-20', amount: 42000, status: 'Pending' },
+        ];
+
+        const billsTableBody = document.getElementById('billsTableBody');
+        const totalPayablesEl = document.getElementById('totalPayables');
+        const overdueBillsEl = document.getElementById('overdueBills');
+
+        function renderBillsTable() {
+            billsTableBody.innerHTML = '';
+            let totalPayables = 0;
+            let overdueCount = 0;
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            billsData.forEach(bill => {
+                let status = bill.status;
+                if (status === 'Pending' && new Date(bill.dueDate) < today) {
+                    status = 'Overdue';
+                }
+                
+                if (status === 'Pending' || status === 'Overdue') {
+                    totalPayables += bill.amount;
+                    if (status === 'Overdue') overdueCount++;
+                }
+
+                const statusClasses = { 'Paid': 'status-paid', 'Pending': 'status-pending', 'Overdue': 'status-overdue' };
+                const row = `
+                    <tr data-id="${bill.id}" class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${bill.vendor}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${bill.billNo}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(bill.dueDate).toLocaleDateString('en-IN')}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">${bill.amount.toLocaleString('en-IN')}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><span class="status-badge ${statusClasses[status]}">${status}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><button class="text-red-600 hover:text-red-900 view-bill-btn">View</button></td>
+                    </tr>`;
+                billsTableBody.innerHTML += row;
+            });
+
+            totalPayablesEl.textContent = `₹${(totalPayables/100000).toFixed(2)}L`;
+            overdueBillsEl.textContent = overdueCount;
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+
+        const newBillModal = setupModal('newBillModal', 'openNewBillModalBtn');
+        const viewBillModal = setupModal('viewBillModal', null);
+
+        document.getElementById('newBillForm').addEventListener('submit', e => {
+            e.preventDefault();
+            billsData.push({
+                id: Date.now(),
+                vendor: document.getElementById('vendorName').value,
+                billNo: document.getElementById('billNumber').value,
+                dueDate: document.getElementById('dueDate').value,
+                amount: parseInt(document.getElementById('billAmount').value),
+                status: 'Pending'
+            });
+            renderBillsTable();
+            newBillModal.style.display = 'none';
+        });
+
+        billsTableBody.addEventListener('click', e => {
+            if (e.target.classList.contains('view-bill-btn')) {
+                const billId = e.target.closest('tr').dataset.id;
+                const bill = billsData.find(b => b.id == billId);
+                renderViewBillModal(bill);
+                viewBillModal.style.display = 'block';
+            }
+        });
+        
+        function renderViewBillModal(bill) {
+            let actionsHtml = '';
+            if (bill.status !== 'Paid') {
+                actionsHtml = `<div class="border-t pt-4 mt-4">
+                                 <h4 class="text-lg font-semibold mb-2">Record Payment</h4>
+                                 <form id="paymentForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div><label class="block text-sm font-medium">Payment Date</label><input type="date" id="paymentDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                                    <div><label class="block text-sm font-medium">Payment Mode</label><select class="mt-1 block w-full border-gray-300 rounded-md"><option>Bank Transfer</option><option>Cheque</option></select></div>
+                                    <div class="flex items-end"><button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-md">Record Payment</button></div>
+                                 </form>
+                               </div>`;
+            }
+
+            document.getElementById('viewBillModalContent').innerHTML = `
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <div><h3 class="text-2xl font-bold text-gray-800">Bill Details</h3><p class="text-gray-500">${bill.billNo}</p></div>
+                    <button class="close-modal-btn text-gray-500">&times;</button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><p class="text-sm text-gray-500">Vendor</p><p class="font-semibold">${bill.vendor}</p></div>
+                    <div><p class="text-sm text-gray-500">Due Date</p><p class="font-semibold">${new Date(bill.dueDate).toLocaleDateString('en-IN')}</p></div>
+                    <div><p class="text-sm text-gray-500">Amount</p><p class="font-semibold text-2xl">₹${bill.amount.toLocaleString('en-IN')}</p></div>
+                    <div><p class="text-sm text-gray-500">Status</p><span class="status-badge ${bill.status === 'Paid' ? 'status-paid' : (new Date(bill.dueDate) < new Date() ? 'status-overdue' : 'status-pending')}">${bill.status === 'Paid' ? 'Paid' : (new Date(bill.dueDate) < new Date() ? 'Overdue' : 'Pending')}</span></div>
+                </div>
+                ${actionsHtml}
+            `;
+            viewBillModal.querySelector('.close-modal-btn').onclick = () => viewBillModal.style.display = 'none';
+
+            if(bill.status !== 'Paid') {
+                document.getElementById('paymentForm').addEventListener('submit', e => {
+                    e.preventDefault();
+                    bill.status = 'Paid';
+                    renderBillsTable();
+                    viewBillModal.style.display = 'none';
+                });
+            }
+        }
+
+        renderBillsTable();
+    </script>
+</body>
+</html>

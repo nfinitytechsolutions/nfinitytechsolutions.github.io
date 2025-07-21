@@ -1,0 +1,15 @@
+user id: any of the employee number given below (to show all modules select 100144)
+password: 1234
+
+100122 Procurement Ramesh mavalli
+100123 Gate_Weighbridge Amarnath Desai
+100124 Quality_Lab Ravi Kulkarni
+100125 Inventory Ravi Sindagi
+100126 Production_Control Sreenath K
+100127 Fermentation Sumanth Rao
+100128 Distillation Rajeev Mallannavar
+100129 Sales_Logistics Radha Venu
+100131 Finance Raadhika S
+100132 HR Sunita Patil
+100133 Maintenance Rudresh S
+100144 Admin Chandrashekhar

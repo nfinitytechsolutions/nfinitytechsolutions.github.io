@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Statutory Compliance & Reporting</title>
+   <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #1d4ed8; /* blue-700 */
+        }
+        .report-card {
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .due-soon {
+            border-left: 4px solid #f97316; /* orange-500 */
+        }
+        .due-overdue {
+            border-left: 4px solid #dc2626; /* red-600 */
+        }
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 2% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+        
+        /* Print Styles */
+        @media print {
+            body * { visibility: hidden; }
+            .printable-area, .printable-area * { visibility: visible; }
+            .printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none; }
+        }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+						<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10 no-print">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+				<a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Main Dashboard
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Statutory Compliance & Reporting</h1>
+                    <p class="mt-1 text-md text-gray-500">Automate and manage all regulatory filings and compliance tasks.</p>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="shield-check" class="h-6 w-6 text-blue-700"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Compliance Status</dt><dd class="text-3xl font-bold text-green-600">On Track</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-orange-100 rounded-md p-3"><i data-lucide="file-clock" class="h-6 w-6 text-orange-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Pending Reports</dt><dd class="text-3xl font-bold text-gray-900">2</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-violet-100 rounded-md p-3"><i data-lucide="flask-conical" class="h-6 w-6 text-violet-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Denaturant Stock</dt><dd class="text-3xl font-bold text-gray-900">1,250 L</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-cyan-100 rounded-md p-3"><i data-lucide="fuel" class="h-6 w-6 text-cyan-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">EBP Supply (MTD)</dt><dd class="text-3xl font-bold text-gray-900">1,520 KL</dd></dl></div></div></div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Report Generation -->
+                <div class="lg:col-span-2">
+                     <div class="bg-white shadow-md rounded-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Report Generation</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="report-card p-4 rounded-lg"><h3 class="font-bold text-gray-800">Monthly Production Return (RG-1)</h3><p class="text-sm text-gray-500 mt-1">Summary of production, stock, and clearance of excisable goods for the State Excise Dept.</p><button data-report-type="rg1" data-period="June 2025" class="generate-btn mt-3 w-full text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 rounded-md">Generate for June 2025</button></div>
+                            <div class="report-card p-4 rounded-lg"><h3 class="font-bold text-gray-800">Daily Production Report (DPR)</h3><p class="text-sm text-gray-500 mt-1">Daily log of spirit production, strength, and storage details for internal and excise audit.</p><button data-report-type="dpr" data-period="Today" class="generate-btn mt-3 w-full text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 rounded-md">Generate for Today</button></div>
+                            <div class="report-card p-4 rounded-lg"><h3 class="font-bold text-gray-800">Denaturant Consumption Report</h3><p class="text-sm text-gray-500 mt-1">Monthly statement of denaturant stock, consumption, and closing balance.</p><button data-report-type="denaturant" data-period="June 2025" class="generate-btn mt-3 w-full text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 rounded-md">Generate for June 2025</button></div>
+                            <div class="report-card p-4 rounded-lg"><h3 class="font-bold text-gray-800">EBP Supply Statement</h3><p class="text-sm text-gray-500 mt-1">Report on ethanol supplied to Oil Marketing Companies (OMCs) under the blending program.</p><button data-report-type="ebp" data-period="Q2 2025" class="generate-btn mt-3 w-full text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 py-2 rounded-md">Generate for Q2 2025</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compliance Calendar & Denaturant Log -->
+                <div class="lg:col-span-1 space-y-8">
+                    <div class="bg-white p-6 shadow-md rounded-lg"><h3 class="text-xl font-bold text-gray-800 mb-4">Compliance Calendar</h3><div class="space-y-4"><div class="due-soon p-3 rounded-md bg-orange-50"><p class="font-semibold text-orange-800">Monthly Excise Return (June)</p><p class="text-sm text-orange-600">Due: 10-Jul-2025 (8 days left)</p></div><div class="p-3 rounded-md bg-gray-50"><p class="font-semibold text-gray-800">PCB Water Cess Return (Q2)</p><p class="text-sm text-gray-500">Due: 25-Jul-2025</p></div><div class="p-3 rounded-md bg-gray-50"><p class="font-semibold text-gray-800">GST Return (GSTR-3B - June)</p><p class="text-sm text-gray-500">Due: 20-Jul-2025</p></div></div></div>
+                    <div class="bg-white shadow-md rounded-lg"><h3 class="text-xl font-bold text-gray-800 p-4 border-b">Denaturant Consumption Log</h3><div class="overflow-y-auto max-h-48"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50 sticky top-0"><tr><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Qty (L)</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Batch Ref</th></tr></thead><tbody class="bg-white divide-y divide-gray-200"><tr><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">01-Jul-25</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-800">200</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">DEN-07-01</td></tr><tr><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">28-Jun-25</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-800">200</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">DEN-06-45</td></tr><tr><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">25-Jun-25</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-800">200</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">DEN-06-44</td></tr><tr><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">22-Jun-25</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-800">200</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">DEN-06-43</td></tr></tbody></table></div></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Report Viewer Modal -->
+    <div id="reportViewerModal" class="modal-backdrop">
+        <div class="modal-content bg-white w-full max-w-4xl rounded-lg shadow-xl">
+            <div id="reportContent" class="printable-area p-8">
+                <!-- Report content will be injected here -->
+            </div>
+            <div class="bg-gray-100 px-6 py-4 rounded-b-lg flex justify-end space-x-3 no-print">
+                <button id="closeReportModalBtn" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">Close</button>
+                <button onclick="window.print()" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                    <i data-lucide="printer" class="mr-2 h-5 w-5"></i>Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const reportViewerModal = document.getElementById('reportViewerModal');
+        const reportContent = document.getElementById('reportContent');
+
+        document.querySelectorAll('.generate-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const reportType = button.dataset.reportType;
+                const period = button.dataset.period;
+                let reportHtml = '';
+
+                switch(reportType) {
+                    case 'rg1':
+                        reportHtml = getRg1Html(period);
+                        break;
+                    case 'dpr':
+                        reportHtml = getDprHtml(period);
+                        break;
+                    case 'denaturant':
+                        reportHtml = getDenaturantHtml(period);
+                        break;
+                    case 'ebp':
+                        reportHtml = getEbpHtml(period);
+                        break;
+                }
+                reportContent.innerHTML = reportHtml;
+                reportViewerModal.style.display = 'block';
+            });
+        });
+
+        document.getElementById('closeReportModalBtn').onclick = () => { reportViewerModal.style.display = 'none'; };
+        window.onclick = (event) => { if (event.target == reportViewerModal) reportViewerModal.style.display = 'none'; };
+
+        // --- Mock Report HTML Generators ---
+        function getReportHeader(title, period) {
+            return `
+                <div class="text-center border-b pb-4 mb-6">
+                    <h2 class="text-2xl font-bold">Distillery Name Pvt. Ltd.</h2>
+                    <h3 class="text-xl font-semibold text-gray-700">${title}</h3>
+                    <p class="text-md text-gray-500">For the Period: ${period}</p>
+                </div>`;
+        }
+
+        function getRg1Html(period) {
+            return `
+                ${getReportHeader('Monthly Production Return (RG-1)', period)}
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-100"><tr><th class="p-2">Description</th><th class="p-2">Opening Balance (KL)</th><th class="p-2">Production (KL)</th><th class="p-2">Clearance (KL)</th><th class="p-2">Closing Balance (KL)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b"><td class="p-2 font-semibold">Undenatured Ethanol</td><td class="p-2">150.5</td><td class="p-2">4500.2</td><td class="p-2">4400.0</td><td class="p-2">250.7</td></tr>
+                        <tr class="border-b"><td class="p-2 font-semibold">Denatured Ethanol</td><td class="p-2">250.0</td><td class="p-2">4400.0</td><td class="p-2">4550.0</td><td class="p-2">100.0</td></tr>
+                    </tbody>
+                </table>
+                <div class="mt-12 text-xs text-gray-500">Certified that the above information is true and correct as per our records and books of accounts.</div>
+                <div class="mt-8 flex justify-between"><p class="font-semibold">Signature of Excise Officer</p><p class="font-semibold">Signature of Compliance Officer</p></div>`;
+        }
+
+        function getDprHtml(period) {
+            return `
+                ${getReportHeader('Daily Production Report (DPR)', new Date().toLocaleDateString('en-IN'))}
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-100"><tr><th class="p-2">Batch ID</th><th class="p-2">Spirit Type</th><th class="p-2">Quantity (KL)</th><th class="p-2">Strength (% v/v)</th><th class="p-2">Storage Tank</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b"><td class="p-2">FERM-0702-21</td><td class="p-2">Undenatured Ethanol</td><td class="p-2">150.2</td><td class="p-2">94.5</td><td class="p-2">T-101</td></tr>
+                        <tr class="border-b"><td class="p-2">FERM-0702-20</td><td class="p-2">Undenatured Ethanol</td><td class="p-2">149.8</td><td class="p-2">94.6</td><td class="p-2">T-102</td></tr>
+                    </tbody>
+                </table>
+                 <div class="mt-12 text-xs text-gray-500">End of Report.</div>`;
+        }
+        
+        function getDenaturantHtml(period) {
+             return `
+                ${getReportHeader('Denaturant Consumption Report', period)}
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-100"><tr><th class="p-2">Description</th><th class="p-2">Quantity (Litres)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b"><td class="p-2 font-semibold">Opening Stock</td><td class="p-2">1,550</td></tr>
+                        <tr class="border-b"><td class="p-2 font-semibold">Received during month</td><td class="p-2">2,000</td></tr>
+                        <tr class="border-b"><td class="p-2 font-semibold">Consumed during month</td><td class="p-2">-2,300</td></tr>
+                        <tr class="border-b bg-gray-50"><td class="p-2 font-bold">Closing Stock</td><td class="p-2 font-bold">1,250</td></tr>
+                    </tbody>
+                </table>`;
+        }
+
+        function getEbpHtml(period) {
+             return `
+                ${getReportHeader('EBP Supply Statement', period)}
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-gray-100"><tr><th class="p-2">OMC</th><th class="p-2">Invoice No.</th><th class="p-2">Date</th><th class="p-2">Quantity (KL)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b"><td class="p-2">Indian Oil Corporation</td><td class="p-2">INV-EBP-06-112</td><td class="p-2">15-Jun-25</td><td class="p-2">500</td></tr>
+                        <tr class="border-b"><td class="p-2">Bharat Petroleum</td><td class="p-2">INV-EBP-05-201</td><td class="p-2">28-May-25</td><td class="p-2">750</td></tr>
+                        <tr class="border-b"><td class="p-2">Hindustan Petroleum</td><td class="p-2">INV-EBP-04-098</td><td class="p-2">20-Apr-25</td><td class="p-2">600</td></tr>
+                        <tr class="border-b bg-gray-50"><td class="p-2 font-bold" colspan="3">Total Supplied in Quarter</td><td class="p-2 font-bold">1,850</td></tr>
+                    </tbody>
+                </table>`;
+        }
+    </script>
+</body>
+</html>

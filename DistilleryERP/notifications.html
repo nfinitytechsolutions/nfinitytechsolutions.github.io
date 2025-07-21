@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - All Notifications</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .notification-item:not(:last-child) {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .notification-item {
+            transition: background-color 0.3s ease-in-out;
+        }
+        .notification-item:hover {
+            background-color: #f9fafb;
+        }
+        .notification-item.unread:hover {
+            background-color: #fef9c3; /* A light yellow for unread hover */
+        }
+        .notification-item.unread {
+             background-color: #fefcf2;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+				<div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3">
+					    <div class="h-8 w-8 flex-shrink-0">
+						    <img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					    </div>
+					 <span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+                    </a>
+				</div>
+                <div class="flex items-center space-x-5">
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- User profile will be dynamically inserted here by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex items-center justify-between mb-8">
+			<a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Main
+                </a>
+                 <h1 class="text-3xl font-bold text-gray-800">All Notifications</h1>
+                 <div class="flex items-center space-x-4">
+                    <button id="markAllReadBtn" class="text-sm font-medium text-blue-600 hover:text-blue-800">Mark all as read</button>
+                    <button id="clearAllBtn" class="text-sm font-medium text-gray-500 hover:text-gray-700">Clear all</button>
+                 </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md border overflow-hidden">
+                <div id="notificationList" class="divide-y divide-gray-200">
+                    <!-- Notification Item: Success -->
+                    <div class="notification-item p-4 flex items-start space-x-4 unread">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Production batch #1024 completed successfully and moved to inventory.</p>
+                            <p class="text-xs text-gray-500 mt-1">July 5, 2025, 10:45 AM</p>
+                        </div>
+                        <button class="mark-as-read-btn text-xs text-gray-400 hover:text-gray-600 font-semibold">MARK AS READ</button>
+                    </div>
+
+                    <!-- Notification Item: Warning -->
+                    <div class="notification-item p-4 flex items-start space-x-4 unread bg-orange-50/50">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
+                                <i data-lucide="alert-triangle" class="h-5 w-5 text-orange-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Low stock alert for Ethanol. Current level: 480L (Threshold: 500L).</p>
+                            <p class="text-xs text-gray-500 mt-1">July 5, 2025, 9:12 AM</p>
+                        </div>
+                         <button class="text-xs text-blue-500 hover:text-blue-700 font-semibold">VIEW STOCK</button>
+                    </div>
+
+                    <!-- Notification Item: Info -->
+                    <div class="notification-item p-4 flex items-start space-x-4">
+                        <div class="flex-shrink-0 mt-1">
+                             <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="info" class="h-5 w-5 text-blue-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">New contract with <span class="font-bold">Green Valley Farms</span> has been approved by management.</p>
+                            <p class="text-xs text-gray-500 mt-1">July 4, 2025, 5:00 PM</p>
+                        </div>
+                    </div>
+                    
+                     <!-- Notification Item: Error -->
+                    <div class="notification-item p-4 flex items-start space-x-4 unread bg-red-50/50">
+                        <div class="flex-shrink-0 mt-1">
+                             <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                                <i data-lucide="x-circle" class="h-5 w-5 text-red-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Failed to process weighment for vehicle <span class="font-bold">KA-05-MN-1234</span>. Please check gate logs.</p>
+                            <p class="text-xs text-gray-500 mt-1">July 4, 2025, 11:20 AM</p>
+                        </div>
+                         <button class="text-xs text-blue-500 hover:text-blue-700 font-semibold">CHECK LOGS</button>
+                    </div>
+
+                    <!-- More notifications (Initially hidden) -->
+                    <div class="notification-item p-4 flex items-start space-x-4 hidden">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                                <i data-lucide="wrench" class="h-5 w-5 text-purple-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Preventive maintenance for Fermenter #3 is scheduled for tomorrow.</p>
+                            <p class="text-xs text-gray-500 mt-1">July 3, 2025, 2:00 PM</p>
+                        </div>
+                    </div>
+
+                     <div class="notification-item p-4 flex items-start space-x-4 hidden">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Quality analysis for raw grain batch #RG-7891 approved.</p>
+                            <p class="text-xs text-gray-500 mt-1">July 3, 2025, 10:30 AM</p>
+                        </div>
+                    </div>
+                    
+                     <div class="notification-item p-4 flex items-start space-x-4 hidden">
+                        <div class="flex-shrink-0 mt-1">
+                             <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="user" class="h-5 w-5 text-blue-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Your leave request for July 15th has been approved.</p>
+                            <p class="text-xs text-gray-500 mt-1">July 2, 2025, 4:18 PM</p>
+                        </div>
+                    </div>
+
+                     <div class="notification-item p-4 flex items-start space-x-4 hidden">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
+                                <i data-lucide="file-text" class="h-5 w-5 text-teal-500"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-800">Monthly sales report for June 2025 is now available.</p>
+                            <p class="text-xs text-gray-500 mt-1">July 1, 2025, 9:00 AM</p>
+                        </div>
+                         <button class="text-xs text-blue-500 hover:text-blue-700 font-semibold">VIEW REPORT</button>
+                    </div>
+                </div>
+                 <div id="loadMoreContainer" class="p-4 text-center">
+                    <button id="loadMoreBtn" class="text-sm font-semibold text-blue-600 hover:text-blue-800">Load More</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="mt-12 py-6 bg-white border-t">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            <p>&copy; 2025 DistillERP. All Rights Reserved. A modern solution for a modern industry.</p>
+        </div>
+    </footer>
+    
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const notificationList = document.getElementById('notificationList');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            const markAllReadBtn = document.getElementById('markAllReadBtn');
+            const clearAllBtn = document.getElementById('clearAllBtn');
+
+            // --- Mark as Read Functionality (delegated to the list) ---
+            notificationList.addEventListener('click', (e) => {
+                if (e.target.classList.contains('mark-as-read-btn')) {
+                    const notificationItem = e.target.closest('.notification-item');
+                    if (notificationItem) {
+                        notificationItem.classList.remove('unread', 'bg-orange-50/50', 'bg-red-50/50');
+                        e.target.style.display = 'none'; // Hide the button
+                    }
+                }
+            });
+
+            // --- Mark All as Read Functionality ---
+            markAllReadBtn.addEventListener('click', () => {
+                const unreadItems = notificationList.querySelectorAll('.notification-item.unread');
+                unreadItems.forEach(item => {
+                    item.classList.remove('unread', 'bg-orange-50/50', 'bg-red-50/50');
+                    const button = item.querySelector('.mark-as-read-btn');
+                    if (button) {
+                        button.style.display = 'none';
+                    }
+                });
+            });
+
+            // --- Clear All Functionality ---
+            clearAllBtn.addEventListener('click', () => {
+                notificationList.innerHTML = '<div class="p-8 text-center text-gray-500">No notifications.</div>';
+                if(loadMoreContainer) loadMoreContainer.style.display = 'none'; // Hide load more container
+            });
+
+            // --- Load More Functionality ---
+            const itemsToShow = 2; // How many items to show per click
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', () => {
+                    const hiddenItems = notificationList.querySelectorAll('.notification-item.hidden');
+                    for (let i = 0; i < itemsToShow; i++) {
+                        if (hiddenItems[i]) {
+                            hiddenItems[i].classList.remove('hidden');
+                        }
+                    }
+                    // Check if there are any more hidden items left
+                    if (notificationList.querySelectorAll('.notification-item.hidden').length === 0) {
+                        if(loadMoreContainer) loadMoreContainer.style.display = 'none'; // Hide button if no more items
+                    }
+                });
+            }
+
+            // Initial check to see if the load more button should be visible
+            if (notificationList.querySelectorAll('.notification-item.hidden').length === 0) {
+                 if(loadMoreContainer) loadMoreContainer.style.display = 'none';
+            }
+        });
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>

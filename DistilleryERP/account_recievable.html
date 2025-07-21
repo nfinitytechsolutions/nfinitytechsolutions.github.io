@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Accounts Receivable</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #22c55e; /* green-500 */
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25em 0.6em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+        .status-paid { background-color: #dcfce7; color: #166534; }
+        .status-sent { background-color: #dbeafe; color: #1e40af; }
+        .status-overdue { background-color: #fee2e2; color: #991b1b; }
+        .status-draft { background-color: #f3f4f6; color: #4b5563; }
+
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-8">
+                <a href="finance.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Finance & Accounting
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Accounts Receivable</h1>
+                <p class="mt-1 text-md text-gray-500">Manage customer invoices, track outstanding payments, and record collections.</p>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Receivables</dt><dd id="totalReceivables" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-red-100 rounded-md p-3"><i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Overdue Invoices</dt><dd id="overdueInvoices" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="calendar-check" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Collected (This Month)</dt><dd class="text-xl font-bold text-gray-900">₹1.5 Cr</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-gray-100 rounded-md p-3"><i data-lucide="briefcase" class="h-6 w-6 text-gray-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Collection (DSO)</dt><dd class="text-3xl font-bold text-gray-900">28</dd></dl></div></div></div>
+            </div>
+
+            <!-- Invoices Table -->
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-gray-800">Customer Invoices</h2>
+                    <button id="openNewInvoiceModalBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                        <i data-lucide="plus" class="h-4 w-4 mr-2"></i>Create New Invoice
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Invoice #</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Due Date</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Amount (₹)</th><th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+                        <tbody id="invoicesTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="newInvoiceModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Create New Invoice</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="newInvoiceForm"><div class="space-y-4"><div><label for="invCustomer" class="block text-sm font-medium">Customer</label><input type="text" id="invCustomer" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div class="grid grid-cols-2 gap-4"><div><label for="invNumber" class="block text-sm font-medium">Invoice Number</label><input type="text" id="invNumber" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="invDate" class="block text-sm font-medium">Invoice Date</label><input type="date" id="invDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="grid grid-cols-2 gap-4"><div><label for="invDueDate" class="block text-sm font-medium">Due Date</label><input type="date" id="invDueDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="invAmount" class="block text-sm font-medium">Amount (₹)</label><input type="number" id="invAmount" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-md">Save Invoice</button></div></form></div></div>
+    <div id="viewInvoiceModal" class="modal-backdrop"><div id="viewInvoiceModalContent" class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl"></div></div>
+    
+    <script>
+        lucide.createIcons();
+
+        let invoiceData = [
+            { id: 'INV-07-112', customer: 'IOCL - Pune', dueDate: '2025-07-25', amount: 1300000, status: 'Sent' },
+            { id: 'INV-06-201', customer: 'BPCL - Mumbai', dueDate: '2025-06-28', amount: 16100000, status: 'Overdue' },
+            { id: 'INV-06-198', customer: 'HPCL - Nagpur', dueDate: '2025-06-20', amount: 1320000, status: 'Paid' },
+            { id: 'INV-07-115', customer: 'Krishna Feeds', dueDate: '2025-07-30', amount: 1225000, status: 'Sent' },
+        ];
+
+        const invoicesTableBody = document.getElementById('invoicesTableBody');
+        const totalReceivablesEl = document.getElementById('totalReceivables');
+        const overdueInvoicesEl = document.getElementById('overdueInvoices');
+
+        function renderInvoicesTable() {
+            invoicesTableBody.innerHTML = '';
+            let totalReceivables = 0;
+            let overdueCount = 0;
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            invoiceData.forEach(inv => {
+                let status = inv.status;
+                if (status === 'Sent' && new Date(inv.dueDate) < today) {
+                    status = 'Overdue';
+                }
+                
+                if (status === 'Sent' || status === 'Overdue') {
+                    totalReceivables += inv.amount;
+                    if (status === 'Overdue') overdueCount++;
+                }
+
+                const statusClasses = { 'Paid': 'status-paid', 'Sent': 'status-sent', 'Overdue': 'status-overdue', 'Draft': 'status-draft' };
+                const row = `
+                    <tr data-id="${inv.id}" class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${inv.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${inv.customer}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(inv.dueDate).toLocaleDateString('en-IN')}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">${inv.amount.toLocaleString('en-IN')}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><span class="status-badge ${statusClasses[status]}">${status}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><button class="text-green-600 hover:text-green-900 view-invoice-btn">View</button></td>
+                    </tr>`;
+                invoicesTableBody.innerHTML += row;
+            });
+
+            totalReceivablesEl.textContent = `₹${(totalReceivables/100000).toFixed(2)}L`;
+            overdueInvoicesEl.textContent = overdueCount;
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+
+        const newInvoiceModal = setupModal('newInvoiceModal', 'openNewInvoiceModalBtn');
+        const viewInvoiceModal = setupModal('viewInvoiceModal', null);
+
+        document.getElementById('newInvoiceForm').addEventListener('submit', e => {
+            e.preventDefault();
+            invoiceData.unshift({
+                id: document.getElementById('invNumber').value,
+                customer: document.getElementById('invCustomer').value,
+                dueDate: document.getElementById('invDueDate').value,
+                amount: parseInt(document.getElementById('invAmount').value),
+                status: 'Sent'
+            });
+            renderInvoicesTable();
+            newInvoiceModal.style.display = 'none';
+        });
+
+        invoicesTableBody.addEventListener('click', e => {
+            if (e.target.classList.contains('view-invoice-btn')) {
+                const invId = e.target.closest('tr').dataset.id;
+                const inv = invoiceData.find(i => i.id == invId);
+                renderViewInvoiceModal(inv);
+                viewInvoiceModal.style.display = 'block';
+            }
+        });
+        
+        function renderViewInvoiceModal(inv) {
+            let actionsHtml = '';
+            if (inv.status !== 'Paid') {
+                actionsHtml = `<div class="border-t pt-4 mt-4">
+                                 <h4 class="text-lg font-semibold mb-2">Record Payment Received</h4>
+                                 <form id="paymentForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div><label class="block text-sm font-medium">Payment Date</label><input type="date" id="paymentDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                                    <div><label class="block text-sm font-medium">Reference No.</label><input type="text" id="paymentRef" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                                    <div class="flex items-end"><button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-md">Record Payment</button></div>
+                                 </form>
+                               </div>`;
+            }
+
+            document.getElementById('viewInvoiceModalContent').innerHTML = `
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <div><h3 class="text-2xl font-bold text-gray-800">Invoice Details</h3><p class="text-gray-500">${inv.id}</p></div>
+                    <button class="close-modal-btn text-gray-500">&times;</button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><p class="text-sm text-gray-500">Customer</p><p class="font-semibold">${inv.customer}</p></div>
+                    <div><p class="text-sm text-gray-500">Due Date</p><p class="font-semibold">${new Date(inv.dueDate).toLocaleDateString('en-IN')}</p></div>
+                    <div><p class="text-sm text-gray-500">Amount</p><p class="font-semibold text-2xl">₹${inv.amount.toLocaleString('en-IN')}</p></div>
+                    <div><p class="text-sm text-gray-500">Status</p><span class="status-badge ${inv.status === 'Paid' ? 'status-paid' : (new Date(inv.dueDate) < new Date() ? 'status-overdue' : 'status-sent')}">${inv.status === 'Paid' ? 'Paid' : (new Date(inv.dueDate) < new Date() ? 'Overdue' : 'Sent')}</span></div>
+                </div>
+                ${actionsHtml}
+            `;
+            viewInvoiceModal.querySelector('.close-modal-btn').onclick = () => viewInvoiceModal.style.display = 'none';
+
+            if(inv.status !== 'Paid') {
+                document.getElementById('paymentForm').addEventListener('submit', e => {
+                    e.preventDefault();
+                    inv.status = 'Paid';
+                    renderInvoicesTable();
+                    viewInvoiceModal.style.display = 'none';
+                });
+            }
+        }
+
+        renderInvoicesTable();
+    </script>
+</body>
+</html>

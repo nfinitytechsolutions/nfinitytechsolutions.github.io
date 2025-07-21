@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Finished Product Inventory</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #0ea5e9; /* sky-500 */
+        }
+        .tank-card {
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .tank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .tank-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transition: height 0.5s ease-out;
+        }
+        .fill-undenatured { background-color: #a78bfa; } /* violet-400 */
+        .fill-denatured { background-color: #60a5fa; } /* blue-400 */
+        .tank-body {
+            position: relative;
+            background-color: #e5e7eb; /* gray-200 */
+            overflow: hidden;
+        }
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+						<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+				<a href="distillation.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Distillation & Dehydration
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Finished Product Inventory</h1>
+                    <p class="mt-1 text-md text-gray-500">Manage real-time stock of undenatured and denatured ethanol.</p>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4 space-x-3">
+                    <button id="openDenatureModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        <i data-lucide="flask-conical" class="mr-2 h-5 w-5 text-violet-500"></i>
+                        Denature Product
+                    </button>
+                    <button id="openTransferModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                        <i data-lucide="move-right" class="mr-2 h-5 w-5"></i>
+                        Initiate Transfer
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-sky-100 rounded-md p-3"><i data-lucide="droplets" class="h-6 w-6 text-sky-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Ethanol Stock</dt><dd id="totalStock" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-violet-100 rounded-md p-3"><i data-lucide="flask-round" class="h-6 w-6 text-violet-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Undenatured Stock</dt><dd id="undenaturedStock" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="fuel" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Denatured Stock</dt><dd id="denaturedStock" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-gray-100 rounded-md p-3"><i data-lucide="pie-chart" class="h-6 w-6 text-gray-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Capacity Used</dt><dd id="capacityUsed" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+            </div>
+
+            <!-- Tank Status View -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Storage Tank Status</h2>
+                <div id="tankContainer" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <!-- Tank cards will be injected by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modals -->
+    <div id="transferModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Initiate Tank Transfer</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="transferForm"><div class="space-y-4"><div><label for="sourceTank" class="block text-sm font-medium">Source Tank</label><select id="sourceTank" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="destTank" class="block text-sm font-medium">Destination Tank</label><select id="destTank" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="transferQty" class="block text-sm font-medium">Quantity (KL)</label><input type="number" id="transferQty" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-sky-600 hover:bg-sky-700 py-2 px-4 rounded-md">Confirm Transfer</button></div></form></div></div>
+    <div id="denatureModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Denature Product</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="denatureForm"><div class="space-y-4"><div><label for="denatureSource" class="block text-sm font-medium">Source (Undenatured)</label><select id="denatureSource" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="denatureQty" class="block text-sm font-medium">Quantity to Denature (KL)</label><input type="number" id="denatureQty" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="denaturantQty" class="block text-sm font-medium">Denaturant Added (L)</label><input type="number" id="denaturantQty" class="mt-1 block w-full border-gray-300 rounded-md" readonly></div><div><label for="denatureDest" class="block text-sm font-medium">Destination (Denatured)</label><select id="denatureDest" class="mt-1 block w-full border-gray-300 rounded-md"></select></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-violet-600 hover:bg-violet-700 py-2 px-4 rounded-md">Confirm Denaturation</button></div></form></div></div>
+
+    <script>
+        lucide.createIcons();
+
+        const tankData = [
+            { id: 'T-101', type: 'Undenatured', current: 450, max: 500 },
+            { id: 'T-102', type: 'Undenatured', current: 480, max: 500 },
+            { id: 'T-103', type: 'Undenatured', current: 120, max: 500 },
+            { id: 'T-201', type: 'Denatured', current: 950, max: 1000 },
+            { id: 'T-202', type: 'Denatured', current: 880, max: 1000 },
+            { id: 'T-203', type: 'Denatured', current: 0, max: 1000 },
+        ];
+
+        const tankContainer = document.getElementById('tankContainer');
+        
+        function renderTanks() {
+            tankContainer.innerHTML = '';
+            let totalStock = 0, undenaturedStock = 0, denaturedStock = 0, totalMax = 0;
+            
+            tankData.forEach(tank => {
+                const fillPercentage = (tank.current / tank.max) * 100;
+                const isUndenatured = tank.type === 'Undenatured';
+                const fillColorClass = isUndenatured ? 'fill-undenatured' : 'fill-denatured';
+                const typeColorClass = isUndenatured ? 'text-violet-700 bg-violet-100' : 'text-blue-700 bg-blue-100';
+
+                const card = `
+                    <div class="tank-card rounded-lg bg-white p-4 text-center flex flex-col">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-lg text-gray-800">${tank.id}</h3>
+                            <span class="text-xs font-semibold px-2 py-1 rounded-full ${typeColorClass}">${tank.type}</span>
+                        </div>
+                        <div class="tank-body my-3 h-40 w-full rounded-md flex-grow">
+                            <div class="tank-fill ${fillColorClass}" style="height: ${fillPercentage}%"></div>
+                        </div>
+                        <p class="font-semibold text-xl text-gray-900">${tank.current.toLocaleString()} <span class="text-sm font-normal">/ ${tank.max.toLocaleString()} KL</span></p>
+                    </div>`;
+                tankContainer.innerHTML += card;
+
+                totalStock += tank.current;
+                totalMax += tank.max;
+                if(isUndenatured) undenaturedStock += tank.current;
+                else denaturedStock += tank.current;
+            });
+
+            document.getElementById('totalStock').textContent = `${totalStock.toLocaleString()} KL`;
+            document.getElementById('undenaturedStock').textContent = `${undenaturedStock.toLocaleString()} KL`;
+            document.getElementById('denaturedStock').textContent = `${denaturedStock.toLocaleString()} KL`;
+            document.getElementById('capacityUsed').textContent = `${((totalStock/totalMax)*100).toFixed(0)}%`;
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+
+        const transferModal = setupModal('transferModal', 'openTransferModalBtn');
+        const denatureModal = setupModal('denatureModal', 'openDenatureModalBtn');
+
+        // Populate modal dropdowns
+        function populateSelectors() {
+            const sourceTank = document.getElementById('sourceTank');
+            const destTank = document.getElementById('destTank');
+            const denatureSource = document.getElementById('denatureSource');
+            const denatureDest = document.getElementById('denatureDest');
+            
+            sourceTank.innerHTML = destTank.innerHTML = denatureSource.innerHTML = denatureDest.innerHTML = '';
+
+            tankData.forEach(tank => {
+                const option = `<option value="${tank.id}">${tank.id} (${tank.current} KL)</option>`;
+                sourceTank.innerHTML += option;
+                destTank.innerHTML += option;
+                if (tank.type === 'Undenatured') denatureSource.innerHTML += option;
+                if (tank.type === 'Denatured') denatureDest.innerHTML += option;
+            });
+        }
+        
+        // Transfer Logic
+        document.getElementById('transferForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const sourceId = document.getElementById('sourceTank').value;
+            const destId = document.getElementById('destTank').value;
+            const qty = parseInt(document.getElementById('transferQty').value, 10);
+
+            const source = tankData.find(t => t.id === sourceId);
+            const dest = tankData.find(t => t.id === destId);
+
+            if (sourceId === destId) { alert("Source and destination tanks cannot be the same."); return; }
+            if (qty > source.current) { alert(`Error: Cannot transfer more than available in ${source.id}.`); return; }
+            if (dest.current + qty > dest.max) { alert(`Error: Transfer exceeds capacity of ${dest.id}.`); return; }
+            if (source.type !== dest.type && dest.current > 0) { alert(`Error: Cannot mix product types in a non-empty tank.`); return; }
+
+            source.current -= qty;
+            dest.current += qty;
+            if (dest.current > 0) dest.type = source.type; // Set type if destination was empty
+
+            renderTanks();
+            transferModal.style.display = 'none';
+        });
+
+        // Denature Logic
+        const denatureQtyInput = document.getElementById('denatureQty');
+        const denaturantQtyInput = document.getElementById('denaturantQty');
+        denatureQtyInput.addEventListener('input', e => {
+            const ethanolQty = parseInt(e.target.value, 10) || 0;
+            // Assuming a 2% denaturant ratio (20L per 1000L KL)
+            denaturantQtyInput.value = ethanolQty * 20; 
+        });
+
+        document.getElementById('denatureForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const sourceId = document.getElementById('denatureSource').value;
+            const destId = document.getElementById('denatureDest').value;
+            const qty = parseInt(denatureQtyInput.value, 10);
+
+            const source = tankData.find(t => t.id === sourceId);
+            const dest = tankData.find(t => t.id === destId);
+            
+            if (qty > source.current) { alert(`Error: Cannot denature more than available in ${source.id}.`); return; }
+            if (dest.current + qty > dest.max) { alert(`Error: Transfer exceeds capacity of ${dest.id}.`); return; }
+
+            source.current -= qty;
+            dest.current += qty;
+            
+            renderTanks();
+            denatureModal.style.display = 'none';
+        });
+
+        // Initial Load
+        document.getElementById('openTransferModalBtn').addEventListener('click', populateSelectors);
+        document.getElementById('openDenatureModalBtn').addEventListener('click', populateSelectors);
+        renderTanks();
+    </script>
+</body>
+</html>

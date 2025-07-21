@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Spares & MRO Inventory</title>
+   <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .kpi-card { border-left: 4px solid #f59e0b; }
+        .status-badge { display: inline-flex; align-items: center; padding: 0.25em 0.6em; font-size: 0.8rem; font-weight: 600; border-radius: 9999px; }
+        .status-ok { background-color: #dcfce7; color: #166534; }
+        .status-low { background-color: #ffedd5; color: #9a3412; }
+        .status-reorder { background-color: #fee2e2; color: #991b1b; }
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8"><a href="plant_maintain.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center"><i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>Back to Plant Maintenance</a><h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Spares & MRO Inventory</h1><p class="mt-1 text-md text-gray-500">Manage stock levels of spare parts, lubricants, and other MRO items.</p></div>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-yellow-100 rounded-md p-3"><i data-lucide="wrench" class="h-6 w-6 text-yellow-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Spare Items</dt><dd class="text-3xl font-bold text-gray-900">152</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-red-100 rounded-md p-3"><i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Items to Reorder</dt><dd id="reorderCount" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Stock Value</dt><dd class="text-xl font-bold text-gray-900">₹25.8L</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="arrow-down-circle" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Issued (Today)</dt><dd class="text-3xl font-bold text-gray-900">5</dd></dl></div></div></div>
+            </div>
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b flex justify-between items-center"><h2 class="text-xl font-bold text-gray-800">Inventory List</h2><div class="space-x-2"><button id="openIssueStockModalBtn" class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md">Issue Item</button><button id="openReceiveStockModalBtn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700">Receive Item</button></div></div>
+                <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Item Code</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Item Name</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Qty on Hand</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reorder Point</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th></tr></thead><tbody id="sparesTableBody" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+            </div>
+        </div>
+    </main>
+    <div id="issueStockModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Issue Spare/MRO Item</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="issueStockForm"><div class="space-y-4"><div><label for="issueItemSelect" class="block text-sm font-medium">Item</label><select id="issueItemSelect" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="issueQty" class="block text-sm font-medium">Quantity to Issue</label><input type="number" id="issueQty" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="issueWO" class="block text-sm font-medium">Work Order #</label><input type="text" id="issueWO" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-red-600 hover:bg-red-700 py-2 px-4 rounded-md">Issue Item</button></div></form></div></div>
+    <div id="receiveStockModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Receive Spare/MRO Item</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="receiveStockForm"><div class="space-y-4"><div><label for="receiveItemSelect" class="block text-sm font-medium">Item</label><select id="receiveItemSelect" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="receiveQty" class="block text-sm font-medium">Quantity Received</label><input type="number" id="receiveQty" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="receiveRef" class="block text-sm font-medium">GRN/Reference #</label><input type="text" id="receiveRef" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-yellow-600 hover:bg-yellow-700 py-2 px-4 rounded-md">Receive Item</button></div></form></div></div>
+    <script>
+        lucide.createIcons();
+        let sparesData = [
+            { code: 'SP-BRG-001', name: 'Bearing 6205-ZZ', location: 'Rack A-1', qty: 25, reorder: 10, unit: 'pcs' },
+            { code: 'SP-BELT-005', name: 'V-Belt B-52', location: 'Rack B-3', qty: 8, reorder: 15, unit: 'pcs' },
+            { code: 'LUB-OIL-002', name: 'Gear Oil ISO VG 320', location: 'Store 1', qty: 50, reorder: 100, unit: 'L' },
+            { code: 'SP-SEAL-012', name: 'Mechanical Seal Type 21', location: 'Rack A-2', qty: 12, reorder: 5, unit: 'pcs' },
+        ];
+        const sparesTableBody = document.getElementById('sparesTableBody');
+        function renderSparesTable() {
+            sparesTableBody.innerHTML = '';
+            let reorderCount = 0;
+            sparesData.forEach(item => {
+                let status, statusClass;
+                if (item.qty <= item.reorder) { status = 'Reorder'; statusClass = 'status-reorder'; reorderCount++; }
+                else if (item.qty <= item.reorder * 1.2) { status = 'Low'; statusClass = 'status-low'; }
+                else { status = 'OK'; statusClass = 'status-ok'; }
+                const row = `<tr><td class="px-6 py-4 text-sm font-medium text-gray-900">${item.code}</td><td class="px-6 py-4 text-sm text-gray-800">${item.name}</td><td class="px-6 py-4 text-sm text-gray-500">${item.location}</td><td class="px-6 py-4 text-sm text-gray-800">${item.qty} ${item.unit}</td><td class="px-6 py-4 text-sm text-gray-500">${item.reorder} ${item.unit}</td><td class="px-6 py-4 text-sm"><span class="status-badge ${statusClass}">${status}</span></td></tr>`;
+                sparesTableBody.innerHTML += row;
+            });
+            document.getElementById('reorderCount').textContent = reorderCount;
+        }
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+        const issueStockModal = setupModal('issueStockModal', 'openIssueStockModalBtn');
+        const receiveStockModal = setupModal('receiveStockModal', 'openReceiveStockModalBtn');
+        const issueItemSelect = document.getElementById('issueItemSelect');
+        const receiveItemSelect = document.getElementById('receiveItemSelect');
+        function populateSelects() {
+            issueItemSelect.innerHTML = receiveItemSelect.innerHTML = '';
+            sparesData.forEach(item => {
+                const option = `<option value="${item.code}">${item.name} (${item.code})</option>`;
+                issueItemSelect.innerHTML += option;
+                receiveItemSelect.innerHTML += option;
+            });
+        }
+        document.getElementById('issueStockForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const item = sparesData.find(i => i.code === document.getElementById('issueItemSelect').value);
+            const qty = parseInt(document.getElementById('issueQty').value);
+            if(qty > item.qty) { alert('Issue quantity cannot be more than stock on hand.'); return; }
+            item.qty -= qty;
+            renderSparesTable();
+            issueStockModal.style.display = 'none';
+        });
+         document.getElementById('receiveStockForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const item = sparesData.find(i => i.code === document.getElementById('receiveItemSelect').value);
+            const qty = parseInt(document.getElementById('receiveQty').value);
+            item.qty += qty;
+            renderSparesTable();
+            receiveStockModal.style.display = 'none';
+        });
+        renderSparesTable();
+        populateSelects();
+    </script>
+</body>
+</html>

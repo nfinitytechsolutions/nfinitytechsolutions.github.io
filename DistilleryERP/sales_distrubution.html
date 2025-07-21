@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Sales & Distribution</title>
+   <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #0d9488; /* teal-600 */
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25em 0.6em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+        .status-scheduled { background-color: #e0e7ff; color: #4338ca; }
+        .status-in-transit { background-color: #dbeafe; color: #1e40af; }
+        .status-delivered { background-color: #dcfce7; color: #166534; }
+        
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+				<a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Main Dashboard
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Sales & Distribution (Ethanol)</h1>
+                    <p class="mt-1 text-md text-gray-500">Manage contracts, pricing, and logistics for fuel-grade ethanol supply.</p>
+                </div>
+                 <div class="mt-4 flex md:mt-0 md:ml-4 space-x-3">
+                    <button id="openNewContractModalBtn" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        <i data-lucide="file-plus-2" class="mr-2 h-5 w-5"></i>
+                        New Contract
+                    </button>
+                    <button id="openScheduleDispatchModalBtn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700">
+                        <i data-lucide="calendar-plus" class="mr-2 h-5 w-5"></i>
+                        Schedule Dispatch
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-teal-100 rounded-md p-3"><i data-lucide="file-text" class="h-6 w-6 text-teal-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Active Contracts</dt><dd id="activeContractsCount" class="text-3xl font-bold text-gray-900">3</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="truck" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Shipments Today</dt><dd class="text-3xl font-bold text-gray-900">18</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Price (OMC)</dt><dd class="text-3xl font-bold text-gray-900">₹65.75/L</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-purple-100 rounded-md p-3"><i data-lucide="percent" class="h-6 w-6 text-purple-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Contract Fulfillment</dt><dd class="text-3xl font-bold text-gray-900">62%</dd></dl></div></div></div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Dispatch Schedule -->
+                <div class="lg:col-span-2 bg-white shadow-md rounded-lg">
+                     <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Dispatch Schedule</h2>
+                     <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dispatch ID</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Mode</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vehicle/Rake No.</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Qty (KL)</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th></tr></thead>
+                            <tbody id="dispatchTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Rows will be injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Contracts Overview -->
+                <div class="lg:col-span-1 bg-white p-6 shadow-md rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">OMC Contracts Overview</h3>
+                    <div id="contractsContainer" class="space-y-4">
+                        <!-- Contracts will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="newContractModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">New OMC Contract</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="newContractForm"><div class="space-y-4"><div><label for="customer" class="block text-sm font-medium">Customer (OMC)</label><select id="customer" class="mt-1 block w-full border-gray-300 rounded-md"><option>IOCL</option><option>BPCL</option><option>HPCL</option><option>Reliance</option></select></div><div><label for="contractId" class="block text-sm font-medium">Contract ID</label><input type="text" id="contractId" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="totalQty" class="block text-sm font-medium">Total Quantity (KL)</label><input type="number" id="totalQty" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="pricing" class="block text-sm font-medium">Pricing Model</label><input type="text" id="pricing" value="OMC Tender Rate" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-teal-600 hover:bg-teal-700 py-2 px-4 rounded-md">Save Contract</button></div></form></div></div>
+    <div id="scheduleDispatchModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Schedule New Dispatch</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="scheduleDispatchForm"><div class="space-y-4"><div><label for="dispatchCustomer" class="block text-sm font-medium">Customer</label><select id="dispatchCustomer" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="dispatchMode" class="block text-sm font-medium">Mode</label><select id="dispatchMode" class="mt-1 block w-full border-gray-300 rounded-md"><option value="Truck">Truck</option><option value="Rail">Rail</option></select></div><div><label for="vehicleNo" class="block text-sm font-medium">Vehicle/Rake No.</label><input type="text" id="vehicleNo" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="dispatchQty" class="block text-sm font-medium">Quantity (KL)</label><input type="number" id="dispatchQty" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-teal-600 hover:bg-teal-700 py-2 px-4 rounded-md">Schedule</button></div></form></div></div>
+    
+    <script>
+        lucide.createIcons();
+
+        let contractData = [
+            { id: 'CON-IOCL-2025', customer: 'IOCL', pricing: 'OMC Tender Rate - ₹0.25', totalQty: 10000, fulfilled: 7500 },
+            { id: 'CON-BPCL-2025', customer: 'BPCL', pricing: 'OMC Tender Rate', totalQty: 10000, fulfilled: 5500 },
+            { id: 'CON-HPCL-2025', customer: 'HPCL', pricing: 'OMC Tender Rate - ₹0.10', totalQty: 7500, fulfilled: 4500 },
+        ];
+
+        let dispatchData = [
+            { id: 'DSP-25-105', customer: 'IOCL - Pune', mode: 'Truck', vehicleNo: 'MH 12 AB 1234', qty: 20, status: 'In-Transit' },
+            { id: 'DSP-25-104', customer: 'BPCL - Mumbai', mode: 'Rail', vehicleNo: 'RAKE-54B', qty: 2500, status: 'Delivered' },
+            { id: 'DSP-25-103', customer: 'HPCL - Nagpur', mode: 'Truck', vehicleNo: 'MH 31 CD 5678', qty: 20, status: 'Delivered' },
+            { id: 'DSP-25-106', customer: 'BPCL - Mumbai', mode: 'Truck', vehicleNo: 'MH 04 EF 9012', qty: 20, status: 'Scheduled' },
+        ];
+        
+        const contractsContainer = document.getElementById('contractsContainer');
+        const dispatchTableBody = document.getElementById('dispatchTableBody');
+        const activeContractsCount = document.getElementById('activeContractsCount');
+        const dispatchCustomerSelect = document.getElementById('dispatchCustomer');
+
+        function renderContracts() {
+            contractsContainer.innerHTML = '';
+            dispatchCustomerSelect.innerHTML = '';
+            contractData.forEach(c => {
+                const fulfillment = (c.fulfilled / c.totalQty) * 100;
+                const card = `
+                    <div class="border p-3 rounded-lg">
+                        <p class="font-bold text-gray-800">${c.customer}</p>
+                        <p class="text-sm text-gray-500">Contract: ${c.id}</p>
+                        <p class="text-sm text-gray-500">Pricing: ${c.pricing}</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2"><div class="bg-teal-500 h-2.5 rounded-full" style="width: ${fulfillment}%"></div></div>
+                        <p class="text-xs text-right mt-1">${c.fulfilled.toLocaleString()} / ${c.totalQty.toLocaleString()} KL Fulfilled</p>
+                    </div>`;
+                contractsContainer.innerHTML += card;
+                dispatchCustomerSelect.innerHTML += `<option value="${c.customer}">${c.customer}</option>`;
+            });
+            activeContractsCount.textContent = contractData.length;
+        }
+
+        function renderDispatchTable() {
+            dispatchTableBody.innerHTML = '';
+            dispatchData.forEach(d => {
+                const statusClasses = { 'Scheduled': 'status-scheduled', 'In-Transit': 'status-in-transit', 'Delivered': 'status-delivered' };
+                const icon = d.mode === 'Truck' ? 'truck' : 'train';
+                const row = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${d.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${d.customer}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><i data-lucide="${icon}" class="inline-block h-4 w-4 mr-1"></i>${d.mode}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${d.vehicleNo}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${d.qty}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${statusClasses[d.status]}">${d.status}</span></td>
+                    </tr>`;
+                dispatchTableBody.innerHTML += row;
+            });
+            lucide.createIcons();
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+
+        const newContractModal = setupModal('newContractModal', 'openNewContractModalBtn');
+        const scheduleDispatchModal = setupModal('scheduleDispatchModal', 'openScheduleDispatchModalBtn');
+
+        document.getElementById('newContractForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newContract = {
+                id: document.getElementById('contractId').value,
+                customer: document.getElementById('customer').value,
+                pricing: document.getElementById('pricing').value,
+                totalQty: parseInt(document.getElementById('totalQty').value),
+                fulfilled: 0
+            };
+            contractData.push(newContract);
+            renderContracts();
+            newContractModal.style.display = 'none';
+            e.target.reset();
+        });
+
+        document.getElementById('scheduleDispatchForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newDispatch = {
+                id: `DSP-25-${Math.floor(Math.random() * 100) + 200}`,
+                customer: document.getElementById('dispatchCustomer').value,
+                mode: document.getElementById('dispatchMode').value,
+                vehicleNo: document.getElementById('vehicleNo').value,
+                qty: parseInt(document.getElementById('dispatchQty').value),
+                status: 'Scheduled'
+            };
+            dispatchData.unshift(newDispatch);
+            renderDispatchTable();
+            scheduleDispatchModal.style.display = 'none';
+            e.target.reset();
+        });
+
+        // Initial Render
+        renderContracts();
+        renderDispatchTable();
+    </script>
+</body>
+</html>
