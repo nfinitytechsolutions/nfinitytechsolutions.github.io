@@ -161,24 +161,24 @@
         document.addEventListener('DOMContentLoaded', () => {
             // --- DATA & PRICING LOGIC ---
             const modules = [
-                { id: 'procurement', name: 'Procurement & Contracts', icon: 'file-text', oneTimePrice: 50000 },
-                { id: 'gate', name: 'Gate & Weighbridge', icon: 'truck', oneTimePrice: 30000 },
-                { id: 'lims', name: 'Quality Lab (LIMS)', icon: 'flask-conical', oneTimePrice: 75000 },
-                { id: 'silo', name: 'Silo & Inventory', icon: 'database', oneTimePrice: 60000 },
-                { id: 'milling', name: 'Milling & Slurry', icon: 'blender', oneTimePrice: 45000 },
-                { id: 'fermentation', name: 'Fermentation', icon: 'beaker', oneTimePrice: 80000 },
-                { id: 'distillation', name: 'Distillation', icon: 'flame', oneTimePrice: 90000 },
-                { id: 'coproduct', name: 'Co-Product Management', icon: 'recycle', oneTimePrice: 40000 },
-                { id: 'sales', name: 'Sales & Logistics', icon: 'bar-chart-2', oneTimePrice: 65000 },
-                { id: 'finance', name: 'Finance & Accounting', icon: 'landmark', oneTimePrice: 100000 },
-                { id: 'maintenance', name: 'Plant Maintenance', icon: 'wrench', oneTimePrice: 55000 },
-                { id: 'compliance', name: 'Compliance & Reporting', icon: 'shield-check', oneTimePrice: 70000 },
-                { id: 'hr', name: 'Employee Management', icon: 'users-2', oneTimePrice: 50000 },
+                { id: 'procurement', name: 'Procurement & Contracts', icon: 'file-text', oneTimePrice: 95000 },
+                { id: 'gate', name: 'Gate & Weighbridge', icon: 'truck', oneTimePrice: 110000 },
+                { id: 'lims', name: 'Quality Lab (LIMS)', icon: 'flask-conical', oneTimePrice: 85000 },
+                { id: 'silo', name: 'Silo & Inventory', icon: 'database', oneTimePrice: 85000 },
+                { id: 'milling', name: 'Milling & Slurry', icon: 'blender', oneTimePrice: 85000 },
+                { id: 'fermentation', name: 'Fermentation', icon: 'beaker', oneTimePrice: 95000 },
+                { id: 'distillation', name: 'Distillation', icon: 'flame', oneTimePrice: 95000 },
+                { id: 'coproduct', name: 'Co-Product Management', icon: 'recycle', oneTimePrice: 85000 },
+                { id: 'sales', name: 'Sales & Logistics', icon: 'bar-chart-2', oneTimePrice: 115000 },
+                { id: 'finance', name: 'Finance & Accounting', icon: 'landmark', oneTimePrice: 120000 },
+                { id: 'maintenance', name: 'Plant Maintenance', icon: 'wrench', oneTimePrice: 85000 },
+                { id: 'compliance', name: 'Compliance & Reporting', icon: 'shield-check', oneTimePrice: 95000 },
+                { id: 'hr', name: 'Employee Management', icon: 'users-2', oneTimePrice: 85000 },
             ];
 
             const ONE_TIME_PLATFORM_FEE = 200000;
-            const YEARLY_COST_PER_EMPLOYEE = 200; // Base yearly cost per employee
-            const YEARLY_MODULE_MAINTENANCE_PERCENTAGE = 0.12; // 12% of module cost for yearly maintenance
+            const YEARLY_COST_PER_EMPLOYEE = 150; // Base yearly cost per employee
+            const YEARLY_MODULE_MAINTENANCE_PERCENTAGE = 0.02; // 12% of module cost for yearly maintenance
 
             let selectedModules = new Set();
 
