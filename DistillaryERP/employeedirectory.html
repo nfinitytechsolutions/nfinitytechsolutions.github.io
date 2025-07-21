@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Employee Directory</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .kpi-card { border-left: 4px solid #ec4899; }
+        .status-badge { display: inline-flex; align-items: center; padding: 0.25em 0.6em; font-size: 0.8rem; font-weight: 600; border-radius: 9999px; }
+        .status-active { background-color: #dcfce7; color: #166534; }
+        .status-on-leave { background-color: #ffedd5; color: #9a3412; }
+        .status-inactive { background-color: #fee2e2; color: #991b1b; }
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+				<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8"><a href="emp_main.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center"><i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>Back to Employee Management</a><h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Employee Directory</h1><p class="mt-1 text-md text-gray-500">Manage all employee information, payroll, and HR activities.</p></div>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-fuchsia-100 rounded-md p-3"><i data-lucide="users" class="h-6 w-6 text-fuchsia-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Employees</dt><dd id="totalEmployees" class="text-3xl font-bold text-gray-900">421</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="user-check" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Attendance Today</dt><dd class="text-3xl font-bold text-gray-900">95.2%</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-orange-100 rounded-md p-3"><i data-lucide="calendar-off" class="h-6 w-6 text-orange-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">On Leave Today</dt><dd class="text-3xl font-bold text-gray-900">18</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Payroll (Last Month)</dt><dd class="text-xl font-bold text-gray-900">₹1.85 Cr</dd></dl></div></div></div>
+            </div>
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
+                    <div class="relative w-full md:w-1/3"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i data-lucide="search" class="h-5 w-5 text-gray-400"></i></div><input type="text" id="employeeSearch" placeholder="Search by Name or Employee ID..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md"></div>
+                    <button id="openNewEmployeeModalBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-fuchsia-600 hover:bg-fuchsia-700"><i data-lucide="user-plus" class="mr-2 h-5 w-5"></i>Add New Employee</button>
+                </div>
+                <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Employee Name</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Employee ID</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Department</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Designation</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead><tbody id="employeeTableBody" class="bg-white divide-y divide-gray-200"></tbody></table></div>
+            </div>
+        </div>
+    </main>
+    <div id="newEmployeeModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Add New Employee</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="newEmployeeForm"><div class="space-y-4"><div><label class="block text-sm font-medium">Full Name</label><input type="text" id="fullName" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div class="grid grid-cols-2 gap-4"><div><label class="block text-sm font-medium">Department</label><select id="department" class="mt-1 block w-full border-gray-300 rounded-md"><option>Production</option><option>Maintenance</option><option>Quality</option><option>Logistics</option><option>Admin</option><option>Finance</option></select></div><div><label class="block text-sm font-medium">Designation</label><input type="text" id="designation" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div><label class="block text-sm font-medium">Date of Joining</label><input type="date" id="doj" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-fuchsia-600 hover:bg-fuchsia-700 py-2 px-4 rounded-md">Add Employee</button></div></form></div></div>
+    <div id="viewProfileModal" class="modal-backdrop"><div id="viewProfileModalContent" class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-3xl"></div></div>
+    <script>
+        lucide.createIcons();
+        let employeeData = [
+            { id: 'D00123', name: 'Ramesh Kumar', department: 'Production', designation: 'Shift In-charge', status: 'Active' },
+            { id: 'D00124', name: 'Sita Sharma', department: 'Quality', designation: 'Lab Chemist', status: 'Active' },
+            { id: 'D00125', name: 'Arjun Singh', department: 'Maintenance', designation: 'Mechanical Engineer', status: 'On Leave' },
+            { id: 'D00126', name: 'Priya Patel', department: 'Logistics', designation: 'Dispatch Coordinator', status: 'Active' },
+            { id: 'D00105', name: 'Sunil Gupta', department: 'Production', designation: 'Operator', status: 'Inactive' },
+        ];
+        const employeeTableBody = document.getElementById('employeeTableBody');
+        const employeeSearch = document.getElementById('employeeSearch');
+        function renderEmployeeTable(filter = '') {
+            employeeTableBody.innerHTML = '';
+            const filteredData = employeeData.filter(emp => emp.name.toLowerCase().includes(filter.toLowerCase()) || emp.id.toLowerCase().includes(filter.toLowerCase()));
+            filteredData.forEach(emp => {
+                let statusClass = '';
+                if(emp.status === 'Active') statusClass = 'status-active';
+                else if(emp.status === 'On Leave') statusClass = 'status-on-leave';
+                else statusClass = 'status-inactive';
+                const row = `<tr data-id="${emp.id}"><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${emp.name}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${emp.id}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${emp.department}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${emp.designation}</td><td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${statusClass}">${emp.status}</span></td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-fuchsia-600 hover:text-fuchsia-900 view-profile-btn">View Profile</a></td></tr>`;
+                employeeTableBody.innerHTML += row;
+            });
+            document.getElementById('totalEmployees').textContent = employeeData.length;
+        }
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+        const newEmployeeModal = setupModal('newEmployeeModal', 'openNewEmployeeModalBtn');
+        const viewProfileModal = setupModal('viewProfileModal', null);
+        document.getElementById('newEmployeeForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newId = `D00${127 + employeeData.length}`;
+            const newEmployee = { id: newId, name: document.getElementById('fullName').value, department: document.getElementById('department').value, designation: document.getElementById('designation').value, status: 'Active' };
+            employeeData.unshift(newEmployee);
+            renderEmployeeTable();
+            newEmployeeModal.style.display = 'none';
+            e.target.reset();
+        });
+        employeeSearch.addEventListener('input', e => renderEmployeeTable(e.target.value));
+        employeeTableBody.addEventListener('click', e => {
+            if (e.target.classList.contains('view-profile-btn')) {
+                const empId = e.target.closest('tr').dataset.id;
+                const emp = employeeData.find(e => e.id === empId);
+				
+				// 1. Create the SVG string using our new helper function
+				const initials = emp.name.split(' ').map(n => n[0]).join('').toUpperCase();
+				const svgString = createInitialsSVG(initials);
+				// 2. Base64 encode the raw SVG string
+				const svgBase64 = btoa(svgString);
+				// 3. Create the data URI for the image source
+				const svgDataUri = `data:image/svg+xml;base64,${svgBase64}`;
+				
+                const content = `<div class="flex justify-between items-start border-b pb-3 mb-4"><div><h3 class="text-2xl font-bold text-gray-800">${emp.name}</h3><p class="text-gray-500">${emp.designation}, ${emp.department}</p></div><button class="close-modal-btn text-gray-500">&times;</button></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="md:col-span-1"><img src="${svgDataUri}" class="rounded-lg w-full"></div><div class="md:col-span-2 space-y-4"><div><p class="text-sm text-gray-500">Employee ID</p><p class="font-semibold">${emp.id}</p></div><div><p class="text-sm text-gray-500">Date of Joining</p><p class="font-semibold">15-Feb-2022</p></div><div><p class="text-sm text-gray-500">Contact</p><p class="font-semibold">+91 98765 43210</p></div><div><p class="text-sm text-gray-500">Emergency Contact</p><p class="font-semibold">Spouse Name (+91 98765 43211)</p></div><div class="border-t pt-4"><p class="text-sm text-gray-500">Leave Balance</p><p class="font-semibold">Casual: 5/12, Sick: 8/15</p></div></div></div><div class="mt-6 flex justify-end"><button class="close-modal-btn bg-white py-2 px-4 border rounded-md">Close</button></div>`;
+                document.getElementById('viewProfileModalContent').innerHTML = content;
+                viewProfileModal.style.display = 'block';
+                viewProfileModal.querySelectorAll('.close-modal-btn').forEach(btn => {
+					btn.onclick = () => {
+						viewProfileModal.style.display = 'none';
+					};
+				});
+            }
+        });
+        renderEmployeeTable();
+		
+		/**
+		 * Creates a dynamic SVG avatar with the user's initials.
+		 * This removes the dependency on external placeholder services.
+		 * @param {string} initials - The user's initials (e.g., 'JD').
+		 * @returns {string} A string containing the raw SVG markup.
+		 */
+		function createInitialsSVG(initials) {
+			const width = 100;
+			const height = 100;
+
+			// Simple hash function to generate a color from initials for variety
+			let hash = 0;
+			if (initials.length === 0) {
+				hash = 0;
+			} else {
+				for (let i = 0; i < initials.length; i++) {
+					hash = initials.charCodeAt(i) + ((hash << 5) - hash);
+					hash = hash & hash; // Convert to 32bit integer
+				}
+			}
+			
+			const h = hash % 360;
+			const backgroundColor = `hsl(${h}, 70%, 85%)`; // Lighter, pastel-like background
+			const textColor = `hsl(${h}, 50%, 40%)`;     // Darker, readable text color
+
+			const svg = `
+				<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+					<rect width="100%" height="100%" fill="${backgroundColor}" />
+					<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+						  font-family="Arial, sans-serif" font-size="45" font-weight="bold" fill="${textColor}">
+						${initials}
+					</text>
+				</svg>
+			`;
+			return svg;
+		}
+		
+    </script>
+</body>
+</html>

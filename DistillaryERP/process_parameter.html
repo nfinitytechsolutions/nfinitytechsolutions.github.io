@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Process Parameter Tracking</title>
+     <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <script src="libs/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #ef4444; /* red-500 */
+        }
+        .param-ok { color: #16a34a; /* green-600 */ }
+        .param-deviation { color: #dc2626; /* red-600 */ animation: pulse 1.5s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .tank-status-filling { border-top-color: #3b82f6; } /* blue-500 */
+        .tank-status-cooking { border-top-color: #f97316; } /* orange-500 */
+        .tank-status-pumping { border-top-color: #8b5cf6; } /* purple-500 */
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+						<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Process Parameter Tracking</h1>
+                    <p class="mt-1 text-md text-gray-500">Live SCADA data for Cooking & Liquefaction stage.</p>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-red-100 rounded-md p-3"><i data-lucide="activity" class="h-6 w-6 text-red-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Active Batches</dt><dd class="text-3xl font-bold text-gray-900">3</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-yellow-100 rounded-md p-3"><i data-lucide="alert-triangle" class="h-6 w-6 text-yellow-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Alarms (24h)</dt><dd class="text-3xl font-bold text-gray-900">2</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="thermometer" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Jet Cooker Temp</dt><dd class="text-3xl font-bold text-gray-900">105.2 °C</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-purple-100 rounded-md p-3"><i data-lucide="timer" class="h-6 w-6 text-purple-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Liquefaction Time</dt><dd class="text-3xl font-bold text-gray-900">92 min</dd></dl></div></div></div>
+            </div>
+
+            <!-- Live Process View -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Jet Cooker Monitor -->
+                <div class="lg:col-span-2 bg-white p-6 shadow-md rounded-lg">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">Jet Cooker - Live Parameters</h2>
+                    <p class="text-sm text-gray-500 mb-4">Processing Batch: <span class="font-semibold">MASH-0702-05</span></p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <p class="text-sm font-medium text-gray-500">Temperature (°C)</p>
+                            <p id="tempReading" class="text-4xl font-bold param-ok">105.1</p>
+                            <p class="text-xs text-gray-400">Setpoint: 105.0</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <p class="text-sm font-medium text-gray-500">Pressure (bar)</p>
+                            <p id="pressureReading" class="text-4xl font-bold param-ok">1.22</p>
+                            <p class="text-xs text-gray-400">Setpoint: 1.20</p>
+                        </div>
+                    </div>
+                    <canvas id="processChart"></canvas>
+                </div>
+
+                <!-- Liquefaction Tanks -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white p-4 shadow-md rounded-lg border-t-4 tank-status-cooking">
+                        <h3 class="font-bold text-lg text-gray-800">Liquefaction Tank 1</h3>
+                        <p class="text-sm text-gray-500 mb-2">Batch: <span class="font-semibold">MASH-0702-05</span></p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Status:</span><span class="font-semibold">Cooking</span></div>
+                            <div class="flex justify-between"><span>Temperature:</span><span class="font-semibold">95.3 °C</span></div>
+                            <div class="flex justify-between"><span>Residence Time:</span><span class="font-semibold">45 / 90 min</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1"><div class="bg-orange-500 h-2.5 rounded-full" style="width: 50%"></div></div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 shadow-md rounded-lg border-t-4 tank-status-pumping">
+                        <h3 class="font-bold text-lg text-gray-800">Liquefaction Tank 2</h3>
+                        <p class="text-sm text-gray-500 mb-2">Batch: <span class="font-semibold">MASH-0702-04</span></p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Status:</span><span class="font-semibold">Pumping to Ferm.</span></div>
+                            <div class="flex justify-between"><span>Temperature:</span><span class="font-semibold">85.1 °C</span></div>
+                            <div class="flex justify-between"><span>Residence Time:</span><span class="font-semibold">91 / 90 min</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1"><div class="bg-purple-500 h-2.5 rounded-full" style="width: 100%"></div></div>
+                        </div>
+                    </div>
+                     <div class="bg-white p-4 shadow-md rounded-lg border-t-4 tank-status-filling">
+                        <h3 class="font-bold text-lg text-gray-800">Liquefaction Tank 3</h3>
+                        <p class="text-sm text-gray-500 mb-2">Batch: <span class="font-semibold">MASH-0702-06</span></p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Status:</span><span class="font-semibold">Filling</span></div>
+                            <div class="flex justify-between"><span>Temperature:</span><span class="font-semibold">65.8 °C</span></div>
+                            <div class="flex justify-between"><span>Residence Time:</span><span class="font-semibold">5 / 90 min</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1"><div class="bg-blue-500 h-2.5 rounded-full" style="width: 5.5%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alarm Log Table -->
+            <div class="mt-8 bg-white shadow-md rounded-lg">
+                <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Deviation & Alarm Log (Last 24 Hours)</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Equipment</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Parameter</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reading</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Setpoint</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deviation</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Notes</th></tr></thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="bg-red-50"><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">02-Jul-2025 04:15:22</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Jet Cooker</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Temperature</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">107.8 °C</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">105.0 °C</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">+2.8 °C</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Auto-corrected</td></tr>
+                            <tr><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">02-Jul-2025 04:15:05</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Jet Cooker</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Temperature</td><td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">105.1 °C</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">105.0 °C</td><td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">+0.1 °C</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Within tolerance</td></tr>
+                            <tr class="bg-red-50"><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">01-Jul-2025 22:30:10</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Liq. Tank 2</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Pressure</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">1.35 bar</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1.20 bar</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">+0.15 bar</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Manual vent opened</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        lucide.createIcons();
+
+        const tempReadingEl = document.getElementById('tempReading');
+        const pressureReadingEl = document.getElementById('pressureReading');
+        const ctx = document.getElementById('processChart').getContext('2d');
+
+        const chartData = {
+            labels: Array(20).fill(''),
+            datasets: [
+                {
+                    label: 'Temperature (°C)',
+                    data: Array(20).fill(105),
+                    borderColor: '#3b82f6', // blue-500
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    yAxisID: 'y',
+                    tension: 0.3,
+                    fill: true,
+                },
+                {
+                    label: 'Pressure (bar)',
+                    data: Array(20).fill(1.2),
+                    borderColor: '#f97316', // orange-500
+                    backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                    yAxisID: 'y1',
+                    tension: 0.3,
+                    fill: true,
+                }
+            ]
+        };
+
+        const processChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: true,
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    x: { display: false },
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: { display: true, text: 'Temperature (°C)'},
+                        min: 100,
+                        max: 110,
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: { display: true, text: 'Pressure (bar)'},
+                        min: 0.8,
+                        max: 1.6,
+                        grid: { drawOnChartArea: false }
+                    }
+                },
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // Simulate live data feed
+        setInterval(() => {
+            // Update chart
+            const now = new Date();
+            const timeLabel = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+            chartData.labels.push(timeLabel);
+            chartData.labels.shift();
+
+            const newTemp = 105 + (Math.random() - 0.45);
+            chartData.datasets[0].data.push(newTemp);
+            chartData.datasets[0].data.shift();
+            
+            const newPressure = 1.2 + (Math.random() - 0.5) * 0.2;
+            chartData.datasets[1].data.push(newPressure);
+            chartData.datasets[1].data.shift();
+            
+            processChart.update('none');
+
+            // Update KPI readings
+            tempReadingEl.textContent = newTemp.toFixed(1);
+            pressureReadingEl.textContent = newPressure.toFixed(2);
+            
+            // Check for deviations
+            if (newTemp > 106 || newTemp < 104) {
+                tempReadingEl.classList.remove('param-ok');
+                tempReadingEl.classList.add('param-deviation');
+            } else {
+                tempReadingEl.classList.add('param-ok');
+                tempReadingEl.classList.remove('param-deviation');
+            }
+            if (newPressure > 1.3 || newPressure < 1.1) {
+                pressureReadingEl.classList.remove('param-ok');
+                pressureReadingEl.classList.add('param-deviation');
+            } else {
+                pressureReadingEl.classList.add('param-ok');
+                pressureReadingEl.classList.remove('param-deviation');
+            }
+
+        }, 2000);
+
+    </script>
+</body>
+</html>

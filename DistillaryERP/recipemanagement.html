@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Recipe/Formula Management</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <script src="libs/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #4f46e5; /* indigo-600 */
+        }
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+					<a href="fermentation.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Fermentation
+					</a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Recipe & Formula Management</h1>
+                    <p class="mt-1 text-md text-gray-500">Manage and analyze recipes to optimize fermentation efficiency and yield.</p>
+                </div>
+                 <div class="mt-4 flex md:mt-0 md:ml-4">
+                    <button id="openNewRecipeModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i data-lucide="plus" class="mr-2 h-5 w-5"></i>
+                        Create New Recipe
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-indigo-100 rounded-md p-3"><i data-lucide="notebook" class="h-6 w-6 text-indigo-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Recipes</dt><dd class="text-3xl font-bold text-gray-900">5</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="star" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Most Used Recipe</dt><dd class="text-xl font-bold text-gray-900">Standard Yield</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="flask-conical" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Enzyme Dosage</dt><dd class="text-3xl font-bold text-gray-900">0.8 kg/T</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-purple-100 rounded-md p-3"><i data-lucide="microscope" class="h-6 w-6 text-purple-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Yeast Dosage</dt><dd class="text-3xl font-bold text-gray-900">0.5 kg/T</dd></dl></div></div></div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Recipe Table -->
+                <div class="lg:col-span-2 bg-white shadow-md rounded-lg">
+                     <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Recipe Book</h2>
+                     <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Recipe Name</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Enzyme Dosage</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Yeast Dosage</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Projected Yield (L/T)</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+                            <tbody id="recipeTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Recipe rows will be injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Performance Analysis -->
+                <div class="lg:col-span-1 bg-white p-6 shadow-md rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Performance Analysis</h3>
+                    <div>
+                        <label for="recipeAnalysisSelect" class="block text-sm font-medium text-gray-700">Select Recipe to Analyze:</label>
+                        <select id="recipeAnalysisSelect" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"></select>
+                    </div>
+                    <div class="mt-4">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                     <div id="performanceSummary" class="mt-4 text-sm space-y-2">
+                        <!-- Summary will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New/Edit Recipe Modal -->
+    <div id="recipeModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 id="recipeModalTitle" class="text-2xl font-bold text-gray-800">Create New Recipe</h3>
+                <button class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="recipeForm">
+                <input type="hidden" id="recipeId">
+                <div class="space-y-4">
+                    <div><label for="recipeName" class="block text-sm font-medium">Recipe Name</label><input type="text" id="recipeName" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                    <h4 class="font-semibold pt-2 border-t">Dosages (per Tonne of Corn)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><label for="alphaAmylase" class="block text-sm font-medium">Alpha-Amylase (kg)</label><input type="number" step="0.01" id="alphaAmylase" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                        <div><label for="glucoamylase" class="block text-sm font-medium">Glucoamylase (kg)</label><input type="number" step="0.01" id="glucoamylase" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                        <div><label for="yeast" class="block text-sm font-medium">Yeast (kg)</label><input type="number" step="0.01" id="yeast" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                        <div><label for="nutrients" class="block text-sm font-medium">Nutrients (kg)</label><input type="number" step="0.01" id="nutrients" class="mt-1 block w-full border-gray-300 rounded-md"></div>
+                    </div>
+                     <h4 class="font-semibold pt-2 border-t">Projections</h4>
+                     <div><label for="projectedYield" class="block text-sm font-medium">Projected Yield (Litres per Tonne)</label><input type="number" id="projectedYield" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button>
+                    <button type="submit" class="ml-3 text-white bg-indigo-600 hover:bg-indigo-700 py-2 px-4 rounded-md">Save Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        lucide.createIcons();
+
+        const recipeData = [
+            { id: 1, name: 'Standard Yield', alpha: 0.40, gluco: 0.40, yeast: 0.50, nutrients: 0.1, yield: 410, performance: { time: 52, efficiency: 94, ddgs: 320 } },
+            { id: 2, name: 'High Yield', alpha: 0.45, gluco: 0.42, yeast: 0.55, nutrients: 0.15, yield: 425, performance: { time: 54, efficiency: 96, ddgs: 310 } },
+            { id: 3, name: 'Quick Ferment', alpha: 0.50, gluco: 0.50, yeast: 0.60, nutrients: 0.2, yield: 400, performance: { time: 48, efficiency: 91, ddgs: 325 } },
+            { id: 4, name: 'Cost Saver', alpha: 0.35, gluco: 0.35, yeast: 0.45, nutrients: 0.05, yield: 405, performance: { time: 55, efficiency: 92, ddgs: 330 } },
+            { id: 5, name: 'High Starch Corn', alpha: 0.38, gluco: 0.38, yeast: 0.50, nutrients: 0.1, yield: 415, performance: { time: 53, efficiency: 95, ddgs: 315 } },
+        ];
+        const plantAverage = { time: 52.5, efficiency: 93.5, ddgs: 320 };
+
+        const recipeTableBody = document.getElementById('recipeTableBody');
+        const recipeAnalysisSelect = document.getElementById('recipeAnalysisSelect');
+        const performanceSummary = document.getElementById('performanceSummary');
+        const recipeModal = document.getElementById('recipeModal');
+        const recipeForm = document.getElementById('recipeForm');
+        
+        let performanceChart;
+
+        function renderRecipeTable() {
+            recipeTableBody.innerHTML = '';
+            recipeAnalysisSelect.innerHTML = '';
+            recipeData.forEach(r => {
+                const totalEnzyme = r.alpha + r.gluco;
+                const row = `
+                    <tr data-id="${r.id}">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${r.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${totalEnzyme.toFixed(2)} kg/T</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${r.yeast.toFixed(2)} kg/T</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${r.yield} L/T</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-900 edit-btn">Edit</a>
+                        </td>
+                    </tr>`;
+                recipeTableBody.innerHTML += row;
+                recipeAnalysisSelect.innerHTML += `<option value="${r.id}">${r.name}</option>`;
+            });
+        }
+
+        function createPerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            performanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Ferm. Time (hrs)', 'Efficiency (%)', 'DDGS Yield (kg/T)'],
+                    datasets: [
+                        { label: 'Selected Recipe', data: [], backgroundColor: 'rgba(79, 70, 229, 0.8)' },
+                        { label: 'Plant Average', data: Object.values(plantAverage), backgroundColor: 'rgba(209, 213, 219, 0.8)' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    indexAxis: 'y',
+                    scales: { x: { beginAtZero: true } },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+        
+        function updatePerformanceAnalysis(recipeId) {
+            const recipe = recipeData.find(r => r.id == recipeId);
+            if (!recipe) return;
+            
+            performanceChart.data.datasets[0].data = Object.values(recipe.performance);
+            performanceChart.update();
+            
+            const timeDiff = recipe.performance.time - plantAverage.time;
+            const effDiff = recipe.performance.efficiency - plantAverage.efficiency;
+
+            performanceSummary.innerHTML = `
+                <p><strong>${recipe.name}</strong> vs. Plant Average:</p>
+                <p class="flex items-center">Fermentation Time: <span class="ml-2 font-semibold ${timeDiff > 0 ? 'text-red-600' : 'text-green-600'}">${timeDiff.toFixed(1)} hrs</span></p>
+                <p class="flex items-center">Final Efficiency: <span class="ml-2 font-semibold ${effDiff < 0 ? 'text-red-600' : 'text-green-600'}">${effDiff.toFixed(1)}%</span></p>
+            `;
+        }
+
+        document.getElementById('openNewRecipeModalBtn').onclick = () => {
+            recipeForm.reset();
+            document.getElementById('recipeId').value = '';
+            document.getElementById('recipeModalTitle').textContent = 'Create New Recipe';
+            recipeModal.style.display = 'block';
+        };
+        
+        recipeTableBody.addEventListener('click', e => {
+            if(e.target.classList.contains('edit-btn')) {
+                const recipeId = e.target.closest('tr').dataset.id;
+                const recipe = recipeData.find(r => r.id == recipeId);
+                document.getElementById('recipeId').value = recipe.id;
+                document.getElementById('recipeName').value = recipe.name;
+                document.getElementById('alphaAmylase').value = recipe.alpha;
+                document.getElementById('glucoamylase').value = recipe.gluco;
+                document.getElementById('yeast').value = recipe.yeast;
+                document.getElementById('nutrients').value = recipe.nutrients;
+                document.getElementById('projectedYield').value = recipe.yield;
+                document.getElementById('recipeModalTitle').textContent = 'Edit Recipe';
+                recipeModal.style.display = 'block';
+            }
+        });
+
+        recipeForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const id = document.getElementById('recipeId').value;
+            const formData = {
+                name: document.getElementById('recipeName').value,
+                alpha: parseFloat(document.getElementById('alphaAmylase').value),
+                gluco: parseFloat(document.getElementById('glucoamylase').value),
+                yeast: parseFloat(document.getElementById('yeast').value),
+                nutrients: parseFloat(document.getElementById('nutrients').value),
+                yield: parseInt(document.getElementById('projectedYield').value),
+                performance: { time: 52, efficiency: 94, ddgs: 320 } // Default performance for new recipes
+            };
+
+            if (id) { // Edit
+                const index = recipeData.findIndex(r => r.id == id);
+                recipeData[index] = { ...recipeData[index], ...formData };
+            } else { // Create
+                formData.id = Date.now();
+                recipeData.push(formData);
+            }
+            renderRecipeTable();
+            recipeModal.style.display = 'none';
+        });
+
+        recipeModal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => recipeModal.style.display = 'none');
+        window.onclick = (e) => { if (e.target == recipeModal) recipeModal.style.display = 'none'; };
+        
+        recipeAnalysisSelect.addEventListener('change', (e) => updatePerformanceAnalysis(e.target.value));
+
+        // Initial Load
+        renderRecipeTable();
+        createPerformanceChart();
+        updatePerformanceAnalysis(recipeAnalysisSelect.value);
+
+    </script>
+</body>
+</html>

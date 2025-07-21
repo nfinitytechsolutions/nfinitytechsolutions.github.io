@@ -1,0 +1,12 @@
+let us move to Gate & Weighbridge, I will put the original description from the research:
+
+
+
+Weighbridge & Gate Management: The system must integrate directly with truck scales for automated capture of gross and tare weights. It should manage gate entry/exit, generate unique weighment tickets, and ideally use RFID or license plate recognition to automate truck identification.
+
+
+
+Create page for the same.
+
+
+python -m http.server
