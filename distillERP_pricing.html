@@ -67,26 +67,23 @@
         </div>
     </header>
 
-   <!-- Main Content -->
+  <!-- Main Content -->
     <main class="py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Left Column: Available Modules -->
                 <div class="lg:col-span-2">
-                    <h2 class="text-2xl font-bold mb-1">Available Modules</h2>
-                    <p class="text-gray-600 mb-6">Drag and drop the modules you need into your configuration.</p>
-                    <div id="modules-container" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-                        <!-- Module cards will be injected here by JavaScript -->
+                    <h2 class="text-3xl font-bold mb-8">Available Modules</h2>
+                    <div id="modules-container">
+                        <!-- Module groups will be injected here by JavaScript -->
                     </div>
                 </div>
 
                 <!-- Right Column: Your Configuration & Pricing -->
                 <div class="lg:col-span-1">
                     <div class="sticky top-24">
-                        <h2 class="text-2xl font-bold mb-1">Your Configuration</h2>
-                        <p class="text-gray-600 mb-6">Your selected modules and pricing.</p>
+                        <h2 class="text-3xl font-bold mb-8">Your Configuration</h2>
                         
                         <div class="bg-white rounded-xl shadow-md border">
                             <!-- Drop Zone -->
@@ -161,24 +158,36 @@
         document.addEventListener('DOMContentLoaded', () => {
             // --- DATA & PRICING LOGIC ---
             const modules = [
-                { id: 'procurement', name: 'Procurement & Contracts', icon: 'file-text', oneTimePrice: 95000 },
-                { id: 'gate', name: 'Gate & Weighbridge', icon: 'truck', oneTimePrice: 110000 },
-                { id: 'lims', name: 'Quality Lab (LIMS)', icon: 'flask-conical', oneTimePrice: 85000 },
-                { id: 'silo', name: 'Silo & Inventory', icon: 'database', oneTimePrice: 85000 },
-                { id: 'milling', name: 'Milling & Slurry', icon: 'blender', oneTimePrice: 85000 },
-                { id: 'fermentation', name: 'Fermentation', icon: 'beaker', oneTimePrice: 95000 },
-                { id: 'distillation', name: 'Distillation', icon: 'flame', oneTimePrice: 95000 },
-                { id: 'coproduct', name: 'Co-Product Management', icon: 'recycle', oneTimePrice: 85000 },
-                { id: 'sales', name: 'Sales & Logistics', icon: 'bar-chart-2', oneTimePrice: 115000 },
-                { id: 'finance', name: 'Finance & Accounting', icon: 'landmark', oneTimePrice: 120000 },
-                { id: 'maintenance', name: 'Plant Maintenance', icon: 'wrench', oneTimePrice: 85000 },
-                { id: 'compliance', name: 'Compliance & Reporting', icon: 'shield-check', oneTimePrice: 95000 },
-                { id: 'hr', name: 'Employee Management', icon: 'users-2', oneTimePrice: 85000 },
+                { id: 'procurement', name: 'Procurement & Contracts', icon: 'file-text', oneTimePrice: 95000, group: 'Field to Factory' },
+                { id: 'gate', name: 'Gate & Weighbridge', icon: 'truck', oneTimePrice: 110000, group: 'Field to Factory' },
+                { id: 'lims', name: 'Quality Lab (LIMS)', icon: 'flask-conical', oneTimePrice: 85000, group: 'Field to Factory' },
+                { id: 'silo', name: 'Silo & Inventory', icon: 'database', oneTimePrice: 85000, group: 'Field to Factory' },
+                
+                { id: 'milling', name: 'Milling & Slurry', icon: 'blender', oneTimePrice: 85000, group: 'Core Production' },
+                { id: 'fermentation', name: 'Fermentation', icon: 'beaker', oneTimePrice: 95000, group: 'Core Production' },
+                { id: 'distillation', name: 'Distillation', icon: 'flame', oneTimePrice: 95000, group: 'Core Production' },
+                { id: 'coproduct', name: 'Co-Product Management', icon: 'recycle', oneTimePrice: 85000, group: 'Core Production' },
+
+                { id: 'sales', name: 'Sales & Logistics', icon: 'bar-chart-2', oneTimePrice: 115000, group: 'Business & Support' },
+                { id: 'finance', name: 'Finance & Accounting', icon: 'landmark', oneTimePrice: 120000, group: 'Business & Support' },
+                { id: 'maintenance', name: 'Plant Maintenance', icon: 'wrench', oneTimePrice: 85000, group: 'Business & Support' },
+                { id: 'compliance', name: 'Compliance & Reporting', icon: 'shield-check', oneTimePrice: 95000, group: 'Business & Support' },
+                
+                { id: 'hr', name: 'Employee Management', icon: 'users-2', oneTimePrice: 85000, group: 'General Administration' },
+				{ id: 'vehicles', name: 'Company Vehicles Mgmt.', icon: 'bus-front', oneTimePrice: 75000, group: 'General Administration' },
+				{ id: 'canteen', name: 'Canteen Management', icon: 'utensils-crossed', oneTimePrice: 85000, group: 'General Administration' },
+            ];
+
+            const moduleGroups = [
+                'Field to Factory',
+                'Core Production',
+                'Business & Support',
+                'General Administration'
             ];
 
             const ONE_TIME_PLATFORM_FEE = 200000;
-            const YEARLY_COST_PER_EMPLOYEE = 150; // Base yearly cost per employee
-            const YEARLY_MODULE_MAINTENANCE_PERCENTAGE = 0.02; // 12% of module cost for yearly maintenance
+            const YEARLY_COST_PER_EMPLOYEE = 150; 
+            const YEARLY_MODULE_MAINTENANCE_PERCENTAGE = 0.02;
 
             let selectedModules = new Set();
 
@@ -212,23 +221,49 @@
             
             const renderAvailableModules = () => {
                 modulesContainer.innerHTML = '';
-                modules.forEach(module => {
-                    const card = document.createElement('div');
-                    card.className = 'module-card bg-white rounded-xl p-5 flex items-center gap-4 border shadow-sm';
-                    card.setAttribute('draggable', 'true');
-                    card.dataset.moduleId = module.id;
+                // Create a grid that will hold each group as a column
+                modulesContainer.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10';
+                
+                moduleGroups.forEach(groupName => {
+                    // This div is a column for one group
+                    const groupColumnDiv = document.createElement('div');
+                    groupColumnDiv.className = 'space-y-5';
 
-                    card.innerHTML = `
-                        <div class="p-3 bg-blue-100 rounded-lg">
-                            <i data-lucide="${module.icon}" class="h-7 w-7 text-blue-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-800">${module.name}</h3>
-                            <p class="text-sm text-gray-500">${formatCurrency(module.oneTimePrice)}</p>
-                        </div>
-                    `;
-                    modulesContainer.appendChild(card);
+                    // Add the group title
+                    const title = document.createElement('h3');
+                    title.className = 'text-xl font-bold text-gray-900';
+                    title.textContent = groupName;
+                    groupColumnDiv.appendChild(title);
+                    
+                    // This div will list the cards vertically
+                    const cardsList = document.createElement('div');
+                    cardsList.className = 'space-y-4';
+
+                    const groupModules = modules.filter(m => m.group === groupName);
+
+                    groupModules.forEach(module => {
+                        const card = document.createElement('div');
+                        card.className = 'module-card bg-white rounded-xl p-4 flex items-center gap-4';
+                        card.setAttribute('draggable', 'true');
+                        card.dataset.moduleId = module.id;
+
+                        // FIX: Added flex-shrink-0 to icon and flex-1 min-w-0 to text container
+                        card.innerHTML = `
+                            <div class="p-3 bg-blue-50 rounded-lg flex-shrink-0">
+                                <i data-lucide="${module.icon}" class="h-7 w-7 text-blue-600"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-semibold text-gray-800">${module.name}</h4>
+                                <p class="text-sm text-gray-500">${formatCurrency(module.oneTimePrice)}</p>
+                            </div>
+                        `;
+                        cardsList.appendChild(card);
+                    });
+
+                    groupColumnDiv.appendChild(cardsList);
+                    modulesContainer.appendChild(groupColumnDiv);
                 });
+
                 lucide.createIcons();
             };
 
@@ -259,7 +294,6 @@
             };
             
             const calculateAndUpdateCosts = () => {
-                // One-Time Costs
                 const platformFee = selectedModules.size > 0 ? ONE_TIME_PLATFORM_FEE : 0;
                 const modulesCost = Array.from(selectedModules).reduce((acc, moduleId) => {
                     const module = modules.find(m => m.id === moduleId);
@@ -267,13 +301,11 @@
                 }, 0);
                 const totalOneTime = platformFee + modulesCost;
 
-                // Yearly Cost Calculation
                 const numEmployees = parseInt(employeeSlider.value, 10);
                 const employeeBasedYearlyCost = numEmployees * YEARLY_COST_PER_EMPLOYEE;
                 const moduleBasedYearlyCost = modulesCost * YEARLY_MODULE_MAINTENANCE_PERCENTAGE;
                 const totalYearlyCost = employeeBasedYearlyCost + moduleBasedYearlyCost;
 
-                // Update UI
                 employeeCount.textContent = numEmployees;
                 oneTimePlatformFeeEl.textContent = formatCurrency(platformFee);
                 oneTimeModulesCostEl.textContent = formatCurrency(modulesCost);
@@ -287,15 +319,17 @@
             // --- EVENT LISTENERS ---
 
             modulesContainer.addEventListener('dragstart', (e) => {
-                if (e.target.classList.contains('module-card')) {
-                    e.dataTransfer.setData('text/plain', e.target.dataset.moduleId);
-                    e.target.style.opacity = '0.5';
+                const card = e.target.closest('.module-card');
+                if (card) {
+                    e.dataTransfer.setData('text/plain', card.dataset.moduleId);
+                    card.style.opacity = '0.5';
                 }
             });
 
             modulesContainer.addEventListener('dragend', (e) => {
-                if (e.target.classList.contains('module-card')) {
-                    e.target.style.opacity = '1';
+                const card = e.target.closest('.module-card');
+                if (card) {
+                    card.style.opacity = '1';
                 }
             });
 
