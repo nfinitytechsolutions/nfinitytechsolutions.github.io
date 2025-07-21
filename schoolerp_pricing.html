@@ -102,9 +102,12 @@
                 <h3 class="text-2xl font-bold text-gray-800">Base</h3>
                 <p class="text-gray-500">Essential features to get you started.</p>
                 <div class="my-6">
-                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="base">240</span></p>
+                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="base">168</span></p>
                     <p class="text-gray-500">per child / <span class="duration-text">year</span></p>
-                    <p class="text-red-500 line-through">₹<span class="original-price-display" data-plan="base">400</span></p>
+                    <div class="flex items-center justify-center space-x-2 mt-1">
+                        <p class="text-gray-500 line-through">₹<span class="original-price-display" data-plan="base">280</span></p>
+                        <span class="discount-badge text-xs font-semibold bg-red-100 text-red-700 px-2 py-1 rounded-full">40% OFF</span>
+                    </div>
                 </div>
                 <ul class="space-y-4 text-gray-600 flex-grow">
                     <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Student Admission</li>
@@ -124,9 +127,12 @@
                 <h3 class="text-2xl font-bold text-purple-600">Value</h3>
                 <p class="text-gray-500">Advanced features for growing schools.</p>
                 <div class="my-6">
-                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="value">300</span></p>
+                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="value">210</span></p>
                     <p class="text-gray-500">per child / <span class="duration-text">year</span></p>
-                    <p class="text-red-500 line-through">₹<span class="original-price-display" data-plan="value">500</span></p>
+                    <div class="flex items-center justify-center space-x-2 mt-1">
+                        <p class="text-gray-500 line-through">₹<span class="original-price-display" data-plan="value">350</span></p>
+                        <span class="discount-badge text-xs font-semibold bg-red-100 text-red-700 px-2 py-1 rounded-full">40% OFF</span>
+                    </div>
                 </div>
                 <ul class="space-y-4 text-gray-600 flex-grow">
                     <li class="flex items-center font-semibold"><i class="fas fa-check-circle text-purple-500 mr-3"></i> Everything in Base, plus:</li>
@@ -146,9 +152,12 @@
                 <h3 class="text-2xl font-bold text-gray-800">Pro</h3>
                 <p class="text-gray-500">Complete solution for large institutions.</p>
                 <div class="my-6">
-                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="pro">360</span></p>
+                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="pro">252</span></p>
                     <p class="text-gray-500">per child / <span class="duration-text">year</span></p>
-                    <p class="text-red-500 line-through">₹<span class="original-price-display" data-plan="pro">600</span></p>
+                    <div class="flex items-center justify-center space-x-2 mt-1">
+                        <p class="text-gray-500 line-through">₹<span class="original-price-display" data-plan="pro">420</span></p>
+                        <span class="discount-badge text-xs font-semibold bg-red-100 text-red-700 px-2 py-1 rounded-full">40% OFF</span>
+                    </div>
                 </div>
                 <ul class="space-y-4 text-gray-600 flex-grow">
                     <li class="flex items-center font-semibold"><i class="fas fa-check-circle text-purple-500 mr-3"></i> Everything in Value, plus:</li>
@@ -262,7 +271,7 @@
         const totalPriceEl = document.getElementById('total-price');
         const savingsAmountEl = document.getElementById('savings-amount');
         const selectedPlanDisplayEl = document.getElementById('selected-plan-display');
-        const proceedLink = document.getElementById('proceed-link'); // The new anchor tag
+        const proceedLink = document.getElementById('proceed-link');
         
         // Duration Toggle Elements
         const durationToggle = document.getElementById('duration-toggle');
@@ -278,21 +287,26 @@
         const priceDisplayEls = document.querySelectorAll('.price-display');
         const originalPriceDisplayEls = document.querySelectorAll('.original-price-display');
         const durationTextEls = document.querySelectorAll('.duration-text');
+        const discountBadgeEls = document.querySelectorAll('.discount-badge'); // Select all discount badges
 
-        // --- STATE & PRICING DATA ---
+        // --- STATE & PRICING DATA (UPDATED) ---
         const pricingData = {
-            '2year': { base: { price: 400, original: 800 }, value: { price: 500, original: 1000 }, pro: { price: 600, original: 1200 } },
-            '1year': { base: { price: 240, original: 400 }, value: { price: 300, original: 500 }, pro: { price: 360, original: 600 } }
+            '2year': { base: { price: 280, original: 560 }, value: { price: 350, original: 700 }, pro: { price: 420, original: 840 } },
+            '1year': { base: { price: 168, original: 280 }, value: { price: 210, original: 350 }, pro: { price: 252, original: 420 } }
         };
 
         // --- UI UPDATE & SYNC FUNCTIONS ---
         function updatePricingCards() {
             const selectedDuration = durationSelect.value;
             const durationLabel = selectedDuration === '1year' ? 'year' : '2 years';
+            const discountText = selectedDuration === '1year' ? '40% OFF' : '50% OFF'; // Determine discount text
             
             durationTextEls.forEach(el => { el.textContent = durationLabel; });
             priceDisplayEls.forEach(el => { el.textContent = pricingData[selectedDuration][el.dataset.plan].price; });
             originalPriceDisplayEls.forEach(el => { el.textContent = pricingData[selectedDuration][el.dataset.plan].original; });
+            
+            // Update the text of each discount badge
+            discountBadgeEls.forEach(el => { el.textContent = discountText; });
         }
         
         function syncAndHighlightPlan() {
