@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Canteen Management</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .kpi-card { border-left: 4px solid #10b981; }
+        .menu-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+        
+        /* Style for editable content */
+        [contenteditable="true"] {
+            outline: 2px dashed #3b82f6;
+            background-color: #eff6ff;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+        }
+    </style>
+    <script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 flex-shrink-0">
+                        <img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+                    </div>
+                    <span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+                </div>
+                <div class="flex items-center space-x-5">
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>Back to Main Dashboard
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Canteen Management</h1>
+                <p class="mt-1 text-md text-gray-500">Oversee daily menu, stock, and expenses for the company canteen.</p>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="utensils-crossed" class="h-6 w-6 text-green-600"></i></div>
+                        <div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Meals Served Today</dt><dd class="text-3xl font-bold text-gray-900">385</dd></dl></div>
+                    </div>
+                </div>
+                 <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-yellow-100 rounded-md p-3"><i data-lucide="star" class="h-6 w-6 text-yellow-600"></i></div>
+                        <div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Today's Special</dt><dd class="text-lg font-bold text-gray-900">Paneer Butter Masala</dd></dl></div>
+                    </div>
+                </div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-red-100 rounded-md p-3"><i data-lucide="shopping-cart" class="h-6 w-6 text-red-600"></i></div>
+                        <div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Stock Low Alert</dt><dd class="text-3xl font-bold text-gray-900">3 items</dd></dl></div>
+                    </div>
+                </div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-blue-600"></i></div>
+                        <div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Weekly Expense</dt><dd class="text-2xl font-bold text-gray-900">₹45,200</dd></dl></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu and Stock Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Today's Menu -->
+                <div class="lg:col-span-2 bg-white shadow-md rounded-lg p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-gray-800 flex items-center"><i data-lucide="calendar-heart" class="h-6 w-6 mr-2 text-green-500"></i>Today's Menu</h2>
+                        <button id="editMenuBtn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                            <i data-lucide="edit" class="mr-2 h-4 w-4"></i>Edit Menu
+                        </button>
+                    </div>
+                    <div id="menuContent" class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700">Breakfast (8:00 AM - 10:00 AM)</h3>
+                            <p class="text-gray-600 ml-5 menu-item">Idli-Vada, Poha, Tea/Coffee</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700">Lunch (12:30 PM - 2:30 PM)</h3>
+                            <div class="text-gray-600 ml-5 menu-item">
+                                <ul class="list-disc list-inside">
+                                    <li>Roti & Naan</li>
+                                    <li>Jeera Rice</li>
+                                    <li>Dal Fry</li>
+                                    <li>Paneer Butter Masala (Special)</li>
+                                    <li>Mixed Veg Sabzi</li>
+                                    <li>Salad, Papad, Pickle</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-700">Dinner (7:30 PM - 9:30 PM)</h3>
+                            <p class="text-gray-600 ml-5 menu-item">Veg Pulao, Raita, Chapati, Aloo Gobi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock Management -->
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><i data-lucide="boxes" class="h-6 w-6 mr-2 text-blue-500"></i>Stock Management</h2>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between items-center"><span>Rice (Basmati)</span> <span class="font-semibold">55 kg</span></li>
+                        <li class="flex justify-between items-center"><span>Wheat Flour</span> <span class="font-semibold">80 kg</span></li>
+                        <li class="flex justify-between items-center"><span>Toor Dal</span> <span class="font-semibold">25 kg</span></li>
+                        <li class="flex justify-between items-center text-red-600"><span>Onions</span> <span class="font-bold bg-red-100 px-2 py-1 rounded">LOW (8 kg)</span></li>
+                        <li class="flex justify-between items-center text-red-600"><span>Tomatoes</span> <span class="font-bold bg-red-100 px-2 py-1 rounded">LOW (5 kg)</span></li>
+                         <li class="flex justify-between items-center text-red-600"><span>Cooking Oil</span> <span class="font-bold bg-red-100 px-2 py-1 rounded">LOW (9 Ltr)</span></li>
+                        <li class="flex justify-between items-center"><span>Paneer</span> <span class="font-semibold">12 kg</span></li>
+                    </ul>
+                    <button id="openPoModalBtn" class="mt-6 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                        <i data-lucide="file-plus-2" class="mr-2 h-5 w-5"></i>Generate Purchase Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Purchase Order Modal -->
+    <div id="purchaseOrderModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Generate Purchase Order</h3>
+                <button class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <form id="purchaseOrderForm">
+                <div class="space-y-6">
+                    <p class="text-sm text-gray-600">Create a purchase order for low-stock items or add items manually.</p>
+                    <div class="border rounded-lg p-3">
+                        <h4 class="font-semibold mb-2 text-gray-800">Low Stock Items:</h4>
+                        <div class="flex flex-wrap gap-2">
+                             <span class="border border-red-200 bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Onions</span>
+                             <span class="border border-red-200 bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Tomatoes</span>
+                             <span class="border border-red-200 bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Cooking Oil</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="poItemName" class="block text-sm font-medium text-gray-700">Item Name</label>
+                            <input type="text" id="poItemName" name="poItemName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                        </div>
+                        <div>
+                            <label for="poQuantity" class="block text-sm font-medium text-gray-700">Quantity (e.g., 25 kg)</label>
+                            <input type="text" id="poQuantity" name="poQuantity" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                        </div>
+                    </div>
+                     <div>
+                        <label for="poSupplier" class="block text-sm font-medium text-gray-700">Preferred Supplier (Optional)</label>
+                        <input type="text" id="poSupplier" name="poSupplier" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                     </div>
+
+                </div>
+                <div class="mt-8 flex justify-end">
+                    <button type="button" class="close-modal-btn bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 text-sm font-medium">Cancel</button>
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Submit PO</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        lucide.createIcons();
+
+        // --- Modal Handling ---
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+        
+        const poModal = setupModal('purchaseOrderModal', 'openPoModalBtn');
+        document.getElementById('purchaseOrderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // In a real app, this would send data to the server
+            // Using a custom modal for the alert
+            const tempAlert = document.createElement('div');
+            tempAlert.className = 'fixed top-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg animate-pulse';
+            tempAlert.innerText = 'Purchase Order Submitted!';
+			alert("Purchase Order Submitted!");
+            document.body.appendChild(tempAlert);
+            setTimeout(() => {
+                tempAlert.remove();
+            }, 3000);
+
+            poModal.style.display = 'none';
+            e.target.reset();
+        });
+
+        // --- Editable Menu Logic ---
+        const editMenuBtn = document.getElementById('editMenuBtn');
+        const menuItems = document.querySelectorAll('.menu-item');
+        let isEditing = false;
+
+        editMenuBtn.addEventListener('click', () => {
+            isEditing = !isEditing;
+            if (isEditing) {
+                editMenuBtn.innerHTML = `<i data-lucide="save" class="mr-2 h-4 w-4"></i>Save Menu`;
+                menuItems.forEach(item => {
+                    item.setAttribute('contenteditable', 'true');
+                    item.focus();
+                });
+            } else {
+                editMenuBtn.innerHTML = `<i data-lucide="edit" class="mr-2 h-4 w-4"></i>Edit Menu`;
+                menuItems.forEach(item => {
+                    item.setAttribute('contenteditable', 'false');
+                });
+            }
+            lucide.createIcons(); // Re-render icons after changing innerHTML
+        });
+
+    </script>
+</body>
+</html>

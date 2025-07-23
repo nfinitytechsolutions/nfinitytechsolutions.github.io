@@ -123,7 +123,6 @@
 
                 <div class="flex items-center space-x-5">
                     
-                    <!-- MODIFIED: Changed id to userProfileTrigger -->
                     <div id="userProfileTrigger" class="flex items-center space-x-2">
                         <!-- This content will be replaced by auth.js -->
                     </div>
@@ -146,7 +145,11 @@
                     <p class="mt-1 text-md text-gray-500">Live monitoring of all vehicle movements and weighments.</p>
                 </div>
                 <div class="mt-4 flex md:mt-0 md:ml-4">
-                    <button id="openCreateGatePassModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <button id="openCreateManualWeighmentModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <i data-lucide="scale" class="mr-2 h-5 w-5"></i>
+                        Create Manual Weighment
+                    </button>
+                    <button id="openCreateGatePassModalBtn" type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <i data-lucide="file-plus-2" class="mr-2 h-5 w-5"></i>
                         Create Gate Pass
                     </button>
@@ -161,7 +164,7 @@
                         <div class="timeline-item relative"><div class="timeline-icon bg-green-100 text-green-600"><i data-lucide="arrow-right-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Entry: MH 14 HU 5521</p><p class="text-sm text-gray-500">Driver: Suresh Yadav</p><time class="text-xs text-gray-400 font-medium">02:15 PM</time></div></div>
                         <div class="timeline-item relative"><div class="timeline-icon bg-blue-100 text-blue-600"><i data-lucide="arrow-left-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Exit: KA 05 N 9876</p><p class="text-sm text-gray-500">Tare Weight: 7,250 kg</p><time class="text-xs text-gray-400 font-medium">02:12 PM</time></div></div>
                         <div class="timeline-item relative"><div class="timeline-icon bg-green-100 text-green-600"><i data-lucide="arrow-right-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Entry: AP 28 DJ 1111</p><p class="text-sm text-gray-500">Driver: Mohan Kumar</p><time class="text-xs text-gray-400 font-medium">02:05 PM</time></div></div>
-                        <div class="timeline-item relative"><div class="timeline-icon bg-blue-100 text-blue-600"><i data-lucide="arrow-left-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Exit: TN 38 G 4321</p><p class="text-sm text-gray-500">Tare Weight: 6,980 kg</p><time class="text-xs text-gray-400 font-medium">01:58 PM</time></div></div>
+                        <div class="timeline-item relative"><div class="timeline-icon bg-blue-100 text-blue-600"><i data-lucide="arrow-left-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Exit: TN 38 G 4321</p><p class="text-sm text-gray-500">Tare Weight: 6,980 kg</p<time class="text-xs text-gray-400 font-medium">01:58 PM</time></div></div>
                     </div>
                 </div>
 
@@ -177,7 +180,8 @@
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket No.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle No.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gross Wt.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tare Wt.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Wt.</th><th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- MODIFIED: Added id to tbody -->
+                                <tbody id="recentWeighmentsTbody" class="bg-white divide-y divide-gray-200">
                                     <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WT-0702-112</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">KA 05 N 9876</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25,880 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7,250 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">18,630 kg</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td></tr>
                                     <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WT-0702-111</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">TN 38 G 4321</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">24,550 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6,980 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">17,570 kg</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td></tr>
                                     <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WT-0702-110</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">MH 12 XY 4567</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26,120 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7,110 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">19,010 kg</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td></tr>
@@ -219,6 +223,27 @@
             </form>
         </div>
     </div>
+
+    <!-- Create Manual Weighment Modal -->
+    <div id="createManualWeighmentModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Create Manual Weighment</h3>
+                <button id="closeCreateWeighmentModalBtn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            </div>
+            <form id="createManualWeighmentForm">
+                <div class="space-y-4">
+                    <div><label for="mwVehicleNo" class="block text-sm font-medium text-gray-700">Vehicle Number</label><input type="text" id="mwVehicleNo" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., MH 12 XY 4567"></div>
+                    <div><label for="mwGrossWt" class="block text-sm font-medium text-gray-700">Gross Weight (kg)</label><input type="number" id="mwGrossWt" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., 25000"></div>
+                    <div><label for="mwTareWt" class="block text-sm font-medium text-gray-700">Tare Weight (kg)</label><input type="number" id="mwTareWt" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., 7000"></div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" id="cancelCreateWeighmentBtn" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">Cancel</button>
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">Generate Weighment Slip</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="auth.js"></script>
     <script>
         lucide.createIcons();
@@ -240,10 +265,12 @@
 
         const viewModal = setupModal('viewTicketModal', null, []);
         const createModal = setupModal('createGatePassModal', 'openCreateGatePassModalBtn', ['closeCreateModalBtn', 'cancelCreateBtn']);
+        const createWeighmentModal = setupModal('createManualWeighmentModal', 'openCreateManualWeighmentModalBtn', ['closeCreateWeighmentModalBtn', 'cancelCreateWeighmentBtn']);
 
-        // --- View Ticket Logic ---
-        document.querySelectorAll('.view-ticket-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
+        // --- View Ticket Logic (Using Event Delegation) ---
+        // MODIFIED: This now handles clicks for existing and dynamically added "View Ticket" buttons.
+        document.getElementById('recentWeighmentsTbody').addEventListener('click', function(event) {
+            if (event.target.classList.contains('view-ticket-btn')) {
                 event.preventDefault();
                 const row = event.target.closest('tr');
                 const cells = row.querySelectorAll('td');
@@ -257,10 +284,11 @@
                 };
                 document.getElementById('viewTicketContent').innerHTML = generateWeighmentTicketHTML(ticketData);
                 viewModal.style.display = 'block';
-                // Attach listeners to the new buttons
+                // Attach listeners to the new buttons in the modal
                 document.getElementById('closeViewTicketBtn').onclick = () => viewModal.style.display = 'none';
                 document.getElementById('printWeighmentBtn').onclick = () => window.print();
-            });
+                lucide.createIcons();
+            }
         });
 
         // --- Create Gate Pass Logic ---
@@ -281,7 +309,59 @@
             // Attach listeners to the new buttons
             document.getElementById('closeViewTicketBtn').onclick = () => viewModal.style.display = 'none';
             document.getElementById('printGatePassBtn').onclick = () => window.print();
+            lucide.createIcons();
         });
+        
+        // --- Create Manual Weighment Logic ---
+        document.getElementById('createManualWeighmentForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const grossWt = parseFloat(document.getElementById('mwGrossWt').value);
+            const tareWt = parseFloat(document.getElementById('mwTareWt').value);
+            
+            if (isNaN(grossWt) || isNaN(tareWt) || grossWt < tareWt) {
+                alert("Please enter valid weights. Gross Weight must be greater than Tare Weight.");
+                return;
+            }
+
+            const netWt = grossWt - tareWt;
+
+            const weighmentData = {
+                ticketNo: 'MW-' + Math.floor(Math.random() * 9000) + 1000,
+                vehicleNo: document.getElementById('mwVehicleNo').value,
+                grossWt: grossWt.toLocaleString('en-IN') + ' kg',
+                tareWt: tareWt.toLocaleString('en-IN') + ' kg',
+                netWt: netWt.toLocaleString('en-IN') + ' kg',
+                dateTime: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+            };
+            
+            // NEW: Add the new weighment to the table
+            addWeighmentToTable(weighmentData);
+
+            document.getElementById('viewTicketContent').innerHTML = generateWeighmentTicketHTML(weighmentData);
+            createWeighmentModal.style.display = 'none';
+            viewModal.style.display = 'block';
+            document.getElementById('createManualWeighmentForm').reset();
+            // Attach listeners to the new buttons
+            document.getElementById('closeViewTicketBtn').onclick = () => viewModal.style.display = 'none';
+            document.getElementById('printWeighmentBtn').onclick = () => window.print();
+            lucide.createIcons();
+        });
+
+        // --- NEW: Function to add a row to the weighments table ---
+        function addWeighmentToTable(data) {
+            const tableBody = document.getElementById('recentWeighmentsTbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${data.ticketNo}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${data.vehicleNo}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${data.grossWt}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${data.tareWt}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">${data.netWt}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td>
+            `;
+            tableBody.prepend(newRow); // Adds the new row to the top of the table
+        }
+
 
         // --- HTML Generation Functions ---
         function generateWeighmentTicketHTML(data) {

@@ -16,7 +16,7 @@ const ROLES = {
         'milling.html', 'fermentation.html', 'distillation.html', 'coprod.html', 
         'sales_main.html', 'sales_management.html', 'logistics.html',
         'finance.html', 'plant_maintain.html', 'St_compliance_and_reporting.html', 'emp_main.html','employeedirectory.html','leave_mgmt.html',
-		'work_order.html', 'preventive.html', 'spare_and_mro.html','accounts_payble.html','account_recievable.html','finance_reports.html','batchmanagement.html','recipemanagement.html','lims_2.html','production.html','chemicalsinventory.html','yield_accounting.html','productinventory.html','coprod-inventory.html','coprod-salesandlogistics.html','payroll.html','admin_settings.html','notifications.html'
+		'work_order.html', 'preventive.html', 'spare_and_mro.html','accounts_payble.html','account_recievable.html','finance_reports.html','batchmanagement.html','recipemanagement.html','lims_2.html','production.html','chemicalsinventory.html','yield_accounting.html','productinventory.html','coprod-inventory.html','coprod-salesandlogistics.html','payroll.html','admin_settings.html','notifications.html', 'vehicles.html', 'canteen.html'
     ]
 };
 
