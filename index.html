@@ -251,22 +251,45 @@
             text-align: center;
         }
         
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 30px;
-            max-width: 800px;
+        .tech-strip {
+            overflow: hidden;
+            white-space: nowrap;
             margin: 0 auto;
+            width: 100%;
+        }
+        
+        .tech-track {
+            display: inline-flex;
+            gap: 30px;
+            animation: scroll-horizontal 60s linear infinite;
+            will-change: transform;
+        }
+        
+        .tech-track:hover {
+            animation-play-state: paused;
+        }
+        
+        @keyframes scroll-horizontal {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
         
         .tech-item {
             background: rgba(255, 255, 255, 0.05);
-            padding: 30px 20px;
+            padding: 20px 30px;
             border-radius: 15px;
             font-weight: 600;
             color: #4ecdc4;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            white-space: nowrap;
+            min-width: 120px;
+            text-align: center;
         }
         
         .tech-item:hover {
@@ -437,8 +460,13 @@
                 gap: 30px;
             }
             
-            .tech-grid {
-                grid-template-columns: repeat(3, 1fr);
+            .tech-track {
+                gap: 20px;
+            }
+            
+            .tech-item {
+                min-width: 100px;
+                padding: 15px 20px;
             }
             
             .hero-cta {
@@ -587,8 +615,8 @@
                 
                 <div class="feature">
                     <div class="feature-icon">🏆</div>
-                    <h3>Own Your Software, Fully</h3>
-                    <p>We believe in digital sovereignty. Our clients fully own their source code, infrastructure, and intellectual property.</p>
+                    <h3>Built for Your Business</h3>
+                    <p>We create solutions tailored specifically to your operational needs, ensuring complete alignment with your business processes.</p>
                 </div>
                 
                 <div class="feature">
@@ -604,19 +632,78 @@
             <h2 class="section-title">Our Tech Stack Expertise</h2>
             <p class="section-subtitle">We use modern, robust, and scalable technologies to build future-proof software.</p>
             
-            <div class="tech-grid interactive">
-                <div class="tech-item">React</div>
-                <div class="tech-item">Node.js</div>
-                <div class="tech-item">Python</div>
-                <div class="tech-item">AWS</div>
-                <div class="tech-item">Flutter</div>
+            <div class="tech-strip interactive">
+                <div class="tech-track">
+                    <div class="tech-item">React</div>
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">Python</div>
+                    <div class="tech-item">AWS</div>
+                    <div class="tech-item">Flutter</div>
+                    <div class="tech-item">Docker</div>
+                    <div class="tech-item">Kubernetes</div>
+                    <div class="tech-item">PostgreSQL</div>
+                    <div class="tech-item">MongoDB</div>
+                    <div class="tech-item">Redis</div>
+                    <div class="tech-item">GraphQL</div>
+                    <div class="tech-item">TypeScript</div>
+                    <div class="tech-item">Vue.js</div>
+                    <div class="tech-item">Next.js</div>
+                    <div class="tech-item">Express.js</div>
+                    <div class="tech-item">FastAPI</div>
+                    <div class="tech-item">Go</div>
+                    <div class="tech-item">Rust</div>
+                    <div class="tech-item">TensorFlow</div>
+                    <div class="tech-item">PyTorch</div>
+                    <div class="tech-item">Elasticsearch</div>
+                    <div class="tech-item">Apache Kafka</div>
+                    <div class="tech-item">Jenkins</div>
+                    <div class="tech-item">GitHub Actions</div>
+                    <div class="tech-item">Terraform</div>
+                    <div class="tech-item">Azure</div>
+                    <div class="tech-item">GCP</div>
+                    <div class="tech-item">Nginx</div>
+                    <div class="tech-item">RabbitMQ</div>
+                    <div class="tech-item">Prometheus</div>
+                    
+                    <!-- Duplicate for seamless loop -->
+                    <div class="tech-item">React</div>
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">Python</div>
+                    <div class="tech-item">AWS</div>
+                    <div class="tech-item">Flutter</div>
+                    <div class="tech-item">Docker</div>
+                    <div class="tech-item">Kubernetes</div>
+                    <div class="tech-item">PostgreSQL</div>
+                    <div class="tech-item">MongoDB</div>
+                    <div class="tech-item">Redis</div>
+                    <div class="tech-item">GraphQL</div>
+                    <div class="tech-item">TypeScript</div>
+                    <div class="tech-item">Vue.js</div>
+                    <div class="tech-item">Next.js</div>
+                    <div class="tech-item">Express.js</div>
+                    <div class="tech-item">FastAPI</div>
+                    <div class="tech-item">Go</div>
+                    <div class="tech-item">Rust</div>
+                    <div class="tech-item">TensorFlow</div>
+                    <div class="tech-item">PyTorch</div>
+                    <div class="tech-item">Elasticsearch</div>
+                    <div class="tech-item">Apache Kafka</div>
+                    <div class="tech-item">Jenkins</div>
+                    <div class="tech-item">GitHub Actions</div>
+                    <div class="tech-item">Terraform</div>
+                    <div class="tech-item">Azure</div>
+                    <div class="tech-item">GCP</div>
+                    <div class="tech-item">Nginx</div>
+                    <div class="tech-item">RabbitMQ</div>
+                    <div class="tech-item">Prometheus</div>
+                </div>
             </div>
         </section>
         
         <!-- Contact Section -->
         <section class="contact" id="contact">
-            <h2 class="section-title">Ready to Build Your Next Big Idea?</h2>
-            <p class="section-subtitle">Let's talk about how we can help you achieve your business goals with custom software.</p>
+            <h2 class="section-title">Ready to Scale Your Operations?</h2>
+            <p class="section-subtitle">Partner with us to optimize your production workflows and streamline your commodity operations with custom software solutions.</p>
             
             <div class="contact-info interactive">
                 <div class="contact-item">
