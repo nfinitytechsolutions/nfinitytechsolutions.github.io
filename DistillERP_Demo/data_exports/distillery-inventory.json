@@ -1,0 +1,224 @@
+{
+  "total_rows": 6,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "inventory:1753733393650",
+      "key": "inventory:1753733393650",
+      "value": {
+        "rev": "13-26c38adc651df660d0470fcd0c7b1dbd"
+      },
+      "doc": {
+        "_id": "inventory:1753733393650",
+        "_rev": "13-26c38adc651df660d0470fcd0c7b1dbd",
+        "type": "inventory",
+        "category": "raw_material",
+        "item": {
+          "name": "Rice",
+          "sku": "RICE-006",
+          "description": "",
+          "unit": "bushel"
+        },
+        "location": {
+          "warehouse": "WH001",
+          "silo": "SILO-03",
+          "capacity": 0
+        },
+        "stock": {
+          "quantity": 2111,
+          "reserved": 0,
+          "available": 2111,
+          "reorderPoint": 0,
+          "reorderQuantity": 0
+        },
+        "costing": {
+          "method": "FIFO",
+          "averageCost": 2,
+          "totalValue": 4222
+        },
+        "created": "2025-07-28T20:09:53.650Z",
+        "updated": "2025-07-31T12:01:59.992Z"
+      }
+    },
+    {
+      "id": "inventory:grain:corn-001",
+      "key": "inventory:grain:corn-001",
+      "value": {
+        "rev": "1-607b98ead989c0a74e9167c77625622d"
+      },
+      "doc": {
+        "_id": "inventory:grain:corn-001",
+        "_rev": "1-607b98ead989c0a74e9167c77625622d",
+        "type": "inventory",
+        "category": "raw_material",
+        "item": {
+          "name": "Corn",
+          "sku": "CORN-001",
+          "description": "Yellow Dent Corn #2",
+          "unit": "bushel"
+        },
+        "location": {
+          "warehouse": "WH001",
+          "silo": "SILO-01",
+          "capacity": 10000
+        },
+        "stock": {
+          "quantity": 1500,
+          "reserved": 500,
+          "available": 1000,
+          "reorderPoint": 2000,
+          "reorderQuantity": 5000
+        },
+        "costing": {
+          "method": "FIFO",
+          "averageCost": 4.5,
+          "totalValue": 6750
+        }
+      }
+    },
+    {
+      "id": "inventory:grain:wheat-001",
+      "key": "inventory:grain:wheat-001",
+      "value": {
+        "rev": "1-91ab9473863c170ed2131d16aeffc646"
+      },
+      "doc": {
+        "_id": "inventory:grain:wheat-001",
+        "_rev": "1-91ab9473863c170ed2131d16aeffc646",
+        "type": "inventory",
+        "category": "raw_material",
+        "item": {
+          "name": "Wheat",
+          "sku": "WHEAT-001",
+          "description": "Winter Wheat",
+          "unit": "bushel"
+        },
+        "location": {
+          "warehouse": "WH001",
+          "silo": "SILO-02",
+          "capacity": 8000
+        },
+        "stock": {
+          "quantity": 3000,
+          "reserved": 200,
+          "available": 2800,
+          "reorderPoint": 1000,
+          "reorderQuantity": 3000
+        },
+        "costing": {
+          "method": "FIFO",
+          "averageCost": 5.25,
+          "totalValue": 15750
+        }
+      }
+    },
+    {
+      "id": "inventory:grain:barley-malt-001",
+      "key": "inventory:grain:barley-malt-001",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "inventory:grain:barley-malt-001",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "inventory",
+        "category": "raw_material",
+        "item": {
+          "name": "Malted Barley",
+          "sku": "BARLEY-MALT-001",
+          "description": "Two-row malted barley",
+          "unit": "pound"
+        },
+        "location": {
+          "warehouse": "WH002",
+          "silo": "BIN-101",
+          "capacity": 50000
+        },
+        "stock": {
+          "quantity": 25000,
+          "reserved": 5000,
+          "available": 20000,
+          "reorderPoint": 10000,
+          "reorderQuantity": 20000
+        },
+        "costing": {
+          "method": "LIFO",
+          "averageCost": 0.8,
+          "totalValue": 20000
+        }
+      }
+    },
+    {
+      "id": "inventory:barrel:oak-am-01",
+      "key": "inventory:barrel:oak-am-01",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "inventory:barrel:oak-am-01",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "inventory",
+        "category": "barrels",
+        "item": {
+          "name": "American Oak Barrels",
+          "sku": "BARREL-OAK-AM-01",
+          "description": "53-gallon new American oak barrels, char #4",
+          "unit": "barrel"
+        },
+        "location": {
+          "warehouse": "Rickhouse A",
+          "silo": "Row 1",
+          "capacity": 200
+        },
+        "stock": {
+          "quantity": 150,
+          "reserved": 50,
+          "available": 100,
+          "reorderPoint": 50,
+          "reorderQuantity": 100
+        },
+        "costing": {
+          "method": "FIFO",
+          "averageCost": 450,
+          "totalValue": 67500
+        }
+      }
+    },
+    {
+      "id": "inventory:packaging:bottle-750ml-01",
+      "key": "inventory:packaging:bottle-750ml-01",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "inventory:packaging:bottle-750ml-01",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "inventory",
+        "category": "packaging",
+        "item": {
+          "name": "750ml Glass Bottles",
+          "sku": "BOTTLE-750ML-CLR-01",
+          "description": "Standard 750ml clear glass bottles",
+          "unit": "each"
+        },
+        "location": {
+          "warehouse": "WH003",
+          "silo": "Pallet 1-A",
+          "capacity": 10000
+        },
+        "stock": {
+          "quantity": 8000,
+          "reserved": 2000,
+          "available": 6000,
+          "reorderPoint": 2500,
+          "reorderQuantity": 5000
+        },
+        "costing": {
+          "method": "FIFO",
+          "averageCost": 1.2,
+          "totalValue": 9600
+        }
+      }
+    }
+  ]
+}

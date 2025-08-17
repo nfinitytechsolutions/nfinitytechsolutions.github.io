@@ -1,0 +1,144 @@
+{
+  "total_rows": 6,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "customer:aasssa",
+      "key": "customer:aasssa",
+      "value": {
+        "rev": "1-58ff9b79f98bca3bdc036ac121850a0a"
+      },
+      "doc": {
+        "_id": "customer:aasssa",
+        "_rev": "1-58ff9b79f98bca3bdc036ac121850a0a",
+        "type": "customer",
+        "name": "aasssa",
+        "email": "ssaa@dd.c",
+        "phone": "",
+        "address": {
+          "street": "",
+          "city": "",
+          "state": "",
+          "zip": ""
+        },
+        "created": "2025-07-31T12:06:43.128Z",
+        "updated": "2025-07-31T12:06:43.128Z"
+      }
+    },
+    {
+      "id": "customer:san",
+      "key": "customer:san",
+      "value": {
+        "rev": "1-53eb270013f521116ed8155a44ac08ae"
+      },
+      "doc": {
+        "_id": "customer:san",
+        "_rev": "1-53eb270013f521116ed8155a44ac08ae",
+        "type": "customer",
+        "name": "San",
+        "email": "sss@dds.dd",
+        "phone": "",
+        "address": {
+          "street": "",
+          "city": "",
+          "state": "",
+          "zip": ""
+        },
+        "created": "2025-07-28T20:26:25.626Z",
+        "updated": "2025-07-28T20:26:25.626Z"
+      }
+    },
+    {
+      "id": "customer:test",
+      "key": "customer:test",
+      "value": {
+        "rev": "1-64c9e878342e832b8bec0ddd9d704ec8"
+      },
+      "doc": {
+        "_id": "customer:test",
+        "_rev": "1-64c9e878342e832b8bec0ddd9d704ec8",
+        "type": "customer",
+        "name": "Test",
+        "email": "test@tt",
+        "phone": "",
+        "address": {
+          "street": "",
+          "city": "",
+          "state": "",
+          "zip": ""
+        },
+        "created": "2025-08-03T04:35:10.282Z",
+        "updated": "2025-08-03T04:35:10.282Z"
+      }
+    },
+    {
+      "id": "customer:globalbev",
+      "key": "customer:globalbev",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "customer:globalbev",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "customer",
+        "name": "Global Beverages",
+        "email": "contact@globalbev.com",
+        "phone": "123-456-7890",
+        "address": {
+          "street": "123 Beverage Lane",
+          "city": "New York",
+          "state": "NY",
+          "zip": "10001"
+        },
+        "created": "2025-08-15T10:00:00.000Z",
+        "updated": "2025-08-15T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "customer:premiumspirits",
+      "key": "customer:premiumspirits",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "customer:premiumspirits",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "customer",
+        "name": "Premium Spirits Co.",
+        "email": "info@premiumspirits.com",
+        "phone": "987-654-3210",
+        "address": {
+          "street": "456 Distillery Row",
+          "city": "Louisville",
+          "state": "KY",
+          "zip": "40202"
+        },
+        "created": "2025-08-16T11:30:00.000Z",
+        "updated": "2025-08-16T11:30:00.000Z"
+      }
+    },
+    {
+      "id": "customer:craftdistillers",
+      "key": "customer:craftdistillers",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "customer:craftdistillers",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "customer",
+        "name": "Craft Distillers Inc.",
+        "email": "sales@craftdistillers.com",
+        "phone": "555-123-4567",
+        "address": {
+          "street": "789 Artisan Way",
+          "city": "Portland",
+          "state": "OR",
+          "zip": "97214"
+        },
+        "created": "2025-08-17T14:00:00.000Z",
+        "updated": "2025-08-17T14:00:00.000Z"
+      }
+    }
+  ]
+}

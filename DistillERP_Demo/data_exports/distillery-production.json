@@ -1,0 +1,169 @@
+{
+  "total_rows": 4,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "batch:whiskey:WH-2024-001",
+      "key": "batch:whiskey:WH-2024-001",
+      "value": {
+        "rev": "3-7816fbaaa78b4bc99e054f9bebc16cf2"
+      },
+      "doc": {
+        "_id": "batch:whiskey:WH-2024-001",
+        "_rev": "3-7816fbaaa78b4bc99e054f9bebc16cf2",
+        "type": "production_batch",
+        "batchNumber": "WH-2024-003",
+        "product": {
+          "name": "Bourbon Whiskey",
+          "type": "bourbon",
+          "recipe": "recipe:bourbon:001"
+        },
+        "status": "aging",
+        "planned": {
+          "startDate": "2024-01-15",
+          "endDate": "2024-01-22",
+          "quantity": 1000,
+          "unit": "gallons"
+        },
+        "actual": {
+          "startDate": "2025-07-30T17:32:47.897Z",
+          "currentQuantity": 1000,
+          "yield": 0
+        },
+        "materials": [],
+        "processes": [],
+        "quality": {
+          "samples": [],
+          "approved": false
+        },
+        "updated": "2025-07-30T17:32:55.864Z"
+      }
+    },
+    {
+      "id": "batch:whiskey:WH-2024-002",
+      "key": "batch:whiskey:WH-2024-002",
+      "value": {
+        "rev": "4-3b7487754bcdbd4854242b1d8d967461"
+      },
+      "doc": {
+        "_id": "batch:whiskey:WH-2024-002",
+        "_rev": "4-3b7487754bcdbd4854242b1d8d967461",
+        "type": "production_batch",
+        "batchNumber": "WH-2024-002",
+        "product": {
+          "name": "Rye Whiskey",
+          "type": "rye",
+          "recipe": "recipe:rye:001"
+        },
+        "status": "fermenting",
+        "planned": {
+          "startDate": "2024-01-10",
+          "endDate": "2024-01-17",
+          "quantity": 800,
+          "unit": "gallons"
+        },
+        "actual": {
+          "startDate": "2025-07-30T17:34:08.278Z",
+          "currentQuantity": 0,
+          "yield": 0
+        },
+        "materials": [],
+        "processes": [],
+        "quality": {
+          "samples": [],
+          "approved": false
+        },
+        "updated": "2025-07-31T12:02:41.759Z"
+      }
+    },
+    {
+      "id": "batch:vodka:V-2025-015",
+      "key": "batch:vodka:V-2025-015",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "batch:vodka:V-2025-015",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "production_batch",
+        "batchNumber": "V-2025-015",
+        "product": {
+          "name": "Premium Vodka",
+          "type": "vodka",
+          "recipe": "recipe:vodka:002"
+        },
+        "status": "distilling",
+        "planned": {
+          "startDate": "2025-08-20",
+          "endDate": "2025-08-25",
+          "quantity": 2000,
+          "unit": "liters"
+        },
+        "actual": {
+          "startDate": "2025-08-20T10:00:00.000Z",
+          "currentQuantity": 1800,
+          "yield": 0.9
+        },
+        "materials": [
+          { "item": "inventory:grain:wheat-001", "quantity": 4000, "unit": "kg" },
+          { "item": "inventory:yeast:vodka-01", "quantity": 10, "unit": "kg" }
+        ],
+        "processes": [
+          { "name": "mashing", "status": "complete" },
+          { "name": "fermentation", "status": "complete" },
+          { "name": "distillation", "status": "in_progress" }
+        ],
+        "quality": {
+          "samples": ["sample:V-2025-015-01", "sample:V-2025-015-02"],
+          "approved": false
+        },
+        "updated": "2025-08-21T11:00:00.000Z"
+      }
+    },
+    {
+      "id": "batch:gin:G-2025-007",
+      "key": "batch:gin:G-2025-007",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "batch:gin:G-2025-007",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "production_batch",
+        "batchNumber": "G-2025-007",
+        "product": {
+          "name": "London Dry Gin",
+          "type": "gin",
+          "recipe": "recipe:gin:001"
+        },
+        "status": "bottling",
+        "planned": {
+          "startDate": "2025-08-10",
+          "endDate": "2025-08-12",
+          "quantity": 1500,
+          "unit": "liters"
+        },
+        "actual": {
+          "startDate": "2025-08-10T09:00:00.000Z",
+          "endDate": "2025-08-12T17:00:00.000Z",
+          "currentQuantity": 1450,
+          "yield": 0.96
+        },
+        "materials": [
+          { "item": "inventory:spirit:neutral-grain-01", "quantity": 1500, "unit": "liters" },
+          { "item": "inventory:botanical:juniper-01", "quantity": 25, "unit": "kg" }
+        ],
+        "processes": [
+          { "name": "infusion", "status": "complete" },
+          { "name": "distillation", "status": "complete" },
+          { "name": "bottling", "status": "in_progress" }
+        ],
+        "quality": {
+          "samples": ["sample:G-2025-007-01", "sample:G-2025-007-02"],
+          "approved": true
+        },
+        "updated": "2025-08-13T10:00:00.000Z"
+      }
+    }
+  ]
+}

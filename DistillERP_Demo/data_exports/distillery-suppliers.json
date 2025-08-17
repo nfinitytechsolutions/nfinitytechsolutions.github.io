@@ -1,0 +1,81 @@
+{
+  "total_rows": 3,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "supplier:goldengrain",
+      "key": "supplier:goldengrain",
+      "value": {
+        "rev": "1-d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6"
+      },
+      "doc": {
+        "_id": "supplier:goldengrain",
+        "_rev": "1-d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6",
+        "type": "supplier",
+        "name": "Golden Grain Supplies",
+        "contact": "John Farmer",
+        "email": "john@goldengrain.com",
+        "phone": "111-222-3333",
+        "address": {
+          "street": "1 Farm Road",
+          "city": "Cornfield",
+          "state": "IA",
+          "zip": "50001"
+        },
+        "materials": ["Corn", "Barley"],
+        "created": "2025-08-17T10:00:00.000Z",
+        "updated": "2025-08-17T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "supplier:oakbarrel",
+      "key": "supplier:oakbarrel",
+      "value": {
+        "rev": "1-e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7"
+      },
+      "doc": {
+        "_id": "supplier:oakbarrel",
+        "_rev": "1-e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7",
+        "type": "supplier",
+        "name": "Oak Barrel Co-op",
+        "contact": "Peter Cooper",
+        "email": "pete@oakbarrelcoop.com",
+        "phone": "444-555-6666",
+        "address": {
+          "street": "2 Cooperage Lane",
+          "city": "Woodsville",
+          "state": "TN",
+          "zip": "37011"
+        },
+        "materials": ["Oak Barrels"],
+        "created": "2025-08-16T11:00:00.000Z",
+        "updated": "2025-08-16T11:00:00.000Z"
+      }
+    },
+    {
+      "id": "supplier:yeastlabs",
+      "key": "supplier:yeastlabs",
+      "value": {
+        "rev": "1-f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8"
+      },
+      "doc": {
+        "_id": "supplier:yeastlabs",
+        "_rev": "1-f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8",
+        "type": "supplier",
+        "name": "Yeast Labs Inc.",
+        "contact": "Dr. A. Myces",
+        "email": "a.myces@yeastlabs.com",
+        "phone": "777-888-9999",
+        "address": {
+          "street": "3 Culture Dish",
+          "city": "Bio-Town",
+          "state": "CA",
+          "zip": "90210"
+        },
+        "materials": ["Distiller's Yeast"],
+        "created": "2025-08-15T12:00:00.000Z",
+        "updated": "2025-08-15T12:00:00.000Z"
+      }
+    }
+  ]
+}

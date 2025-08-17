@@ -1,0 +1,1458 @@
+{
+  "total_rows": 71,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "attendance:EMP001-2025-07-28",
+      "key": "attendance:EMP001-2025-07-28",
+      "value": {
+        "rev": "1-8ba1e5048f56cf8623f5def9126db4ad"
+      },
+      "doc": {
+        "_id": "attendance:EMP001-2025-07-28",
+        "_rev": "1-8ba1e5048f56cf8623f5def9126db4ad",
+        "type": "attendance",
+        "employeeId": "EMP001",
+        "employeeName": "Rajesh Kumar",
+        "date": "2025-07-28",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP001-2025-07-29",
+      "key": "attendance:EMP001-2025-07-29",
+      "value": {
+        "rev": "1-80435a05f5cbb3f76e83740f22b21a4b"
+      },
+      "doc": {
+        "_id": "attendance:EMP001-2025-07-29",
+        "_rev": "1-80435a05f5cbb3f76e83740f22b21a4b",
+        "type": "attendance",
+        "employeeId": "EMP001",
+        "employeeName": "Rajesh Kumar",
+        "date": "2025-07-29",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP001-2025-07-30",
+      "key": "attendance:EMP001-2025-07-30",
+      "value": {
+        "rev": "1-2a1618c1d7f0393e7cd60efa8e01f747"
+      },
+      "doc": {
+        "_id": "attendance:EMP001-2025-07-30",
+        "_rev": "1-2a1618c1d7f0393e7cd60efa8e01f747",
+        "type": "attendance",
+        "employeeId": "EMP001",
+        "employeeName": "Rajesh Kumar",
+        "date": "2025-07-30",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP001-2025-07-31",
+      "key": "attendance:EMP001-2025-07-31",
+      "value": {
+        "rev": "1-408be390b2da9c9ec69115be01367e78"
+      },
+      "doc": {
+        "_id": "attendance:EMP001-2025-07-31",
+        "_rev": "1-408be390b2da9c9ec69115be01367e78",
+        "type": "attendance",
+        "employeeId": "EMP001",
+        "employeeName": "Rajesh Kumar",
+        "date": "2025-07-31",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "2",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP001-2025-08-01",
+      "key": "attendance:EMP001-2025-08-01",
+      "value": {
+        "rev": "1-7158daa328f8a1afa5d4437ed23a5d65"
+      },
+      "doc": {
+        "_id": "attendance:EMP001-2025-08-01",
+        "_rev": "1-7158daa328f8a1afa5d4437ed23a5d65",
+        "type": "attendance",
+        "employeeId": "EMP001",
+        "employeeName": "Rajesh Kumar",
+        "date": "2025-08-01",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "2",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP002-2025-07-28",
+      "key": "attendance:EMP002-2025-07-28",
+      "value": {
+        "rev": "1-96b13b047076843bff7bcc5eacff690a"
+      },
+      "doc": {
+        "_id": "attendance:EMP002-2025-07-28",
+        "_rev": "1-96b13b047076843bff7bcc5eacff690a",
+        "type": "attendance",
+        "employeeId": "EMP002",
+        "employeeName": "Priya Sharma",
+        "date": "2025-07-28",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP002-2025-07-29",
+      "key": "attendance:EMP002-2025-07-29",
+      "value": {
+        "rev": "1-6a3b950e639c97dbbe0dbc7a1d2f8008"
+      },
+      "doc": {
+        "_id": "attendance:EMP002-2025-07-29",
+        "_rev": "1-6a3b950e639c97dbbe0dbc7a1d2f8008",
+        "type": "attendance",
+        "employeeId": "EMP002",
+        "employeeName": "Priya Sharma",
+        "date": "2025-07-29",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "2",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP002-2025-07-30",
+      "key": "attendance:EMP002-2025-07-30",
+      "value": {
+        "rev": "1-e2aae4e629eb1c062c63e4f4dfe26466"
+      },
+      "doc": {
+        "_id": "attendance:EMP002-2025-07-30",
+        "_rev": "1-e2aae4e629eb1c062c63e4f4dfe26466",
+        "type": "attendance",
+        "employeeId": "EMP002",
+        "employeeName": "Priya Sharma",
+        "date": "2025-07-30",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP002-2025-07-31",
+      "key": "attendance:EMP002-2025-07-31",
+      "value": {
+        "rev": "1-a2b43bee2f03b9c3f9b275a56c39b679"
+      },
+      "doc": {
+        "_id": "attendance:EMP002-2025-07-31",
+        "_rev": "1-a2b43bee2f03b9c3f9b275a56c39b679",
+        "type": "attendance",
+        "employeeId": "EMP002",
+        "employeeName": "Priya Sharma",
+        "date": "2025-07-31",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "late",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP002-2025-08-01",
+      "key": "attendance:EMP002-2025-08-01",
+      "value": {
+        "rev": "1-fbf50377367d7cc95d41fd343579674e"
+      },
+      "doc": {
+        "_id": "attendance:EMP002-2025-08-01",
+        "_rev": "1-fbf50377367d7cc95d41fd343579674e",
+        "type": "attendance",
+        "employeeId": "EMP002",
+        "employeeName": "Priya Sharma",
+        "date": "2025-08-01",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP003-2025-07-28",
+      "key": "attendance:EMP003-2025-07-28",
+      "value": {
+        "rev": "1-f58fcea0ff29d8a36334c1bf2939a23c"
+      },
+      "doc": {
+        "_id": "attendance:EMP003-2025-07-28",
+        "_rev": "1-f58fcea0ff29d8a36334c1bf2939a23c",
+        "type": "attendance",
+        "employeeId": "EMP003",
+        "employeeName": "Amit Patil",
+        "date": "2025-07-28",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP003-2025-07-29",
+      "key": "attendance:EMP003-2025-07-29",
+      "value": {
+        "rev": "1-6ec06aacbdab0d5a3345ee95607b0f6b"
+      },
+      "doc": {
+        "_id": "attendance:EMP003-2025-07-29",
+        "_rev": "1-6ec06aacbdab0d5a3345ee95607b0f6b",
+        "type": "attendance",
+        "employeeId": "EMP003",
+        "employeeName": "Amit Patil",
+        "date": "2025-07-29",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP003-2025-07-30",
+      "key": "attendance:EMP003-2025-07-30",
+      "value": {
+        "rev": "1-d5895c9600f310bd4cf94410ecd2113e"
+      },
+      "doc": {
+        "_id": "attendance:EMP003-2025-07-30",
+        "_rev": "1-d5895c9600f310bd4cf94410ecd2113e",
+        "type": "attendance",
+        "employeeId": "EMP003",
+        "employeeName": "Amit Patil",
+        "date": "2025-07-30",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP003-2025-07-31",
+      "key": "attendance:EMP003-2025-07-31",
+      "value": {
+        "rev": "1-0b7ae7b1ea30e8e2272f247d4c404cc1"
+      },
+      "doc": {
+        "_id": "attendance:EMP003-2025-07-31",
+        "_rev": "1-0b7ae7b1ea30e8e2272f247d4c404cc1",
+        "type": "attendance",
+        "employeeId": "EMP003",
+        "employeeName": "Amit Patil",
+        "date": "2025-07-31",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP003-2025-08-01",
+      "key": "attendance:EMP003-2025-08-01",
+      "value": {
+        "rev": "1-b22b4e4ae74d8665ca65a48e190a7841"
+      },
+      "doc": {
+        "_id": "attendance:EMP003-2025-08-01",
+        "_rev": "1-b22b4e4ae74d8665ca65a48e190a7841",
+        "type": "attendance",
+        "employeeId": "EMP003",
+        "employeeName": "Amit Patil",
+        "date": "2025-08-01",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "2",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP004-2025-07-28",
+      "key": "attendance:EMP004-2025-07-28",
+      "value": {
+        "rev": "1-eaf84705ef019ff510a96cab84ee32c3"
+      },
+      "doc": {
+        "_id": "attendance:EMP004-2025-07-28",
+        "_rev": "1-eaf84705ef019ff510a96cab84ee32c3",
+        "type": "attendance",
+        "employeeId": "EMP004",
+        "employeeName": "Sneha Joshi",
+        "date": "2025-07-28",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP004-2025-07-29",
+      "key": "attendance:EMP004-2025-07-29",
+      "value": {
+        "rev": "1-9d01e6bf9e32da91fa5e79edce9407c2"
+      },
+      "doc": {
+        "_id": "attendance:EMP004-2025-07-29",
+        "_rev": "1-9d01e6bf9e32da91fa5e79edce9407c2",
+        "type": "attendance",
+        "employeeId": "EMP004",
+        "employeeName": "Sneha Joshi",
+        "date": "2025-07-29",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP004-2025-07-30",
+      "key": "attendance:EMP004-2025-07-30",
+      "value": {
+        "rev": "1-a13366f8aafbf5475e1b97bb617a4c86"
+      },
+      "doc": {
+        "_id": "attendance:EMP004-2025-07-30",
+        "_rev": "1-a13366f8aafbf5475e1b97bb617a4c86",
+        "type": "attendance",
+        "employeeId": "EMP004",
+        "employeeName": "Sneha Joshi",
+        "date": "2025-07-30",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP004-2025-07-31",
+      "key": "attendance:EMP004-2025-07-31",
+      "value": {
+        "rev": "1-3485b705cd512af9cb5b060588cdb545"
+      },
+      "doc": {
+        "_id": "attendance:EMP004-2025-07-31",
+        "_rev": "1-3485b705cd512af9cb5b060588cdb545",
+        "type": "attendance",
+        "employeeId": "EMP004",
+        "employeeName": "Sneha Joshi",
+        "date": "2025-07-31",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP004-2025-08-01",
+      "key": "attendance:EMP004-2025-08-01",
+      "value": {
+        "rev": "1-70023295fd70a5a151ddf5cf51431b0f"
+      },
+      "doc": {
+        "_id": "attendance:EMP004-2025-08-01",
+        "_rev": "1-70023295fd70a5a151ddf5cf51431b0f",
+        "type": "attendance",
+        "employeeId": "EMP004",
+        "employeeName": "Sneha Joshi",
+        "date": "2025-08-01",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP005-2025-07-28",
+      "key": "attendance:EMP005-2025-07-28",
+      "value": {
+        "rev": "1-b730bb401fa378e267787fd8bcd3c7e0"
+      },
+      "doc": {
+        "_id": "attendance:EMP005-2025-07-28",
+        "_rev": "1-b730bb401fa378e267787fd8bcd3c7e0",
+        "type": "attendance",
+        "employeeId": "EMP005",
+        "employeeName": "Vikram Singh",
+        "date": "2025-07-28",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "late",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP005-2025-07-29",
+      "key": "attendance:EMP005-2025-07-29",
+      "value": {
+        "rev": "1-9ffd1ae7524125cf5808a95facbbebbb"
+      },
+      "doc": {
+        "_id": "attendance:EMP005-2025-07-29",
+        "_rev": "1-9ffd1ae7524125cf5808a95facbbebbb",
+        "type": "attendance",
+        "employeeId": "EMP005",
+        "employeeName": "Vikram Singh",
+        "date": "2025-07-29",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP005-2025-07-30",
+      "key": "attendance:EMP005-2025-07-30",
+      "value": {
+        "rev": "1-98f6073d450775fdf9eb3d632a35a1b1"
+      },
+      "doc": {
+        "_id": "attendance:EMP005-2025-07-30",
+        "_rev": "1-98f6073d450775fdf9eb3d632a35a1b1",
+        "type": "attendance",
+        "employeeId": "EMP005",
+        "employeeName": "Vikram Singh",
+        "date": "2025-07-30",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP005-2025-07-31",
+      "key": "attendance:EMP005-2025-07-31",
+      "value": {
+        "rev": "1-5202dff6f652e64280432005ccbcae41"
+      },
+      "doc": {
+        "_id": "attendance:EMP005-2025-07-31",
+        "_rev": "1-5202dff6f652e64280432005ccbcae41",
+        "type": "attendance",
+        "employeeId": "EMP005",
+        "employeeName": "Vikram Singh",
+        "date": "2025-07-31",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "2",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "attendance:EMP005-2025-08-01",
+      "key": "attendance:EMP005-2025-08-01",
+      "value": {
+        "rev": "1-f4e5bbf5ab13c5ac5e382bedf25a3100"
+      },
+      "doc": {
+        "_id": "attendance:EMP005-2025-08-01",
+        "_rev": "1-f4e5bbf5ab13c5ac5e382bedf25a3100",
+        "type": "attendance",
+        "employeeId": "EMP005",
+        "employeeName": "Vikram Singh",
+        "date": "2025-08-01",
+        "checkIn": "09:00",
+        "checkOut": "18:00",
+        "status": "present",
+        "overtimeHours": "2",
+        "remarks": "",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "employee:EMP001",
+      "key": "employee:EMP001",
+      "value": {
+        "rev": "1-08a98644ce6a9096bc7bca0aaca50cd8"
+      },
+      "doc": {
+        "_id": "employee:EMP001",
+        "_rev": "1-08a98644ce6a9096bc7bca0aaca50cd8",
+        "type": "employee",
+        "employeeId": "EMP001",
+        "firstName": "Rajesh",
+        "lastName": "Kumar",
+        "email": "rajesh.kumar@bagalkot.com",
+        "phone": "+91-9876543210",
+        "department": "Production",
+        "position": "Production Manager",
+        "joinDate": "2023-01-15",
+        "salary": 85000,
+        "status": "active",
+        "address": "123 Main Street, Bagalkot, Karnataka",
+        "emergencyContact": "Sunita Kumar",
+        "emergencyPhone": "+91-9876543211",
+        "bankAccount": "ICICI-123456789",
+        "panNumber": "ABCDE1234F",
+        "aadharNumber": "1234-5678-9012",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "employee:EMP002",
+      "key": "employee:EMP002",
+      "value": {
+        "rev": "1-e0f6c52cf4ce2e3225f98c3858d90ead"
+      },
+      "doc": {
+        "_id": "employee:EMP002",
+        "_rev": "1-e0f6c52cf4ce2e3225f98c3858d90ead",
+        "type": "employee",
+        "employeeId": "EMP002",
+        "firstName": "Priya",
+        "lastName": "Sharma",
+        "email": "priya.sharma@bagalkot.com",
+        "phone": "+91-9876543212",
+        "department": "Quality Control",
+        "position": "Quality Analyst",
+        "joinDate": "2023-03-20",
+        "salary": 65000,
+        "status": "active",
+        "address": "456 Park Road, Bagalkot, Karnataka",
+        "emergencyContact": "Ramesh Sharma",
+        "emergencyPhone": "+91-9876543213",
+        "bankAccount": "SBI-987654321",
+        "panNumber": "FGHIJ5678K",
+        "aadharNumber": "5678-9012-3456",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "employee:EMP003",
+      "key": "employee:EMP003",
+      "value": {
+        "rev": "1-b986bb1b09a08a3943b6cf8c26e11061"
+      },
+      "doc": {
+        "_id": "employee:EMP003",
+        "_rev": "1-b986bb1b09a08a3943b6cf8c26e11061",
+        "type": "employee",
+        "employeeId": "EMP003",
+        "firstName": "Amit",
+        "lastName": "Patil",
+        "email": "amit.patil@bagalkot.com",
+        "phone": "+91-9876543214",
+        "department": "Maintenance",
+        "position": "Maintenance Technician",
+        "joinDate": "2023-06-10",
+        "salary": 55000,
+        "status": "active",
+        "address": "789 Industrial Area, Bagalkot, Karnataka",
+        "emergencyContact": "Lata Patil",
+        "emergencyPhone": "+91-9876543215",
+        "bankAccount": "HDFC-456789123",
+        "panNumber": "KLMNO9012P",
+        "aadharNumber": "9012-3456-7890",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "employee:EMP004",
+      "key": "employee:EMP004",
+      "value": {
+        "rev": "1-d792144229c0e2a4698b5c9142e3476e"
+      },
+      "doc": {
+        "_id": "employee:EMP004",
+        "_rev": "1-d792144229c0e2a4698b5c9142e3476e",
+        "type": "employee",
+        "employeeId": "EMP004",
+        "firstName": "Sneha",
+        "lastName": "Joshi",
+        "email": "sneha.joshi@bagalkot.com",
+        "phone": "+91-9876543216",
+        "department": "Finance & Accounts",
+        "position": "Accountant",
+        "joinDate": "2023-08-05",
+        "salary": 70000,
+        "status": "active",
+        "address": "321 Finance District, Bagalkot, Karnataka",
+        "emergencyContact": "Anil Joshi",
+        "emergencyPhone": "+91-9876543217",
+        "bankAccount": "AXIS-789123456",
+        "panNumber": "QRSTU3456V",
+        "aadharNumber": "3456-7890-1234",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "employee:EMP005",
+      "key": "employee:EMP005",
+      "value": {
+        "rev": "1-eee1f233ece4d3adafebaa317a17ea4a"
+      },
+      "doc": {
+        "_id": "employee:EMP005",
+        "_rev": "1-eee1f233ece4d3adafebaa317a17ea4a",
+        "type": "employee",
+        "employeeId": "EMP005",
+        "firstName": "Vikram",
+        "lastName": "Singh",
+        "email": "vikram.singh@bagalkot.com",
+        "phone": "+91-9876543218",
+        "department": "Security",
+        "position": "Security Guard",
+        "joinDate": "2023-04-12",
+        "salary": 35000,
+        "status": "active",
+        "address": "654 Security Colony, Bagalkot, Karnataka",
+        "emergencyContact": "Manjeet Singh",
+        "emergencyPhone": "+91-9876543219",
+        "bankAccount": "PNB-321654987",
+        "panNumber": "WXYZ7890A",
+        "aadharNumber": "7890-1234-5678",
+        "created": "2025-08-03T06:56:31.674Z"
+      }
+    },
+    {
+      "id": "leave:100101:1754218545297",
+      "key": "leave:100101:1754218545297",
+      "value": {
+        "rev": "1-06fcee083f938211d5239096ff3fddcc"
+      },
+      "doc": {
+        "_id": "leave:100101:1754218545297",
+        "_rev": "1-06fcee083f938211d5239096ff3fddcc",
+        "employeeId": "100101",
+        "employeeName": "Production Manager",
+        "leaveType": "Annual Leave",
+        "startDate": "2025-07-31",
+        "endDate": "2025-07-31",
+        "days": 1,
+        "reason": "taken leave",
+        "halfDay": false,
+        "status": "pending",
+        "appliedDate": "2025-08-03T10:55:45.297Z",
+        "appliedBy": "100101"
+      }
+    },
+    {
+      "id": "leave:100145:1754219528848",
+      "key": "leave:100145:1754219528848",
+      "value": {
+        "rev": "2-014fed14660d7ed1f1afc4b9843d5ebf"
+      },
+      "doc": {
+        "_id": "leave:100145:1754219528848",
+        "_rev": "2-014fed14660d7ed1f1afc4b9843d5ebf",
+        "employeeId": "100145",
+        "employeeName": "Rajesh Kumar",
+        "employeeRole": "manager",
+        "leaveType": "Annual Leave",
+        "startDate": "2025-08-03",
+        "endDate": "2025-08-03",
+        "days": 1,
+        "reason": "ok",
+        "halfDay": false,
+        "status": "approved",
+        "appliedDate": "2025-08-03T11:12:08.848Z",
+        "appliedBy": "100145",
+        "approvalChain": {
+          "eligibleApprovers": [
+            "admin"
+          ],
+          "nextApprover": null,
+          "approvalHistory": [
+            {
+              "approverRole": "admin",
+              "approverId": "100144",
+              "approverName": "Chandrashekhar",
+              "action": "approved",
+              "timestamp": "2025-08-03T11:12:21.068Z",
+              "reason": "approved by admin"
+            }
+          ]
+        },
+        "reviewedBy": "100144",
+        "reviewedDate": "2025-08-03T11:12:21.068Z",
+        "reviewerName": "Chandrashekhar"
+      }
+    },
+    {
+      "id": "leave:100146:1754219470864",
+      "key": "leave:100146:1754219470864",
+      "value": {
+        "rev": "3-d118a7e927466d6cabbaf1cd0e63cdcb"
+      },
+      "doc": {
+        "_id": "leave:100146:1754219470864",
+        "_rev": "3-d118a7e927466d6cabbaf1cd0e63cdcb",
+        "employeeId": "100146",
+        "employeeName": "Priya Sharma",
+        "employeeRole": "supervisor",
+        "leaveType": "Personal Leave",
+        "startDate": "2025-07-28",
+        "endDate": "2025-07-28",
+        "days": 1,
+        "reason": "taken",
+        "halfDay": false,
+        "status": "approved",
+        "appliedDate": "2025-08-03T11:11:10.864Z",
+        "appliedBy": "100146",
+        "approvalChain": {
+          "eligibleApprovers": [
+            "manager",
+            "admin"
+          ],
+          "nextApprover": "admin",
+          "approvalHistory": [
+            {
+              "approverRole": "manager",
+              "approverId": "100145",
+              "approverName": "Rajesh Kumar",
+              "action": "approved",
+              "timestamp": "2025-08-03T11:12:36.108Z",
+              "reason": "approved by manager"
+            },
+            {
+              "approverRole": "manager",
+              "approverId": "100145",
+              "approverName": "Rajesh Kumar",
+              "action": "approved",
+              "timestamp": "2025-08-03T12:55:39.935Z",
+              "reason": "approved by manager"
+            }
+          ],
+          "currentLevel": "admin",
+          "requiredApprover": null
+        },
+        "reviewedBy": "100145",
+        "reviewedDate": "2025-08-03T12:55:39.935Z",
+        "reviewerName": "Rajesh Kumar"
+      }
+    },
+    {
+      "id": "leave:100146:1754225824619",
+      "key": "leave:100146:1754225824619",
+      "value": {
+        "rev": "2-a4171a179815cc01b4366d3eb24d52c9"
+      },
+      "doc": {
+        "_id": "leave:100146:1754225824619",
+        "_rev": "2-a4171a179815cc01b4366d3eb24d52c9",
+        "employeeId": "100146",
+        "employeeName": "Priya Sharma",
+        "employeeRole": "supervisor",
+        "leaveType": "Annual Leave",
+        "startDate": "2025-07-06",
+        "endDate": "2025-07-07",
+        "days": 2,
+        "reason": "ok",
+        "halfDay": false,
+        "status": "approved",
+        "appliedDate": "2025-08-03T12:57:04.619Z",
+        "appliedBy": "100146",
+        "approvalChain": {
+          "requiredApprover": null,
+          "approvalHistory": [
+            {
+              "approverRole": "manager",
+              "approverId": "100145",
+              "approverName": "Rajesh Kumar",
+              "action": "approved",
+              "timestamp": "2025-08-03T12:57:22.390Z",
+              "reason": "approved by manager"
+            }
+          ]
+        },
+        "reviewedBy": "100145",
+        "reviewedDate": "2025-08-03T12:57:22.390Z",
+        "reviewerName": "Rajesh Kumar"
+      }
+    },
+    {
+      "id": "leave:100221:1754218486609",
+      "key": "leave:100221:1754218486609",
+      "value": {
+        "rev": "1-366fd7c07d7fb98ad62bc7cf6bfc2f25"
+      },
+      "doc": {
+        "_id": "leave:100221:1754218486609",
+        "_rev": "1-366fd7c07d7fb98ad62bc7cf6bfc2f25",
+        "employeeId": "100221",
+        "employeeName": "Production Operator 1",
+        "leaveType": "Personal Leave",
+        "startDate": "2025-08-04",
+        "endDate": "2025-08-04",
+        "days": 1,
+        "reason": "ok",
+        "halfDay": false,
+        "status": "pending",
+        "appliedDate": "2025-08-03T10:54:46.609Z",
+        "appliedBy": "100221"
+      }
+    },
+    {
+      "id": "leavebalance:100101:annual",
+      "key": "leavebalance:100101:annual",
+      "value": {
+        "rev": "1-ea13c9936117994a3723188c30d53677"
+      },
+      "doc": {
+        "_id": "leavebalance:100101:annual",
+        "_rev": "1-ea13c9936117994a3723188c30d53677",
+        "employeeId": "100101",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100101:emergency",
+      "key": "leavebalance:100101:emergency",
+      "value": {
+        "rev": "1-dd1fabed94507b5d1bb3fd45f66d3339"
+      },
+      "doc": {
+        "_id": "leavebalance:100101:emergency",
+        "_rev": "1-dd1fabed94507b5d1bb3fd45f66d3339",
+        "employeeId": "100101",
+        "leaveType": "Emergency Leave",
+        "totalDays": 3,
+        "usedDays": 0,
+        "remainingDays": 3,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100101:personal",
+      "key": "leavebalance:100101:personal",
+      "value": {
+        "rev": "1-1eb09faf513787ac58585c90a02b4c36"
+      },
+      "doc": {
+        "_id": "leavebalance:100101:personal",
+        "_rev": "1-1eb09faf513787ac58585c90a02b4c36",
+        "employeeId": "100101",
+        "leaveType": "Personal Leave",
+        "totalDays": 5,
+        "usedDays": 0,
+        "remainingDays": 5,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100101:sick",
+      "key": "leavebalance:100101:sick",
+      "value": {
+        "rev": "1-1bae88b6da77f6ec779c52aaad91f9e4"
+      },
+      "doc": {
+        "_id": "leavebalance:100101:sick",
+        "_rev": "1-1bae88b6da77f6ec779c52aaad91f9e4",
+        "employeeId": "100101",
+        "leaveType": "Sick Leave",
+        "totalDays": 10,
+        "usedDays": 0,
+        "remainingDays": 10,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100144:annual",
+      "key": "leavebalance:100144:annual",
+      "value": {
+        "rev": "1-47899f0772c19c7cad61430b5f0071b5"
+      },
+      "doc": {
+        "_id": "leavebalance:100144:annual",
+        "_rev": "1-47899f0772c19c7cad61430b5f0071b5",
+        "employeeId": "100144",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100144:emergency",
+      "key": "leavebalance:100144:emergency",
+      "value": {
+        "rev": "1-5e3ba5e6dcbfc6e6680df61b2456de58"
+      },
+      "doc": {
+        "_id": "leavebalance:100144:emergency",
+        "_rev": "1-5e3ba5e6dcbfc6e6680df61b2456de58",
+        "employeeId": "100144",
+        "leaveType": "Emergency Leave",
+        "totalDays": 3,
+        "usedDays": 0,
+        "remainingDays": 3,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100144:personal",
+      "key": "leavebalance:100144:personal",
+      "value": {
+        "rev": "1-261091a05fcf2b82e7c13e461cde64b2"
+      },
+      "doc": {
+        "_id": "leavebalance:100144:personal",
+        "_rev": "1-261091a05fcf2b82e7c13e461cde64b2",
+        "employeeId": "100144",
+        "leaveType": "Personal Leave",
+        "totalDays": 5,
+        "usedDays": 0,
+        "remainingDays": 5,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100144:sick",
+      "key": "leavebalance:100144:sick",
+      "value": {
+        "rev": "1-5417cd121b62a711e3204a4cff9326fb"
+      },
+      "doc": {
+        "_id": "leavebalance:100144:sick",
+        "_rev": "1-5417cd121b62a711e3204a4cff9326fb",
+        "employeeId": "100144",
+        "leaveType": "Sick Leave",
+        "totalDays": 10,
+        "usedDays": 0,
+        "remainingDays": 10,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100145:annual",
+      "key": "leavebalance:100145:annual",
+      "value": {
+        "rev": "1-971f0af728f633487f87eb5acf85f724"
+      },
+      "doc": {
+        "_id": "leavebalance:100145:annual",
+        "_rev": "1-971f0af728f633487f87eb5acf85f724",
+        "employeeId": "100145",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100145:emergency",
+      "key": "leavebalance:100145:emergency",
+      "value": {
+        "rev": "1-f794423ab3ce03014ace57c73359506f"
+      },
+      "doc": {
+        "_id": "leavebalance:100145:emergency",
+        "_rev": "1-f794423ab3ce03014ace57c73359506f",
+        "employeeId": "100145",
+        "leaveType": "Emergency Leave",
+        "totalDays": 3,
+        "usedDays": 0,
+        "remainingDays": 3,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100145:personal",
+      "key": "leavebalance:100145:personal",
+      "value": {
+        "rev": "1-8973c6c7e30939b771f579669ca0f374"
+      },
+      "doc": {
+        "_id": "leavebalance:100145:personal",
+        "_rev": "1-8973c6c7e30939b771f579669ca0f374",
+        "employeeId": "100145",
+        "leaveType": "Personal Leave",
+        "totalDays": 5,
+        "usedDays": 0,
+        "remainingDays": 5,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100145:sick",
+      "key": "leavebalance:100145:sick",
+      "value": {
+        "rev": "1-d1e428fadd508accf43637846e9c9fc8"
+      },
+      "doc": {
+        "_id": "leavebalance:100145:sick",
+        "_rev": "1-d1e428fadd508accf43637846e9c9fc8",
+        "employeeId": "100145",
+        "leaveType": "Sick Leave",
+        "totalDays": 10,
+        "usedDays": 0,
+        "remainingDays": 10,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100146:annual",
+      "key": "leavebalance:100146:annual",
+      "value": {
+        "rev": "1-d7586917035a6034928c44fa7ee5189a"
+      },
+      "doc": {
+        "_id": "leavebalance:100146:annual",
+        "_rev": "1-d7586917035a6034928c44fa7ee5189a",
+        "employeeId": "100146",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100146:emergency",
+      "key": "leavebalance:100146:emergency",
+      "value": {
+        "rev": "1-266b8bd54a691476a310819203639d4b"
+      },
+      "doc": {
+        "_id": "leavebalance:100146:emergency",
+        "_rev": "1-266b8bd54a691476a310819203639d4b",
+        "employeeId": "100146",
+        "leaveType": "Emergency Leave",
+        "totalDays": 3,
+        "usedDays": 0,
+        "remainingDays": 3,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100146:personal",
+      "key": "leavebalance:100146:personal",
+      "value": {
+        "rev": "1-814f8cc745e69b1f8cef4cfac321893d"
+      },
+      "doc": {
+        "_id": "leavebalance:100146:personal",
+        "_rev": "1-814f8cc745e69b1f8cef4cfac321893d",
+        "employeeId": "100146",
+        "leaveType": "Personal Leave",
+        "totalDays": 5,
+        "usedDays": 0,
+        "remainingDays": 5,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100146:sick",
+      "key": "leavebalance:100146:sick",
+      "value": {
+        "rev": "1-9d2e49b1ad3fa67e51aad8f9dc2198b5"
+      },
+      "doc": {
+        "_id": "leavebalance:100146:sick",
+        "_rev": "1-9d2e49b1ad3fa67e51aad8f9dc2198b5",
+        "employeeId": "100146",
+        "leaveType": "Sick Leave",
+        "totalDays": 10,
+        "usedDays": 0,
+        "remainingDays": 10,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100147:annual",
+      "key": "leavebalance:100147:annual",
+      "value": {
+        "rev": "1-3789a7f4ff4b0f038bb7a71bc4f790f8"
+      },
+      "doc": {
+        "_id": "leavebalance:100147:annual",
+        "_rev": "1-3789a7f4ff4b0f038bb7a71bc4f790f8",
+        "employeeId": "100147",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100147:emergency",
+      "key": "leavebalance:100147:emergency",
+      "value": {
+        "rev": "1-ac40decefb2516816dd1ca6ceceed421"
+      },
+      "doc": {
+        "_id": "leavebalance:100147:emergency",
+        "_rev": "1-ac40decefb2516816dd1ca6ceceed421",
+        "employeeId": "100147",
+        "leaveType": "Emergency Leave",
+        "totalDays": 3,
+        "usedDays": 0,
+        "remainingDays": 3,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100147:personal",
+      "key": "leavebalance:100147:personal",
+      "value": {
+        "rev": "1-397d1bea934a343f142418742821e430"
+      },
+      "doc": {
+        "_id": "leavebalance:100147:personal",
+        "_rev": "1-397d1bea934a343f142418742821e430",
+        "employeeId": "100147",
+        "leaveType": "Personal Leave",
+        "totalDays": 5,
+        "usedDays": 0,
+        "remainingDays": 5,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100147:sick",
+      "key": "leavebalance:100147:sick",
+      "value": {
+        "rev": "1-0b36d2d97e6ba9acdc2028c68130db6d"
+      },
+      "doc": {
+        "_id": "leavebalance:100147:sick",
+        "_rev": "1-0b36d2d97e6ba9acdc2028c68130db6d",
+        "employeeId": "100147",
+        "leaveType": "Sick Leave",
+        "totalDays": 10,
+        "usedDays": 0,
+        "remainingDays": 10,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100148:annual",
+      "key": "leavebalance:100148:annual",
+      "value": {
+        "rev": "1-519f985d561fdd1154b53e07d062e027"
+      },
+      "doc": {
+        "_id": "leavebalance:100148:annual",
+        "_rev": "1-519f985d561fdd1154b53e07d062e027",
+        "employeeId": "100148",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100148:emergency",
+      "key": "leavebalance:100148:emergency",
+      "value": {
+        "rev": "1-92a66cd72a9fff0ac921149e6c366536"
+      },
+      "doc": {
+        "_id": "leavebalance:100148:emergency",
+        "_rev": "1-92a66cd72a9fff0ac921149e6c366536",
+        "employeeId": "100148",
+        "leaveType": "Emergency Leave",
+        "totalDays": 3,
+        "usedDays": 0,
+        "remainingDays": 3,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100148:personal",
+      "key": "leavebalance:100148:personal",
+      "value": {
+        "rev": "1-6c9a3e1571471ac0fff1fb4702137f79"
+      },
+      "doc": {
+        "_id": "leavebalance:100148:personal",
+        "_rev": "1-6c9a3e1571471ac0fff1fb4702137f79",
+        "employeeId": "100148",
+        "leaveType": "Personal Leave",
+        "totalDays": 5,
+        "usedDays": 0,
+        "remainingDays": 5,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100148:sick",
+      "key": "leavebalance:100148:sick",
+      "value": {
+        "rev": "1-a025a0eb09ab775116d9fe2b3848c379"
+      },
+      "doc": {
+        "_id": "leavebalance:100148:sick",
+        "_rev": "1-a025a0eb09ab775116d9fe2b3848c379",
+        "employeeId": "100148",
+        "leaveType": "Sick Leave",
+        "totalDays": 10,
+        "usedDays": 0,
+        "remainingDays": 10,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100221:annual",
+      "key": "leavebalance:100221:annual",
+      "value": {
+        "rev": "1-1b32d8312403f65e25a1b5bdf4acd8f2"
+      },
+      "doc": {
+        "_id": "leavebalance:100221:annual",
+        "_rev": "1-1b32d8312403f65e25a1b5bdf4acd8f2",
+        "employeeId": "100221",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100221:emergency",
+      "key": "leavebalance:100221:emergency",
+      "value": {
+        "rev": "1-397d078977f5aa8d1dccf2cf10c760fb"
+      },
+      "doc": {
+        "_id": "leavebalance:100221:emergency",
+        "_rev": "1-397d078977f5aa8d1dccf2cf10c760fb",
+        "employeeId": "100221",
+        "leaveType": "Emergency Leave",
+        "totalDays": 3,
+        "usedDays": 0,
+        "remainingDays": 3,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100221:personal",
+      "key": "leavebalance:100221:personal",
+      "value": {
+        "rev": "1-703696e986353a139fefacb1eecac927"
+      },
+      "doc": {
+        "_id": "leavebalance:100221:personal",
+        "_rev": "1-703696e986353a139fefacb1eecac927",
+        "employeeId": "100221",
+        "leaveType": "Personal Leave",
+        "totalDays": 5,
+        "usedDays": 0,
+        "remainingDays": 5,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavebalance:100221:sick",
+      "key": "leavebalance:100221:sick",
+      "value": {
+        "rev": "1-ec5ad1f5d36f19781ae449557f9764be"
+      },
+      "doc": {
+        "_id": "leavebalance:100221:sick",
+        "_rev": "1-ec5ad1f5d36f19781ae449557f9764be",
+        "employeeId": "100221",
+        "leaveType": "Sick Leave",
+        "totalDays": 10,
+        "usedDays": 0,
+        "remainingDays": 10,
+        "year": 2025
+      }
+    },
+    {
+      "id": "leavetype:annual",
+      "key": "leavetype:annual",
+      "value": {
+        "rev": "1-3660d093a7585073a4a925d01d9742c0"
+      },
+      "doc": {
+        "_id": "leavetype:annual",
+        "_rev": "1-3660d093a7585073a4a925d01d9742c0",
+        "type": "Annual Leave",
+        "daysPerYear": 21
+      }
+    },
+    {
+      "id": "leavetype:emergency",
+      "key": "leavetype:emergency",
+      "value": {
+        "rev": "1-a456ad9ae5098c4fe1919e6a2306b2c9"
+      },
+      "doc": {
+        "_id": "leavetype:emergency",
+        "_rev": "1-a456ad9ae5098c4fe1919e6a2306b2c9",
+        "type": "Emergency Leave",
+        "daysPerYear": 3
+      }
+    },
+    {
+      "id": "leavetype:personal",
+      "key": "leavetype:personal",
+      "value": {
+        "rev": "1-0884701a93976f495100a8d9cac73a25"
+      },
+      "doc": {
+        "_id": "leavetype:personal",
+        "_rev": "1-0884701a93976f495100a8d9cac73a25",
+        "type": "Personal Leave",
+        "daysPerYear": 5
+      }
+    },
+    {
+      "id": "leavetype:sick",
+      "key": "leavetype:sick",
+      "value": {
+        "rev": "1-2c092a7b0253bd8e3aac0f194ee3eed9"
+      },
+      "doc": {
+        "_id": "leavetype:sick",
+        "_rev": "1-2c092a7b0253bd8e3aac0f194ee3eed9",
+        "type": "Sick Leave",
+        "daysPerYear": 10
+      }
+    },
+    {
+      "id": "attendance:EMP006-2025-08-18",
+      "key": "attendance:EMP006-2025-08-18",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "attendance:EMP006-2025-08-18",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "attendance",
+        "employeeId": "EMP006",
+        "employeeName": "Anjali Mehta",
+        "date": "2025-08-18",
+        "checkIn": "09:30",
+        "checkOut": "18:30",
+        "status": "present",
+        "created": "2025-08-18T09:30:00.000Z"
+      }
+    },
+    {
+      "id": "employee:EMP006",
+      "key": "employee:EMP006",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "employee:EMP006",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "employee",
+        "employeeId": "EMP006",
+        "firstName": "Anjali",
+        "lastName": "Mehta",
+        "department": "Marketing",
+        "position": "Marketing Executive",
+        "status": "active",
+        "joinDate": "2024-02-01",
+        "created": "2025-08-18T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "leave:EMP002-2025-08-19",
+      "key": "leave:EMP002-2025-08-19",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "leave:EMP002-2025-08-19",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "leave",
+        "employeeId": "EMP002",
+        "leaveType": "Sick Leave",
+        "startDate": "2025-08-19",
+        "endDate": "2025-08-19",
+        "status": "pending",
+        "reason": "Feeling unwell",
+        "appliedDate": "2025-08-18T10:05:00.000Z"
+      }
+    },
+    {
+      "id": "leavebalance:EMP006:annual",
+      "key": "leavebalance:EMP006:annual",
+      "value": {
+        "rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9"
+      },
+      "doc": {
+        "_id": "leavebalance:EMP006:annual",
+        "_rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+        "type": "leavebalance",
+        "employeeId": "EMP006",
+        "leaveType": "Annual Leave",
+        "totalDays": 21,
+        "usedDays": 0,
+        "remainingDays": 21,
+        "year": 2025
+      }
+    }
+  ]
+}

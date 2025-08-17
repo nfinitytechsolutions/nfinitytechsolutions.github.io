@@ -1,0 +1,120 @@
+{
+  "total_rows": 5,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "sample:1753897055383",
+      "key": "sample:1753897055383",
+      "value": {
+        "rev": "4-7373f7fafb1e6cde714f768441b01fe7"
+      },
+      "doc": {
+        "_id": "sample:1753897055383",
+        "_rev": "4-7373f7fafb1e6cde714f768441b01fe7",
+        "type": "quality_sample",
+        "sampleId": "QS-2024-003",
+        "batchId": "",
+        "sampleType": "raw_material",
+        "sampleDate": "2025-07-01",
+        "collectedBy": "",
+        "tests": [
+          "alcohol_content"
+        ],
+        "priority": "normal",
+        "notes": "",
+        "status": "approved",
+        "results": {},
+        "approved": true,
+        "approvedBy": "Quality Manager",
+        "approvedDate": "2025-07-31T12:02:29.359Z",
+        "created": "2025-07-30T17:37:35.383Z",
+        "updated": "2025-07-31T12:02:29.359Z"
+      }
+    },
+    {
+      "id": "sample:QS-2024-001",
+      "key": "sample:QS-2024-001",
+      "value": {
+        "rev": "4-f5e599907f81c5f6da5f49bccaf73e27"
+      },
+      "doc": {
+        "_id": "sample:QS-2024-001",
+        "_rev": "4-f5e599907f81c5f6da5f49bccaf73e27",
+        "type": "quality_sample",
+        "sampleId": "QS-2024-001",
+        "batchId": "batch:whiskey:WH-2024-001",
+        "sampleDate": "2024-01-16T10:00:00Z",
+        "status": "approved",
+        "tests": [
+          "alcohol_content",
+          "ph_level",
+          "color_analysis"
+        ],
+        "updated": "2025-07-28T20:55:52.897Z",
+        "approved": true,
+        "approvedBy": "Quality Manager",
+        "approvedDate": "2025-07-28T20:55:52.897Z"
+      }
+    },
+    {
+      "id": "sample:QS-2024-002",
+      "key": "sample:QS-2024-002",
+      "value": {
+        "rev": "1-3aa233088025bba5a182350c633e166d"
+      },
+      "doc": {
+        "_id": "sample:QS-2024-002",
+        "_rev": "1-3aa233088025bba5a182350c633e166d",
+        "type": "quality_sample",
+        "sampleId": "QS-2024-002",
+        "batchId": "batch:whiskey:WH-2024-002",
+        "sampleDate": "2024-01-17T14:00:00Z",
+        "status": "approved",
+        "approvedDate": "2025-07-28T20:07:46.061Z",
+        "tests": [
+          "alcohol_content",
+          "ph_level",
+          "color_analysis"
+        ]
+      }
+    },
+    {
+      "id": "sample:QS-2025-001",
+      "key": "sample:QS-2025-001",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "sample:QS-2025-001",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "quality_sample",
+        "sampleId": "QS-2025-001",
+        "batchId": "batch:vodka:V-2025-015",
+        "sampleType": "in-process",
+        "status": "pending_analysis",
+        "sampleDate": "2025-08-22T10:00:00Z",
+        "created": "2025-08-22T10:00:00Z",
+        "updated": "2025-08-22T10:00:00Z"
+      }
+    },
+    {
+      "id": "sample:QS-2025-002",
+      "key": "sample:QS-2025-002",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "sample:QS-2025-002",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "quality_sample",
+        "sampleId": "QS-2025-002",
+        "batchId": "batch:gin:G-2025-007",
+        "sampleType": "finished_product",
+        "status": "approved",
+        "sampleDate": "2025-08-13T11:00:00Z",
+        "created": "2025-08-13T11:00:00Z",
+        "updated": "2025-08-13T11:00:00Z"
+      }
+    }
+  ]
+}

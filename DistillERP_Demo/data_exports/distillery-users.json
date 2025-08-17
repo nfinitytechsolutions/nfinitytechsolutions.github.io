@@ -1,0 +1,503 @@
+{
+  "total_rows": 26,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "user:100001",
+      "key": "user:100001",
+      "value": {
+        "rev": "1-1f8691d3229b39351b505ee0fb2902d0"
+      },
+      "doc": {
+        "_id": "user:100001",
+        "_rev": "1-1f8691d3229b39351b505ee0fb2902d0",
+        "type": "user",
+        "username": "100001",
+        "fullName": "Director",
+        "role": "admin",
+        "email": "100001@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.214Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100002",
+      "key": "user:100002",
+      "value": {
+        "rev": "1-705f95f5d83517ae5bf3e310f78acd18"
+      },
+      "doc": {
+        "_id": "user:100002",
+        "_rev": "1-705f95f5d83517ae5bf3e310f78acd18",
+        "type": "user",
+        "username": "100002",
+        "fullName": "General Manager",
+        "role": "admin",
+        "email": "100002@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.220Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100101",
+      "key": "user:100101",
+      "value": {
+        "rev": "1-d7e717754704de491a2d4030a473fcaa"
+      },
+      "doc": {
+        "_id": "user:100101",
+        "_rev": "1-d7e717754704de491a2d4030a473fcaa",
+        "type": "user",
+        "username": "100101",
+        "fullName": "Production Manager",
+        "role": "manager",
+        "email": "100101@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.226Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100102",
+      "key": "user:100102",
+      "value": {
+        "rev": "1-fbccba4373b28916a6a3bb0dd9624406"
+      },
+      "doc": {
+        "_id": "user:100102",
+        "_rev": "1-fbccba4373b28916a6a3bb0dd9624406",
+        "type": "user",
+        "username": "100102",
+        "fullName": "Quality Manager",
+        "role": "manager",
+        "email": "100102@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.230Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100103",
+      "key": "user:100103",
+      "value": {
+        "rev": "1-482881d92c80968fac9956b8a9c6c4f6"
+      },
+      "doc": {
+        "_id": "user:100103",
+        "_rev": "1-482881d92c80968fac9956b8a9c6c4f6",
+        "type": "user",
+        "username": "100103",
+        "fullName": "Sales Manager",
+        "role": "manager",
+        "email": "100103@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.235Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100104",
+      "key": "user:100104",
+      "value": {
+        "rev": "1-89ce68189045af0bd02451649abfba4d"
+      },
+      "doc": {
+        "_id": "user:100104",
+        "_rev": "1-89ce68189045af0bd02451649abfba4d",
+        "type": "user",
+        "username": "100104",
+        "fullName": "Finance Manager",
+        "role": "manager",
+        "email": "100104@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.239Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100105",
+      "key": "user:100105",
+      "value": {
+        "rev": "2-582f71a99ce9284f8131ac7e8f28f0bd"
+      },
+      "doc": {
+        "_id": "user:100105",
+        "_rev": "2-582f71a99ce9284f8131ac7e8f28f0bd",
+        "type": "user",
+        "username": "100105",
+        "fullName": "HR Managerrr",
+        "role": "manager",
+        "email": "100105@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "isActive": true,
+        "updatedAt": "2025-08-06T02:15:00.325Z",
+        "createdAt": "2025-08-05T08:49:33.244Z"
+      }
+    },
+    {
+      "id": "user:100144",
+      "key": "user:100144",
+      "value": {
+        "rev": "1-f600e439e0b2e13441eb43e4861b3497"
+      },
+      "doc": {
+        "_id": "user:100144",
+        "_rev": "1-f600e439e0b2e13441eb43e4861b3497",
+        "type": "user",
+        "username": "100144",
+        "fullName": "Chandrashekhar",
+        "role": "admin",
+        "email": "100144@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.204Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100201",
+      "key": "user:100201",
+      "value": {
+        "rev": "1-4b704107db532cc988a80898e0aa782e"
+      },
+      "doc": {
+        "_id": "user:100201",
+        "_rev": "1-4b704107db532cc988a80898e0aa782e",
+        "type": "user",
+        "username": "100201",
+        "fullName": "Production Supervisor",
+        "role": "supervisor",
+        "email": "100201@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.249Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100202",
+      "key": "user:100202",
+      "value": {
+        "rev": "1-4b23a233dff759e994d210aa89c16b3e"
+      },
+      "doc": {
+        "_id": "user:100202",
+        "_rev": "1-4b23a233dff759e994d210aa89c16b3e",
+        "type": "user",
+        "username": "100202",
+        "fullName": "Quality Supervisor",
+        "role": "supervisor",
+        "email": "100202@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.254Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100203",
+      "key": "user:100203",
+      "value": {
+        "rev": "1-9ee75bd0422ba8d71a31be2bd3d5d741"
+      },
+      "doc": {
+        "_id": "user:100203",
+        "_rev": "1-9ee75bd0422ba8d71a31be2bd3d5d741",
+        "type": "user",
+        "username": "100203",
+        "fullName": "Maintenance Supervisor",
+        "role": "supervisor",
+        "email": "100203@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.259Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100204",
+      "key": "user:100204",
+      "value": {
+        "rev": "2-4c76d2189ea0175f4c4c4584f59ad3a9"
+      },
+      "doc": {
+        "_id": "user:100204",
+        "_rev": "2-4c76d2189ea0175f4c4c4584f59ad3a9",
+        "type": "user",
+        "username": "100204",
+        "fullName": "Warehouse Supervisorrr",
+        "role": "supervisor",
+        "email": "100204@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "isActive": true,
+        "updatedAt": "2025-08-05T10:59:42.245Z",
+        "createdAt": "2025-08-05T08:49:33.263Z"
+      }
+    },
+    {
+      "id": "user:100221",
+      "key": "user:100221",
+      "value": {
+        "rev": "1-c9df5bccdd575e0373c3169628235458"
+      },
+      "doc": {
+        "_id": "user:100221",
+        "_rev": "1-c9df5bccdd575e0373c3169628235458",
+        "type": "user",
+        "username": "100221",
+        "fullName": "Production Operator 1",
+        "role": "operator",
+        "email": "100221@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.266Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100222",
+      "key": "user:100222",
+      "value": {
+        "rev": "1-a3b8df0aef14633268e95f9f6d0c590a"
+      },
+      "doc": {
+        "_id": "user:100222",
+        "_rev": "1-a3b8df0aef14633268e95f9f6d0c590a",
+        "type": "user",
+        "username": "100222",
+        "fullName": "Production Operator 2",
+        "role": "operator",
+        "email": "100222@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.270Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100223",
+      "key": "user:100223",
+      "value": {
+        "rev": "1-340bcfdd0fecfee664ea12212e1fc61e"
+      },
+      "doc": {
+        "_id": "user:100223",
+        "_rev": "1-340bcfdd0fecfee664ea12212e1fc61e",
+        "type": "user",
+        "username": "100223",
+        "fullName": "Quality Control Operator",
+        "role": "operator",
+        "email": "100223@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.274Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100224",
+      "key": "user:100224",
+      "value": {
+        "rev": "1-0ad5cc4ee4273e36de3bd5c91b626dbf"
+      },
+      "doc": {
+        "_id": "user:100224",
+        "_rev": "1-0ad5cc4ee4273e36de3bd5c91b626dbf",
+        "type": "user",
+        "username": "100224",
+        "fullName": "Packaging Operator",
+        "role": "operator",
+        "email": "100224@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.278Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100225",
+      "key": "user:100225",
+      "value": {
+        "rev": "1-ea1d2dbf32cc382fac4e6334908657f5"
+      },
+      "doc": {
+        "_id": "user:100225",
+        "_rev": "1-ea1d2dbf32cc382fac4e6334908657f5",
+        "type": "user",
+        "username": "100225",
+        "fullName": "Maintenance Operator",
+        "role": "operator",
+        "email": "100225@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.282Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100226",
+      "key": "user:100226",
+      "value": {
+        "rev": "1-017309bd5ff4bd310145469d5690540f"
+      },
+      "doc": {
+        "_id": "user:100226",
+        "_rev": "1-017309bd5ff4bd310145469d5690540f",
+        "type": "user",
+        "username": "100226",
+        "fullName": "Warehouse Operator",
+        "role": "viewer",
+        "email": "100226@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.286Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100227",
+      "key": "user:100227",
+      "value": {
+        "rev": "1-2839fbfd7473b5b3fc2b80a6ea29317e"
+      },
+      "doc": {
+        "_id": "user:100227",
+        "_rev": "1-2839fbfd7473b5b3fc2b80a6ea29317e",
+        "type": "user",
+        "username": "100227",
+        "fullName": "Laboratory Technician",
+        "role": "operator",
+        "email": "100227@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.291Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100228",
+      "key": "user:100228",
+      "value": {
+        "rev": "1-db0a5a40b80048f2d769852f60ef9f25"
+      },
+      "doc": {
+        "_id": "user:100228",
+        "_rev": "1-db0a5a40b80048f2d769852f60ef9f25",
+        "type": "user",
+        "username": "100228",
+        "fullName": "Distillation Operator",
+        "role": "operator",
+        "email": "100228@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.295Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100229",
+      "key": "user:100229",
+      "value": {
+        "rev": "1-e082015a5434fb7b8ca097c9dbdc429a"
+      },
+      "doc": {
+        "_id": "user:100229",
+        "_rev": "1-e082015a5434fb7b8ca097c9dbdc429a",
+        "type": "user",
+        "username": "100229",
+        "fullName": "Bottling Operator",
+        "role": "operator",
+        "email": "100229@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.299Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100230",
+      "key": "user:100230",
+      "value": {
+        "rev": "1-22686a4bb43c304acb56d009bfc3b6e5"
+      },
+      "doc": {
+        "_id": "user:100230",
+        "_rev": "1-22686a4bb43c304acb56d009bfc3b6e5",
+        "type": "user",
+        "username": "100230",
+        "fullName": "Security Officer",
+        "role": "viewer",
+        "email": "100230@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-05T08:49:33.303Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:admin",
+      "key": "user:admin",
+      "value": {
+        "rev": "8-43ec0ebb76005c849e931b8bd6d22858"
+      },
+      "doc": {
+        "_id": "user:admin",
+        "_rev": "8-43ec0ebb76005c849e931b8bd6d22858",
+        "username": "admin",
+        "name": "Administrator",
+        "role": "admin",
+        "level": 4,
+        "created": "2025-08-04T10:17:45.333Z",
+        "type": "user",
+        "password": "admin",
+        "lastLogin": "2025-08-04T13:11:07.083Z"
+      }
+    },
+    {
+      "id": "user:sangan",
+      "key": "user:sangan",
+      "value": {
+        "rev": "1-7356bfb0f14bc8e163025583fca50710"
+      },
+      "doc": {
+        "_id": "user:sangan",
+        "_rev": "1-7356bfb0f14bc8e163025583fca50710",
+        "type": "user",
+        "username": "sangan",
+        "fullName": "sangan k",
+        "role": "manager",
+        "email": "san@test",
+        "plainPassword": "admin123",
+        "isActive": true,
+        "updatedAt": "2025-08-06T02:28:57.149Z",
+        "createdAt": "2025-08-06T02:28:57.149Z"
+      }
+    },
+    {
+      "id": "user:100301",
+      "key": "user:100301",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "user:100301",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "user",
+        "username": "100301",
+        "fullName": "Marketing Executive",
+        "role": "operator",
+        "email": "100301@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-18T13:00:00.000Z",
+        "isActive": true
+      }
+    },
+    {
+      "id": "user:100302",
+      "key": "user:100302",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "user:100302",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "user",
+        "username": "100302",
+        "fullName": "Logistics Coordinator",
+        "role": "operator",
+        "email": "100302@bagalkotdistilleries.com",
+        "plainPassword": "admin123",
+        "createdAt": "2025-08-18T13:05:00.000Z",
+        "isActive": true
+      }
+    }
+  ]
+}
