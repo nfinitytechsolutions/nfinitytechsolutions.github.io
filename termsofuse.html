@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use - Nfinity InfoTech</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            overflow-x: hidden;
+            cursor: auto;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        #canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            cursor: auto;
+        }
+
+        .content-overlay {
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .interactive {
+            pointer-events: auto;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #4ecdc4;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #0f0f23;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4ecdc4;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            color: #0f0f23;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 140px 40px 60px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terms-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .terms-content h2 {
+            color: #4ecdc4;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .terms-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .terms-content h3 {
+            color: #45b7d1;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .terms-content p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .terms-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .terms-content li {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            margin: 20px 0;
+        }
+
+        .highlight-box h3 {
+            color: #4ecdc4;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-info {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: #4ecdc4;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 40px 30px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #4ecdc4;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .main-content {
+                padding: 120px 20px 40px 20px;
+            }
+
+            .terms-content {
+                padding: 25px;
+            }
+
+            .footer-links {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Canvas -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Header -->
+        <header class="header interactive">
+            <nav class="nav">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">N</div>
+                    <span>nfinity<strong>infotech</strong></span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#features">Why Us</a></li>
+                    <li><a href="index.html#tech">Tech Stack</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+                <a href="index.html#contact" class="cta-button">Get Started</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content interactive">
+            <h1 class="page-title">Terms of Use</h1>
+            <p class="page-subtitle">Please read these terms and conditions carefully before using our services.</p>
+
+            <div class="terms-content">
+                <div class="contact-info">
+                    <h3>Website Owner & Operator</h3>
+                    <p>This website is Owned & Operated by Nfinity InfoTech</p>
+                </div>
+
+                <h2>Refund Policy</h2>
+                <div class="highlight-box">
+                    <h3>Important Notice</h3>
+                    <p>All purchases are final. We do not offer refunds or exchanges once a software development service or digital product has been purchased. Please review the project scope, requirements, and deliverables carefully before completing your purchase.</p>
+                </div>
+
+                <h3>Damaged or Inaccessible Content</h3>
+                <p>If you experience any technical issues accessing the delivered software or find that the project deliverables are incomplete or corrupted, please contact our customer support team within 24 hours of delivery. We will assist you in resolving the issue.</p>
+
+                <h3>Refund Exceptions</h3>
+                <p>In rare cases where a refund is approved (e.g., duplicate payment or technical error), the amount will be credited to your bank account within 6–7 business days.</p>
+
+                <h2>Legal Framework</h2>
+                <p>• This document is an electronic record in terms of Information Technology Act, 2000 and rules there under as applicable and the amended provisions pertaining to electronic records in various statutes as amended by the Information Technology Act, 2000. This electronic record is generated by a computer system and does not require any physical or digital signatures.</p>
+
+                <p>• This document is published in accordance with the provisions of Rule 3 (1) of the Information Technology (Intermediaries guidelines) Rules, 2011 that require publishing the rules and regulations, privacy policy and Terms of Use for access or usage of domain name www.nfinityinfotech.com ("Website"), including the related mobile site and mobile application (hereinafter referred to as "Platform").</p>
+
+                <p>• The Platform is owned by Nfinity InfoTech, a company with its registered office at 3rd Floor, SLV Sunrise, Police station road, Varthur, Bangalore India 560087 (hereinafter referred to as "Platform Owner", "we", "us", "our").</p>
+
+                <h2>Terms and Conditions</h2>
+                <p>• Your use of the Platform and services and tools are governed by the following terms and conditions ("Terms of Use") as applicable to the Platform including the applicable policies which are incorporated herein by way of reference. If You transact on the Platform, You shall be subject to the policies that are applicable to the Platform for such transaction. By mere use of the Platform, You shall be contracting with the Platform Owner and these terms and conditions including the policies constitute Your binding obligations, with Platform Owner.</p>
+
+                <p>• For the purpose of these Terms of Use, wherever the context so requires "you", "your" or "user" shall mean any natural or legal person who has agreed to become a user/client on the Platform.</p>
+
+                <p><strong>ACCESSING, BROWSING OR OTHERWISE USING THE PLATFORM INDICATES YOUR AGREEMENT TO ALL THE TERMS AND CONDITIONS UNDER THESE TERMS OF USE, SO PLEASE READ THE TERMS OF USE CAREFULLY BEFORE PROCEEDING.</strong></p>
+
+                <h2>Service Terms</h2>
+                <p>• To access and use the Services, you agree to provide true, accurate and complete information to us during and after registration, and you shall be responsible for all acts done through the use of your registered account on the Platform.</p>
+
+                <p>• Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials offered on this website or through the Services, for any specific purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.</p>
+
+                <p>• Your use of our Services and the Platform is solely and entirely at your own risk and discretion for which we shall not be liable to you in any manner. You are required to independently assess and ensure that the Services meet your requirements.</p>
+
+                <h2>Intellectual Property</h2>
+                <p>• The contents of the Platform and the Services are proprietary to us and are licensed to us. You will not have any authority to claim any intellectual property rights, title, or interest in its contents. The contents includes and is not limited to the design, layout, look and graphics.</p>
+
+                <p>• You acknowledge that unauthorized use of the Platform and/or the Services may lead to action against you as per these Terms of Use and/or applicable laws.</p>
+
+                <h2>Payment and Legal Compliance</h2>
+                <p>• You agree to pay us the charges associated with availing the Services as per the agreed project scope and timeline.</p>
+
+                <p>• You agree not to use the Platform and/or Services for any purpose that is unlawful, illegal or forbidden by these Terms, or Indian or local laws that might apply to you.</p>
+
+                <p>• You agree and acknowledge that website and the Services may contain links to other third party websites. On accessing these links, you will be governed by the terms of use, privacy policy and such other policies of such third party websites.</p>
+
+                <h2>Liability and Indemnification</h2>
+                <p>• You understand that upon initiating a transaction for availing the Services you are entering into a legally binding and enforceable contract with the Platform Owner for the Services.</p>
+
+                <p>• You shall indemnify and hold harmless Platform Owner, its affiliates, group companies (as applicable) and their respective officers, directors, agents, and employees, from any claim or demand, or actions including reasonable attorneys' fees, made by any third party or penalty imposed due to or arising out of Your breach of this Terms of Use, privacy Policy and other Policies.</p>
+
+                <p>• In no event will the Platform Owner be liable for any indirect, consequential, incidental, special or punitive damages, including without limitation damages for loss of profits or revenues, business interruption, loss of business opportunities, loss of data or loss of other economic interests, whether in contract, negligence, tort or otherwise, arising from the use of or inability to use the Services.</p>
+
+                <h2>Force Majeure and Jurisdiction</h2>
+                <p>• Notwithstanding anything contained in these Terms of Use, the parties shall not be liable for any failure to perform an obligation under these Terms if performance is prevented or delayed by a force majeure event.</p>
+
+                <p>• These Terms and any dispute or claim relating to it, or its enforceability, shall be governed by and construed in accordance with the laws of India.</p>
+
+                <p>• All disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in Bangalore, Karnataka.</p>
+
+                <h2>Contact Information</h2>
+                <p>All concerns or communications relating to these Terms must be communicated to us using the contact information provided below:</p>
+
+                <div class="contact-info" style="margin-top: 20px;">
+                    <h3>Contact Information</h3>
+                    <p><strong>Email:</strong> info@nfinityinfotech.com</p>
+                    <p><strong>Address:</strong> 3rd Floor, SLV Sunrise<br>Police station road, Varthur<br>Bangalore India 560087</p>
+                    <p><strong>Phone:</strong> +91 98862 25140</p>
+                </div>
+
+                <p style="margin-top: 30px; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
+                    <strong>Last Updated:</strong> January 2025
+                </p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links interactive">
+                    <a href="index.html#services">Services</a>
+                    <a href="index.html#features">Why Us</a>
+                    <a href="index.html#tech">Tech Stack</a>
+                    <a href="index.html#contact">Contact</a>
+                    <a href="privacypolicy.html">Privacy Policy</a>
+                    <a href="termsofuse.html">Terms of Use</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2024 nfinity infotech. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="nfinity-infotech.js"></script>
+</body>
+</html>
