@@ -71,13 +71,19 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            background: transparent;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
             color: #0f0f23;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         
         .nav-links {
@@ -534,7 +540,7 @@
         <header class="header interactive">
             <nav class="nav">
                 <div class="logo">
-                    <div class="logo-icon"><img src='12.32.09_7732daef-.png' /></div>
+                    <div class="logo-icon"><img src='logo.png' alt='Nfinity InfoTech Logo' /></div>
                     <span>nfinity<strong>infotech</strong></span>
                 </div>
                 <ul class="nav-links">
