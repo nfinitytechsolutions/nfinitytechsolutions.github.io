@@ -1,0 +1,427 @@
+{
+  "total_rows": 21,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "menuitem:1754321902048",
+      "key": "menuitem:1754321902048",
+      "value": {
+        "rev": "1-9604decba5bf2bf31688dd0d9584f6f6"
+      },
+      "doc": {
+        "_id": "menuitem:1754321902048",
+        "_rev": "1-9604decba5bf2bf31688dd0d9584f6f6",
+        "type": "menuitem",
+        "name": "Aaa",
+        "category": "lunch",
+        "price": 11,
+        "description": "",
+        "isAvailable": true,
+        "created": "2025-08-04T15:38:22.048Z",
+        "updated": "2025-08-04T15:38:22.048Z"
+      }
+    },
+    {
+      "id": "menuitem:lunch",
+      "key": "menuitem:lunch",
+      "value": {
+        "rev": "3-e09a00cf1426621a1d51ab1fae1b7c9e"
+      },
+      "doc": {
+        "_id": "menuitem:lunch",
+        "_rev": "3-e09a00cf1426621a1d51ab1fae1b7c9e",
+        "type": "menuitem",
+        "name": "Thali",
+        "category": "lunch",
+        "price": 70,
+        "description": "Full meal with rice, dal, roti, and sabzi",
+        "isAvailable": true,
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjoAAAI9CAYAAAAzTdJ4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAP+lSURBVHhe7P1nsG1JdiaGfcf7c663z9uqV950V7UrdMN0Y0AAgxliwBmNCI5GmglaiaTGkEGFOKEI6o8iRCoohjQcQ5EggMFgBr67gW6gu9pUd3X5elWvXj3v37veHm/1fSt3nrPPefe+et1ohkKIWvfuk5krV65caXbmt3Pn3juysrLVw8f0MX1MH9PH9DF9TB/TX0CKBu7H9DF9TB/Tx/QxfUwf0184+hjofEwf08f0MX1MH9PH9BeWPgY6H9PH9DF9TB/Tx/Qx/YWlj4HOx/QxfUwf08f0MX1Mf2HpY6DzMX1MH9PH9DF9TB/TX1iKrK1s9xABej338JXcSISMgMJ+L+MpooSKJrvHv26325eJRqN2KNTXMJz8fgoEh9JIMxn9vMQJ8hBP+Zrf4pzAqJ0/LD1cemdXmCwcmDmqox+WofL7eh31ixgOOAGplI7j+ZIclnkYol4msrRBVj2GH0oP5X2eQ25In1xFWJwF7Oc+CteNE9tb7n7aq84fnHa/+CEbRmT2CovlXMUNws7v5QfhQbxxFAh47hyxGOMFh+OwPulGOui2W3ZEOx3KdRGLxBCPxpCMJxCLx5FM8EjHEY3xPItFeMUSnAtB/XfRQafXYvt20e010O3U0eRRb+xia2cdtWoZFR4bG9uoVquo15to1NuoVxqol9toN5muzV7XjdKNIMa8mRPisbispC3MOxIlX+c5baNd8XgOpfwCjhw7iumDM8iNpzUQMG86Pcqk2rRwHa3WbZR3r2Jr8zo2Vm9hc20N25tbKO9UsFuuo1xrodxoY6fSRaUOVFmsFnNllhxjVG0sK3myJxqnTUkglYohlU4im84gncgiEkva+DNenMb8zAEe0ziwcABjuXmkIiV0OlEkM3GMTZSQSRWoOI4Oy9yotlHdrWN3axe7lTLKlV1UW1Vm0EEin0RhsojxySmWcxypZJ7pkixfJLBLbalWVLF1rrnG0Nnsx1G5Yf9erijsdyQtzIM/5rqmDnqNfl28+3HUD7toc3vUa+d+SG4kSJIgHTJ9eUSWg+kh01xje2dvCulRkvvJ9Xzpdq4PB0mDtD8uCpn9I9CfL/WPi3yd9Oso5OrX/H6AVzgsq7Ryg0oN9ydPg7aQ7GDmCVLYr8jLiAbpBykdeQlHTq4vbOS6uuz0/BEdPg1ZYTvDlEhyEHgARdZWCXSoxCvwmY2efK7AgX9ERjYofi+gYyTeHno8WRqyIg+YdZVO/+EBYFAxShbw2cCeLdmwzMPQA+UVxWx8GQayynuQznz76OmnoW2Wqh92P0EpjHyclUOuAn3P3rRfmb1mVbFsc/XolJk4gw9QSwq1nFfPgDdnL1tH7fDhvez7KNovrcKuLI5cvOVuYU97pQu7XlylFMvcrvwDOecPBE3OhS3OWHv4DdgYw8Jd06mw6oqzI9qcKJtAp82uyzBBQSKaQJKAIplKcvKOEdjEENG5RPkoy2rlZT+PE+T0CGIIUdDuEsQ0KyhX17Czu4Ht7U3sbldQrdTo1lDZqWNzfRu1nRbatS51EDTFCE4iAgdpA1DJTBKZdIoHwwkgFoshzXCa/Gi0ZwCrRzPaHYIwnuvdbgTZ5DgyuRkUx+ZRmBgjGEgQWMXQ4+SfShEQpTYJsK5jdfkN3L75PlbvrGB9jQBrvY4q7ajXmtRDQEadrUaTZWijScCxWyXIqQENIhyaDmIwMDtMTqTw/LNjOHw8jmwhgc2tCM69X8btexsEZASIqkIerGbWH5ArZDE9PoFEL04AFMPs5ASmFmZx7OhpLM6dQDIyxd7CMmZjLEMBuWyB8ClBXoxtw8KywAJ8zUoTuxsVrK9uYX19HVuVTTQSDaRo... [truncated]",
+        "updated": "2025-08-07T19:43:06.192Z"
+      }
+    },
+    {
+      "id": "menuitem:samosa",
+      "key": "menuitem:samosa",
+      "value": {
+        "rev": "3-b94d81fdd81ff6c7e8ce18aa07b311f8"
+      },
+      "doc": {
+        "_id": "menuitem:samosa",
+        "_rev": "3-b94d81fdd81ff6c7e8ce18aa07b311f8",
+        "type": "menuitem",
+        "name": "Samosa",
+        "category": "snack",
+        "price": 20,
+        "description": "Crispy pastry with spiced potato filling",
+        "isAvailable": true,
+        "image": "data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZgAAAOptZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAImlsb2MAAAAAREAAAQABAAAAAAEOAAEAAAAAAAB1QAAAACNpaW5mAAAAAAABAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAamlwcnAAAABLaXBjbwAAABNjb2xybmNseAABAA0ABoAAAAAMYXYxQ4EEDAAAAAAUaXNwZQAAAAAAAALkAAAC5AAAABBwaXhpAAAAAAMICAgAAAAXaXBtYQAAAAAAAAABAAEEAYIDBAAAdUhtZGF0EgAKChkmbjuPggIaDQgyruoBEUABBBBBQPmsL+vWwM92HMwyVQzOHgQAYEx58xLCPDuMeBiDFdKH/4rxmdkvco/u2yMYdqYChLiqqhda+h1CwQGQGmtbzQ3awYXa57xkV9S0KbjQ/SqJa+bGxbQGfGyJMqo86Ge6rBA90niG/ZdjjReIXYB3H6OsAEoUaGn5uv7Yf+85YIuzBFI7XxGv1r7i0rGUCraj4hptHikwCkA9CTASIU5Z/O268fUDpoH4SmJkPmePBe1UP+T2GtUFVOZlCkYHXyeJ/VkEJg2IGP/jJQWI0rH2oyKrl73u3ED8aslHG9f6MZMWJ0QRUyTiS6ZJDK9uOToAEKY4DXKWBDY7KeB/Zdd1hP8Qx01HmVRqciE9QiVF13On0vp7InVFSKb9rpidIi438LFfKbQ3iZpFF1emfoU5cKg0rCn3G1m/hpWPnOFoI77yPPmZLzN3jamGyzAXpdri4ymgQMUmJnO+k9oM8B8FCmcb6DaSLEbtwuncpd99KLS4cvsMVMoQE4hZ+C4xO1Y/yCdjYHZZqGBpuATWggzwvuKdu3oNdPsMFjX6oMyRSBD/lF3cYfbISDHoQsJuoBwrHZnWbdtrIkANVnW0hIwE4MDXA29Q4FdUSFGG+NrvxMbr3y13QKQ1801SFJ05pGyQrHq87nj0fI2aJJcq18sWNTkld9rpWWxzMT06spNlf655bsPukblhSY++u6rUGeeOs0uZNX8qK+rSZ9XHdB8KUrYPBOi9fa9xXm6PYXJprRBD0ksJnthfanOfPd7GlS2aLnuo5/K7duqP008lhjnZbVbKwvymg1MS/CyjKO+HFWJtXLL9beaCwcubfZ/oy10GdVf29EHmk3pH5agtTu6yXp/liHU8MuIj6TiLj6s09kgk3suVFB8Yvh1dYjRLT061Zu2MJjUHbeWb8xd1dHxJhXnZdzt5baj1lWtoGXtlclHbeRf4BdCaVe9lfWviS6OzBSmOliAkrJvsHgBZ7W5K9HoKkyWF08sSy/xQIgubm1oE5pvlS0z+EOUBsIYT1P4wtMjRR1SGy70MNpC3dDf11Sx1g/pRo/e/ba9E1GGkDxLPa9jYBeNYu7o+46IoNCllo8ONzzB15o6/gulJl4JoYKG8bjxcLCuUlxkSkUIaYMG1u2Ou2UVqg+qZ3D9E0vsIfOP7E546JRh4/xHmL0JWoz6Imuy6EzwmbZLsrJM1ktAodG+o3I8HyfFiYrPHlhEQg7LcIk1eX+N/M5/G4k+LSQMNdGbM5y3GnvtqoPTdg6g/eD9P3CYLyotzMuIZ5sMKCS7h8ewcxRJCVIM2s5cjqBreJ2rmUz9WMguefGB5AA1bdRZ1yQpQSlUIl5BVAbdQOL8n2SWI8M9iVbSl62pbusAYyb2z07T3HvtMFaQoOaLSZRtjxJrd99k4k6jvxxY4+G1TfKOLomfcAmh/039JZJpwM3b4DTGRGzaUZhL2hLthBZvqWO+WYInqPl5d5CkUgcnCxlQJwBy8xNtKP9CnUoQOeq0zB+AWWyfEbZ1GeoOcum/063cxNb7GgBTGstVLfL7Y9hKfeVLBKZgltQ4isYWGut7T2f0... [truncated]",
+        "updated": "2025-08-08T05:49:20.131Z",
+        "updatedBy": "100144",
+        "updatedAt": "2025-08-08T05:49:22.040Z"
+      }
+    },
+    {
+      "id": "menuitem:tea",
+      "key": "menuitem:tea",
+      "value": {
+        "rev": "3-61be2503f20830de241c8f2541e21e69"
+      },
+      "doc": {
+        "_id": "menuitem:tea",
+        "_rev": "3-61be2503f20830de241c8f2541e21e69",
+        "type": "menuitem",
+        "name": "Chai",
+        "category": "beverage",
+        "price": 10,
+        "description": "Hot masala tea",
+        "isAvailable": true,
+        "updated": "2025-08-06T02:29:48.437Z"
+      }
+    },
+    {
+      "id": "order:1754286602991",
+      "key": "order:1754286602991",
+      "value": {
+        "rev": "3-611d79b3df8168b639e024eb78374f20"
+      },
+      "doc": {
+        "_id": "order:1754286602991",
+        "_rev": "3-611d79b3df8168b639e024eb78374f20",
+        "type": "canteen_order",
+        "itemId": "stock:potatoes",
+        "itemName": "Potatoes",
+        "requestedQuantity": 20,
+        "status": "received",
+        "createdAt": "2025-08-04T05:50:02.991Z",
+        "updated": "2025-08-04T05:50:23.895Z"
+      }
+    },
+    {
+      "id": "order:1754326701610",
+      "key": "order:1754326701610",
+      "value": {
+        "rev": "3-3b0fac6fc1fc773b1a17fd066f5c3ef0"
+      },
+      "doc": {
+        "_id": "order:1754326701610",
+        "_rev": "3-3b0fac6fc1fc773b1a17fd066f5c3ef0",
+        "type": "canteen_order",
+        "itemId": "stock:potatoes",
+        "itemName": "Potatoes",
+        "requestedQuantity": 20,
+        "status": "received",
+        "requestedBy": "100221",
+        "requestedByName": "Production Operator 1",
+        "createdAt": "2025-08-04T16:58:21.610Z",
+        "updated": "2025-08-04T17:06:54.748Z",
+        "approvedBy": "100144",
+        "approvedByName": "Chandrashekhar",
+        "approvedAt": "2025-08-04T16:58:56.412Z"
+      }
+    },
+    {
+      "id": "order:1754327236993",
+      "key": "order:1754327236993",
+      "value": {
+        "rev": "3-b7e54dacad399328a6c3b63b5fa8fe2e"
+      },
+      "doc": {
+        "_id": "order:1754327236993",
+        "_rev": "3-b7e54dacad399328a6c3b63b5fa8fe2e",
+        "type": "canteen_order",
+        "itemId": "stock:flour",
+        "itemName": "Flour",
+        "requestedQuantity": 40,
+        "status": "received",
+        "requestedBy": "100221",
+        "requestedByName": "Production Operator 1",
+        "createdAt": "2025-08-04T17:07:16.993Z",
+        "updated": "2025-08-04T17:08:26.510Z",
+        "approvedBy": "100201",
+        "approvedByName": "Production Supervisor",
+        "approvedAt": "2025-08-04T17:07:56.388Z"
+      }
+    },
+    {
+      "id": "order:1754376207404",
+      "key": "order:1754376207404",
+      "value": {
+        "rev": "3-05efbeb8a4f9f3a6e3ce9c1b95d7529f"
+      },
+      "doc": {
+        "_id": "order:1754376207404",
+        "_rev": "3-05efbeb8a4f9f3a6e3ce9c1b95d7529f",
+        "type": "canteen_order",
+        "itemId": "stock:potatoes",
+        "itemName": "Potatoes",
+        "requestedQuantity": 20,
+        "status": "received",
+        "createdAt": "2025-08-05T06:43:27.404Z",
+        "requestedBy": "amit@bagalkotdistilleries.com",
+        "requestedByRole": "operator",
+        "updated": "2025-08-05T06:43:58.164Z",
+        "approvedBy": "rajesh@bagalkotdistilleries.com",
+        "approvedAt": "2025-08-05T06:43:47.956Z",
+        "processedBy": "amit@bagalkotdistilleries.com",
+        "processedAt": "2025-08-05T06:43:58.164Z"
+      }
+    },
+    {
+      "id": "order:1754376807996",
+      "key": "order:1754376807996",
+      "value": {
+        "rev": "3-224db48e3e2f6bb986f78fecfd6747eb"
+      },
+      "doc": {
+        "_id": "order:1754376807996",
+        "_rev": "3-224db48e3e2f6bb986f78fecfd6747eb",
+        "type": "canteen_order",
+        "itemId": "stock:potatoes",
+        "itemName": "Potatoes",
+        "requestedQuantity": 20,
+        "status": "received",
+        "createdAt": "2025-08-05T06:53:27.996Z",
+        "requestedBy": "100225@bagalkotdistilleries.com",
+        "requestedByRole": "operator",
+        "updated": "2025-08-05T06:54:41.844Z",
+        "approvedBy": "100204@bagalkotdistilleries.com",
+        "approvedAt": "2025-08-05T06:54:01.804Z",
+        "processedBy": "100228@bagalkotdistilleries.com",
+        "processedAt": "2025-08-05T06:54:41.844Z"
+      }
+    },
+    {
+      "id": "order:1754571923508",
+      "key": "order:1754571923508",
+      "value": {
+        "rev": "3-3272fb95af507417cf12645e733855d7"
+      },
+      "doc": {
+        "_id": "order:1754571923508",
+        "_rev": "3-3272fb95af507417cf12645e733855d7",
+        "type": "canteen_order",
+        "itemId": "stock:potatoes",
+        "itemName": "Potatoes",
+        "requestedQuantity": 20,
+        "status": "received",
+        "createdAt": "2025-08-07T13:05:23.508Z",
+        "requestedBy": "100228@bagalkotdistilleries.com",
+        "requestedByRole": "operator",
+        "updated": "2025-08-07T13:05:55.828Z",
+        "approvedBy": "100203@bagalkotdistilleries.com",
+        "approvedAt": "2025-08-07T13:05:40.188Z",
+        "processedBy": "100229@bagalkotdistilleries.com",
+        "processedAt": "2025-08-07T13:05:55.828Z"
+      }
+    },
+    {
+      "id": "stock:potato2",
+      "key": "stock:potato2",
+      "value": {
+        "rev": "1-2fb8c228417b80644d44049ba01e8485"
+      },
+      "doc": {
+        "_id": "stock:potato2",
+        "_rev": "1-2fb8c228417b80644d44049ba01e8485",
+        "name": "potato2",
+        "unit": "kg",
+        "quantity": 22,
+        "reorderLevel": 0,
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBKRXhpZgAASUkqAAgAAAABAGmHBAABAAAAGgAAAAAAAAABAIaSBwAVAAAALAAAAAAAAAAAAAAAAAAAAFZlcnNpb24gMS4wLjAA/9sAhAAFBQUJBgkJCQkMEw4ODA4OGRIOEhAXDhAQFxAXFxAUFxQUGhcTExcaFBcYIxgcGR8aGCEYIxgjIiIkJygjFyc1AQkJBQkJCQwJCRMhFw4aIhwMGCkiKBoiJCIiGSwiKCEiFCMiGh8fGhocGBwiGiQkIw4ZJCEXLxkaFyIhJx8XJCr/wgARCAPoA+gDASIAAhEBAxEB/8QANAABAAMBAQEBAQAAAAAAAAAAAAIDBAEFBgcIAQEBAQEBAQEAAAAAAAAAAAAAAgEDBAUG/9oADAMBAAIQAxAAAAD+ywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgROs8c3SokXud3A0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGOc7w5zvGc5h+a59PqvM+bt8nbdllzn0jKzkXXbHhfdgVnvej8g7c/trPkfX78fXU39uY5uTGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwQ74sV6PiedV5PRTZKXl7c6lzuK2vc4p0HO8N7XdCVfLq82FGis1ex813ty+7t+F933eb6Jnt9HGbnKSGA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4jjlcPk+V6vNhT87262J5u+xntZdbVNF6E7kQp2PWK+yYlCXM2mNkJqmu+HPaK7a6rZ9H8dL18P0afxn0fv8fo9rl25zc7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByIReHG+Z5WWj5P0tlVTxd9Es0s3Zbg0bGudULjfynR1m1yNTKrtbZo8nZQ7Iz2Q5OqraYrtWqE7ijdRlx0Znafsvd/NPX+j4fuO4dXt8tjikgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ51mU/A/Ufnvg9tkM2n5Hvtcp5Xq8/0Oaz+lRpuNk82i+XdGey5vjHlz43uVdVJDRuQlKBVGZtVGuiNzT7KNpo0wys3LYZUY2RrNv13wun2+f9Fn877/0vBaOsgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc53kvg/ivf+W+R9TZv8/f8/wBVko95rUY0u7lx1vvafM37yuton056JVdqbKZdO2Zp00VWRpFxLLl3M1ywV59meaxQ01RdcrKWxRav9/5yfr8/6bP4X7L6Xg1djLvzADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA... [truncated]",
+        "type": "stock",
+        "updated": "2025-08-08T07:57:45.882Z",
+        "created": "2025-08-08T07:57:45.882Z"
+      }
+    },
+    {
+      "id": "stock:potatoes",
+      "key": "stock:potatoes",
+      "value": {
+        "rev": "21-c27438cba47ef072de9eb81e84807cbe"
+      },
+      "doc": {
+        "_id": "stock:potatoes",
+        "_rev": "21-c27438cba47ef072de9eb81e84807cbe",
+        "type": "stock",
+        "name": "Potatoes",
+        "unit": "kg",
+        "quantity": 27,
+        "reorderLevel": 10,
+        "updated": "2025-08-07T19:20:11.894Z",
+        "lastUsedBy": "100228@bagalkotdistilleries.com",
+        "lastUsedAt": "2025-08-07T13:05:17.212Z",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QBKRXhpZgAASUkqAAgAAAABAGmHBAABAAAAGgAAAAAAAAABAIaSBwAVAAAALAAAAAAAAAAAAAAAAAAAAFZlcnNpb24gMS4wLjAA/9sAhAAFBQUJBgkJCQkMEw4ODA4OGRIOEhAXDhAQFxAXFxAUFxQUGhcTExcaFBcYIxgcGR8aGCEYIxgjIiIkJygjFyc1AQkJBQkJCQwJCRMhFw4aIhwMGCkiKBoiJCIiGSwiKCEiFCMiGh8fGhocGBwiGiQkIw4ZJCEXLxkaFyIhJx8XJCr/wgARCAPoA+gDASIAAhEBAxEB/8QANAABAAMBAQEBAQAAAAAAAAAAAAIDBAEFBgcIAQEBAQEBAQEAAAAAAAAAAAAAAgEDBAUG/9oADAMBAAIQAxAAAAD+ywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgROs8c3SokXud3A0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGOc7w5zvGc5h+a59PqvM+bt8nbdllzn0jKzkXXbHhfdgVnvej8g7c/trPkfX78fXU39uY5uTGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwQ74sV6PiedV5PRTZKXl7c6lzuK2vc4p0HO8N7XdCVfLq82FGis1ex813ty+7t+F933eb6Jnt9HGbnKSGA0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4jjlcPk+V6vNhT87262J5u+xntZdbVNF6E7kQp2PWK+yYlCXM2mNkJqmu+HPaK7a6rZ9H8dL18P0afxn0fv8fo9rl25zc7QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByIReHG+Z5WWj5P0tlVTxd9Es0s3Zbg0bGudULjfynR1m1yNTKrtbZo8nZQ7Iz2Q5OqraYrtWqE7ijdRlx0Znafsvd/NPX+j4fuO4dXt8tjikgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ51mU/A/Ufnvg9tkM2n5Hvtcp5Xq8/0Oaz+lRpuNk82i+XdGey5vjHlz43uVdVJDRuQlKBVGZtVGuiNzT7KNpo0wys3LYZUY2RrNv13wun2+f9Fn877/0vBaOsgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc53kvg/ivf+W+R9TZv8/f8/wBVko95rUY0u7lx1vvafM37yuton056JVdqbKZdO2Zp00VWRpFxLLl3M1ywV59meaxQ01RdcrKWxRav9/5yfr8/6bP4X7L6Xg1djLvzADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA... [truncated]"
+      }
+    },
+    {
+      "id": "stock:tea_leaves",
+      "key": "stock:tea_leaves",
+      "value": {
+        "rev": "8-e9ed127ccb36b0dec32e367368e906f9"
+      },
+      "doc": {
+        "_id": "stock:tea_leaves",
+        "_rev": "8-e9ed127ccb36b0dec32e367368e906f9",
+        "type": "stock",
+        "name": "Tea Leaves",
+        "unit": "kg",
+        "quantity": 2.5,
+        "reorderLevel": 1,
+        "updated": "2025-08-07T19:23:37.254Z",
+        "lastUsedBy": "amit@bagalkotdistilleries.com",
+        "lastUsedAt": "2025-08-04T17:20:31.480Z",
+        "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQACWAJYAAD/2wCEAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDIBCQkJDAsMGA0NGDIhHCEyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/CABEIAZACgAMBIgACEQEDEQH/xAAyAAEAAwEBAQEAAAAAAAAAAAAAAQIDBAUGBwEBAQADAQAAAAAAAAAAAAAAAAECAwQF/9oADAMBAAIQAxAAAAD9/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ5nQ5Kna4anoOCY7nFautzWN2Vi6JAAAAAAAAAAAAAAAAAAAAAAAAAAAADDiPTx8LjPd5PF55fX5/Oudk8tzonG5rfO5e9Lmmmd61vnoa3zua6Y3NZwHQ5pTpty2OhjcuAAAAAAAAAAAAAAAAAAAAAAcxfgpyq5tMYzx2xM8dsSL0uXvS5e9Lml6aLa9LRrfPStNKXs0vnoXvS5ETCREwREwTfKJerXi0TsY7UAAAAAAAAAAAAAAAAAAABn53ZwrjlriZ468+GUYxnxdDPLz+Tq9R87zcvZ9Hz+LOjp9LLkad2+cMMpJlixJfXEx7eryJz1/Qdnyk7dP2/T8Btv5/0Hf4Hr7OX7OPm+vt5fYjl6uvngjPHo6ePpNhQAAAAAAAAAAAAAAAAAAHLx9vEvP5/X4/ndqmPgeN63seRwTo75tXSbYvOlwrbTW4Y26L5a+a3Xe4cU99ssfPj0a4uCO6uGXHHXTC88b1wyyXrrsSY3o7fLnPX7evjej2cvt+j8/wDQe95PRtw93dx7igAAAAAAAAAAAAAAAAAAMfL9fyZWdrS/I/O/qWfn+n+Uz934/nel89p2cvJ2X1x2k21w1z1dO3Nts09O3Ntv0dF8b7Nd85rJnlrlp25Za56NuVNKaNudNKatlHX6WWrw5+w9bv4/jPoPU5fU87s5Mb+jyX9fy+s7WWlkgAAAAAAAAAAAAAAAAAAeR6/mxzTBdt+Xc6MNL2eby+1WX5rl+sz1bvk8/rKad3ykfVxrz+UfWTL8nP1ky/KW+qlPlb/USnzW3vRnh5PV1U2YX6vNjdp9TLz2zDowrJMxYnSLmvT5vOevTztbOzXDc6587qNwAAAAAAAAAAAAAAAAOLtxPKi1Zbbc+p06Y6WTWalaXqUraFrFqkQiIiaiECIgtFRaKwXrFSyli1q3LXXGlblb+ldPHy90fNR9H56r+R7CdWvB30AAAAAAAAAAAAAAAAiR4+fZxyxeljp0w1s0rNSK2qVraq1iYK1mIis1EIIhAhAQEIJtW5bSmpa8XJ1z6jsFgAHjY+j5Mvqd/F12XAAAAAAAAAAAAAAAABz+Z7Pky5TEmu2G9l0ilbQVpeq0rehWt6RFZqRE1IiaExAVQSC966Fts9S1q3HpcHp2AAAcXj+lwS+p1cffZIAAAAAAAAAAAAAAAAHB35R5ETC6b83RZvKxnTSplXSi0repSJgrS9SkWrFaXoRWahAtaty+tNEveLkzFl6+qtrAAFbeeed1ef7cufocnXYAAAAAAAAAAAAAAAAAZcxjy3pLbfm1O3Xn3srTXMyrpmtItUrS9StbVitbVKUvQpW1CLVuW0pqaXpol7Vss9XIPYcXTZoBGPnHV4z0YteeqtZAAAAAAAAAAAAAAA4vHPouD56I9Tixla02GPo8lzvtnY7eji6q1ztVMqXoViarFUEVmsRW1Cud8ytLZjTO5rrlqmmueha0F5PO9IcG+1Dqnm6U5dfTlYjzfSTo6CgAAAAAAAAAAAAB550fP4zLle81m0kzm8mc3FV5G2Njp6uHpOt... [truncated]"
+      }
+    },
+    {
+      "id": "usage:1754326683249",
+      "key": "usage:1754326683249",
+      "value": {
+        "rev": "1-dc2b192d84301c93ab2a916cc2160dd8"
+      },
+      "doc": {
+        "_id": "usage:1754326683249",
+        "_rev": "1-dc2b192d84301c93ab2a916cc2160dd8",
+        "type": "stock_usage",
+        "itemId": "stock:flour",
+        "itemName": "Flour",
+        "quantityUsed": 20,
+        "usedBy": "100221",
+        "usedByName": "Production Operator 1",
+        "usedAt": "2025-08-04T16:58:03.249Z",
+        "remainingQuantity": 40
+      }
+    },
+    {
+      "id": "usage:1754326696808",
+      "key": "usage:1754326696808",
+      "value": {
+        "rev": "1-a0b070bd10dc09025760d2d2b37e7260"
+      },
+      "doc": {
+        "_id": "usage:1754326696808",
+        "_rev": "1-a0b070bd10dc09025760d2d2b37e7260",
+        "type": "stock_usage",
+        "itemId": "stock:potatoes",
+        "itemName": "Potatoes",
+        "quantityUsed": 16,
+        "usedBy": "100221",
+        "usedByName": "Production Operator 1",
+        "usedAt": "2025-08-04T16:58:16.808Z",
+        "remainingQuantity": 9
+      }
+    },
+    {
+      "id": "usage:1754327235029",
+      "key": "usage:1754327235029",
+      "value": {
+        "rev": "1-f50a8b14eac97a27f902a109d952d870"
+      },
+      "doc": {
+        "_id": "usage:1754327235029",
+        "_rev": "1-f50a8b14eac97a27f902a109d952d870",
+        "type": "stock_usage",
+        "itemId": "stock:flour",
+        "itemName": "Flour",
+        "quantityUsed": 25,
+        "usedBy": "100221",
+        "usedByName": "Production Operator 1",
+        "usedAt": "2025-08-04T17:07:15.029Z",
+        "remainingQuantity": 15
+      }
+    },
+    {
+      "id": "menuitem:coffee",
+      "key": "menuitem:coffee",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "menuitem:coffee",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "menuitem",
+        "name": "Coffee",
+        "category": "beverage",
+        "price": 15,
+        "description": "Freshly brewed coffee",
+        "isAvailable": true,
+        "created": "2025-08-17T10:00:00.000Z",
+        "updated": "2025-08-17T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "menuitem:biryani",
+      "key": "menuitem:biryani",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "menuitem:biryani",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "menuitem",
+        "name": "Vegetable Biryani",
+        "category": "lunch",
+        "price": 80,
+        "description": "Aromatic rice dish with mixed vegetables",
+        "isAvailable": true,
+        "created": "2025-08-17T10:05:00.000Z",
+        "updated": "2025-08-17T10:05:00.000Z"
+      }
+    },
+    {
+      "id": "order:canteen-sugar-1",
+      "key": "order:canteen-sugar-1",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "order:canteen-sugar-1",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "canteen_order",
+        "itemId": "stock:sugar",
+        "itemName": "Sugar",
+        "requestedQuantity": 10,
+        "status": "pending",
+        "createdAt": "2025-08-17T10:10:00.000Z",
+        "updated": "2025-08-17T10:10:00.000Z"
+      }
+    },
+    {
+      "id": "stock:sugar",
+      "key": "stock:sugar",
+      "value": {
+        "rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9"
+      },
+      "doc": {
+        "_id": "stock:sugar",
+        "_rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+        "type": "stock",
+        "name": "Sugar",
+        "unit": "kg",
+        "quantity": 50,
+        "reorderLevel": 10,
+        "created": "2025-08-17T10:15:00.000Z",
+        "updated": "2025-08-17T10:15:00.000Z"
+      }
+    },
+    {
+      "id": "stock:onions",
+      "key": "stock:onions",
+      "value": {
+        "rev": "1-e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+      },
+      "doc": {
+        "_id": "stock:onions",
+        "_rev": "1-e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+        "type": "stock",
+        "name": "Onions",
+        "unit": "kg",
+        "quantity": 30,
+        "reorderLevel": 5,
+        "created": "2025-08-17T10:20:00.000Z",
+        "updated": "2025-08-17T10:20:00.000Z"
+      }
+    }
+  ]
+}

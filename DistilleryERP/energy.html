@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Energy Management</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <script src="libs/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #10b981; /* emerald-500 */
+        }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Energy Management</h1>
+                    <p class="mt-1 text-md text-gray-500">Monitoring steam consumption and energy costs for Cooking & Liquefaction.</p>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-emerald-100 rounded-md p-3"><i data-lucide="zap" class="h-6 w-6 text-emerald-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Live Steam Flow</dt><dd id="liveSteamFlow" class="text-3xl font-bold text-gray-900">22.5 T/hr</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="area-chart" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Steam Consumed (Today)</dt><dd class="text-3xl font-bold text-gray-900">180.4 T</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Energy Cost (Today)</dt><dd class="text-3xl font-bold text-gray-900">₹3,24,720</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-purple-100 rounded-md p-3"><i data-lucide="thermometer-snowflake" class="h-6 w-6 text-purple-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Energy Intensity</dt><dd class="text-3xl font-bold text-gray-900">₹2.15/L</dd></dl></div></div></div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Live Consumption Chart -->
+                <div class="lg:col-span-2 bg-white p-6 shadow-md rounded-lg">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Jet Cooker Steam Consumption (Live)</h2>
+                    <canvas id="steamChart"></canvas>
+                </div>
+
+                <!-- Cost Analysis & Consumption Log -->
+                <div class="lg:col-span-1 space-y-8">
+                    <div class="bg-white p-6 shadow-md rounded-lg">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Cost Analysis</h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between"><span>Steam Price:</span><span class="font-semibold">₹1,800 / Tonne</span></div>
+                            <div class="flex justify-between"><span>Total Steam (Today):</span><span class="font-semibold">180.4 T</span></div>
+                            <div class="flex justify-between border-t pt-2"><span>Total Cost (Today):</span><span class="font-semibold">₹3,24,720</span></div>
+                            <hr class="my-2">
+                            <div class="flex justify-between"><span>Ethanol Produced (Today):</span><span class="font-semibold">1,51,000 L</span></div>
+                            <div class="flex justify-between text-base border-t pt-2">
+                                <span class="font-bold">Energy Intensity:</span>
+                                <span class="font-bold text-emerald-600">₹2.15 / Litre</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg">
+                        <h3 class="text-xl font-bold text-gray-800 p-4 border-b">Consumption Log by Batch</h3>
+                        <div class="overflow-y-auto max-h-64">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50 sticky top-0"><tr><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Batch ID</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Steam (T)</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Cost (₹)</th></tr></thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr><td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">MASH-0702-04</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">45.2</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">₹81,360</td></tr>
+                                    <tr><td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">MASH-0702-03</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">44.8</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">₹80,640</td></tr>
+                                    <tr><td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">MASH-0702-02</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">45.5</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">₹81,900</td></tr>
+                                    <tr><td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">MASH-0702-01</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">44.9</td><td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">₹80,820</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        lucide.createIcons();
+
+        const liveSteamFlowEl = document.getElementById('liveSteamFlow');
+        const ctx = document.getElementById('steamChart').getContext('2d');
+
+        const chartData = {
+            labels: Array(30).fill(''),
+            datasets: [{
+                label: 'Steam Flow (T/hr)',
+                data: Array(30).fill(22),
+                borderColor: '#10b981', // emerald-500
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.4,
+                fill: true,
+            }]
+        };
+
+        const steamChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: { display: true, text: 'Tonnes / Hour' },
+                        min: 15,
+                        max: 30,
+                    },
+                    x: { display: false }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Simulate live data feed
+        setInterval(() => {
+            const now = new Date();
+            const timeLabel = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+            chartData.labels.push(timeLabel);
+            chartData.labels.shift();
+
+            const newFlow = 22 + (Math.random() - 0.4) * 5; // Fluctuate around 22
+            chartData.datasets[0].data.push(newFlow);
+            chartData.datasets[0].data.shift();
+            
+            steamChart.update('none');
+
+            // Update KPI
+            liveSteamFlowEl.textContent = `${newFlow.toFixed(1)} T/hr`;
+
+        }, 2500);
+    </script>
+</body>
+</html>

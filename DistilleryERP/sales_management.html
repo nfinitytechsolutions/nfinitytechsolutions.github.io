@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Sales Management</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .kpi-card { border-left: 4px solid #0d9488; }
+        .status-badge { display: inline-flex; align-items: center; padding: 0.25em 0.6em; font-size: 0.8rem; font-weight: 600; border-radius: 9999px; }
+        .status-open { background-color: #ffedd5; color: #9a3412; }
+        .status-partial { background-color: #dbeafe; color: #1e40af; }
+        .status-fulfilled { background-color: #dcfce7; color: #166534; }
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+        
+        /* UPDATED: Print-specific styles for better fitting on paper */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .printable-area, .printable-area * {
+                visibility: visible;
+            }
+            .printable-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px !important; /* Adjusted padding for print margins */
+                box-sizing: border-box;
+            }
+            #invoiceModalContent {
+                max-width: 100% !important; /* Override screen max-width to fit paper */
+            }
+            .no-print {
+                display: none !important;
+            }
+            .printable-area table td, .printable-area table th {
+                word-break: break-word; /* Prevent long text from overflowing cells */
+            }
+        }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+						<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-10 no-print">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <a href="sales_main.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>Back to Sales & Logistics
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Sales Management</h1>
+                <p class="mt-1 text-md text-gray-500">Manage sales orders, customer contracts, and invoicing.</p>
+            </div>
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-gray-800">Sales Orders</h2>
+                    <button id="openNewOrderModalBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700">
+                        <i data-lucide="plus" class="h-4 w-4 mr-2"></i>Create Sales Order
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fulfillment</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Value (₹)</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Order Modal -->
+    <div id="newOrderModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Create New Sales Order</h3>
+                <button class="close-modal-btn text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
+            </div>
+            <form id="newOrderForm">
+                <div class="space-y-4">
+                    <div><label for="customer" class="block text-sm font-medium text-gray-700">Customer</label><input type="text" id="customer" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required></div>
+                    <div><label for="product" class="block text-sm font-medium text-gray-700">Product</label><select id="product" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"><option value="Ethanol">Ethanol</option><option value="DDGS">DDGS</option><option value="Corn Oil">Corn Oil</option></select></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div><label for="quantity" class="block text-sm font-medium text-gray-700">Quantity (MT/KL)</label><input type="number" id="quantity" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required></div>
+                        <div><label for="price" class="block text-sm font-medium text-gray-700">Price per Unit (₹)</label><input type="number" id="price" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required></div>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" class="close-modal-btn bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700">Create Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal-backdrop">
+        <div id="invoiceModalContent" class="modal-content w-full max-w-4xl bg-white rounded-lg shadow-2xl">
+            <!-- Invoice content will be rendered here -->
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        // --- DATA ---
+        let salesOrderData = [
+            { id: 'SO-25-078', customer: 'Krishna Feeds', product: 'DDGS', qty: 50, dispatched: 0, price: 24500, hsn: '2303' },
+            { id: 'SO-25-077', customer: 'IOCL - Pune', product: 'Ethanol', qty: 100, dispatched: 40, price: 65750, hsn: '2207' },
+            { id: 'SO-25-076', customer: 'Deccan Poultry', product: 'DDGS', qty: 120, dispatched: 120, price: 24200, hsn: '2303' },
+        ];
+        
+        const ordersTableBody = document.getElementById('ordersTableBody');
+
+        // --- RENDER FUNCTIONS ---
+        function renderOrdersTable() {
+            ordersTableBody.innerHTML = '';
+            salesOrderData.forEach(order => {
+                let status, statusClass;
+                if (order.dispatched === 0) { status = 'Open'; statusClass = 'status-open'; }
+                else if (order.dispatched < order.qty) { status = 'Partially Dispatched'; statusClass = 'status-partial'; }
+                else { status = 'Fulfilled'; statusClass = 'status-fulfilled'; }
+                const row = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${order.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${order.customer}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.product}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.dispatched} / ${order.qty}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-800">${(order.qty * order.price).toLocaleString('en-IN', {style: 'currency', currency: 'INR'})}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm"><span class="status-badge ${statusClass}">${status}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button class="text-teal-600 hover:text-teal-900 create-invoice-btn" data-id="${order.id}">Create Invoice</button>
+                        </td>
+                    </tr>`;
+                ordersTableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        /**
+         * Converts a number to its word representation.
+         * @param {number} num - The number to convert.
+         * @returns {string} The number in words.
+         */
+        function numberToWords(num) {
+            const a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
+            const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+            
+            function inWords(n) {
+                let str = '';
+                if (n > 99) {
+                    str += a[Math.floor(n / 100)] + 'hundred ';
+                    n %= 100;
+                }
+                if (n > 19) {
+                    str += b[Math.floor(n / 10)] + ' ' + a[n % 10];
+                } else {
+                    str += a[n];
+                }
+                return str;
+            }
+
+            if (num === 0) return 'Zero';
+            let words = '';
+            if (num >= 10000000) {
+                words += inWords(Math.floor(num / 10000000)) + 'crore ';
+                num %= 10000000;
+            }
+            if (num >= 100000) {
+                words += inWords(Math.floor(num / 100000)) + 'lakh ';
+                num %= 100000;
+            }
+            if (num >= 1000) {
+                words += inWords(Math.floor(num / 1000)) + 'thousand ';
+                num %= 1000;
+            }
+            words += inWords(num);
+            return words.replace(/\s+/g, ' ').trim().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        }
+
+        function renderInvoice(order) {
+            const subtotal = order.qty * order.price;
+            const cgst = subtotal * 0.025; // Assuming 2.5% CGST
+            const sgst = subtotal * 0.025; // Assuming 2.5% SGST
+            const totalGst = cgst + sgst;
+            const total = subtotal + totalGst;
+            const amountInWords = numberToWords(Math.round(total));
+
+            const invoiceHTML = `
+                <div class="p-6 printable-area">
+                    <div class="border border-black p-4 text-sm">
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <h2 class="text-2xl font-bold">Bagalkot Distilleries Pvt.Ltd</h2>
+                            <p>123 Industrial Area, Bagalkot, Karnataka - 587101</p>
+                            <p>Mobile: 9876543210</p>
+                            <p class="font-bold">GSTIN: 29ABCDE1234F1Z5</p>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="border-y-2 border-black text-center py-1">
+                            <h1 class="text-xl font-bold">Tax Invoice</h1>
+                        </div>
+
+                        <!-- Invoice Details -->
+                        <table class="w-full mt-2 text-xs">
+                            <tr>
+                                <td class="w-1/2 pr-1">
+                                    <table class="w-full border border-black">
+                                        <tr><td class="border-b border-black px-1">Invoice No: INV-${order.id}</td></tr>
+                                        <tr><td class="border-b border-black px-1">Invoice date: ${new Date().toLocaleDateString('en-GB')}</td></tr>
+                                        <tr><td class="border-b border-black px-1">Reverse Charge (Y/N): NO</td></tr>
+                                        <tr><td class="px-1">State: KARNATAKA <span class="float-right">Code: 29</span></td></tr>
+                                    </table>
+                                </td>
+                                <td class="w-1/2 pl-1">
+                                    <table class="w-full border border-black">
+                                        <tr><td class="border-b border-black px-1">Transport Mode:</td></tr>
+                                        <tr><td class="border-b border-black px-1">Vehicle number:</td></tr>
+                                        <tr><td class="border-b border-black px-1">Date of Supply: ${new Date().toLocaleDateString('en-GB')}</td></tr>
+                                        <tr><td class="px-1">Place of Supply:</td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- Party Details -->
+                        <table class="w-full mt-1 text-xs">
+                             <tr>
+                                <td class="w-1/2 pr-1">
+                                    <table class="w-full border border-black">
+                                        <tr class="border-b border-black bg-gray-100"><td class="px-1 font-bold">Bill to Party</td></tr>
+                                        <tr><td class="px-1 font-bold">Name: ${order.customer}</td></tr>
+                                        <tr><td class="px-1">Address: </td></tr>
+                                        <tr><td class="px-1 h-8"></td></tr>
+                                        <tr><td class="border-t border-black px-1">GSTIN: 27AGLPR3124P1ZT</td></tr>
+                                        <tr><td class="border-t border-black px-1">State: MAHARASHTRA <span class="float-right">Code: 27</span></td></tr>
+                                    </table>
+                                </td>
+                                <td class="w-1/2 pl-1">
+                                    <table class="w-full border border-black">
+                                        <tr class="border-b border-black bg-gray-100"><td class="px-1 font-bold">Ship to Party</td></tr>
+                                        <tr><td class="px-1 font-bold">Name: ${order.customer}</td></tr>
+                                        <tr><td class="px-1">Address: </td></tr>
+                                        <tr><td class="px-1 h-8"></td></tr>
+                                        <tr><td class="border-t border-black px-1">GSTIN:</td></tr>
+                                        <tr><td class="border-t border-black px-1">State: <span class="float-right">Code:</span></td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Items Table -->
+                        <table class="w-full mt-1 border-collapse border border-black text-xs">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border border-black p-1">S. No.</th>
+                                    <th class="border border-black p-1">Product Description</th>
+                                    <th class="border border-black p-1">HSN Code</th>
+                                    <th class="border border-black p-1">Qty</th>
+                                    <th class="border border-black p-1">Rate</th>
+                                    <th class="border border-black p-1">Amount</th>
+                                    <th class="border border-black p-1">Discount</th>
+                                    <th class="border border-black p-1">Taxable value</th>
+                                    <th colspan="2" class="border border-black p-1">S.GST + C.GST</th>
+                                    <th class="border border-black p-1">Total</th>
+                                </tr>
+                                 <tr class="bg-gray-100">
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black"></th>
+                                    <th class="border border-black p-1">Rate</th>
+                                    <th class="border border-black p-1">Amount</th>
+                                    <th class="border border-black"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-black p-1 text-center">1</td>
+                                    <td class="border border-black p-1">${order.product}</td>
+                                    <td class="border border-black p-1 text-center">${order.hsn}</td>
+                                    <td class="border border-black p-1 text-right">${order.qty}</td>
+                                    <td class="border border-black p-1 text-right">${order.price.toFixed(2)}</td>
+                                    <td class="border border-black p-1 text-right">${subtotal.toFixed(2)}</td>
+                                    <td class="border border-black p-1 text-right">0.00</td>
+                                    <td class="border border-black p-1 text-right">${subtotal.toFixed(2)}</td>
+                                    <td class="border border-black p-1 text-right">
+                                        <div>2.5%</div>
+                                        <div>2.5%</div>
+                                    </td>
+                                    <td class="border border-black p-1 text-right">
+                                        <div>${sgst.toFixed(2)}</div>
+                                        <div>${cgst.toFixed(2)}</div>
+                                    </td>
+                                    <td class="border border-black p-1 text-right font-bold">${total.toFixed(2)}</td>
+                                </tr>
+                                <!-- Dummy rows for layout -->
+                                ${Array(8).fill('<tr><td class="border border-black h-6" colspan="11"></td></tr>').join('')}
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-bold bg-gray-100">
+                                    <td colspan="8" class="border border-black p-1 text-center">Total</td>
+                                    <td class="border border-black p-1 text-right" colspan="2">${totalGst.toFixed(2)}</td>
+                                    <td class="border border-black p-1 text-right">${total.toFixed(2)}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- Footer -->
+                        <table class="w-full mt-1 text-xs">
+                            <tr>
+                                <td class="w-2/3 pr-1 align-top">
+                                    <table class="w-full border border-black h-full">
+                                        <tr><td class="px-1">Total Invoice amount in words: <span class="font-bold">${amountInWords} Rupees Only</span></td></tr>
+                                        <tr class="border-t border-black bg-gray-100"><td class="px-1 font-bold">Bank Details</td></tr>
+                                        <tr><td class="px-1">Bank A/C:</td></tr>
+                                        <tr><td class="px-1">Bank IFSC:</td></tr>
+                                        <tr><td class="h-8"></td></tr>
+                                    </table>
+                                </td>
+                                <td class="w-1/3 pl-1 align-top">
+                                    <table class="w-full border border-black h-full">
+                                        <tr><td class="px-1 flex justify-between"><span>Total Amount before Tax:</span> <span>${subtotal.toFixed(2)}</span></td></tr>
+                                        <tr><td class="px-1 flex justify-between border-t border-black"><span>Add: C.GST + S.GST:</span> <span>${totalGst.toFixed(2)}</span></td></tr>
+                                        <tr><td class="px-1 flex justify-between border-t border-black font-bold"><span>Total Amount after Tax:</span> <span>${total.toFixed(2)}</span></td></tr>
+                                        <tr><td class="px-1 flex justify-between border-t border-black"><span>GST on Reverse Charge:</span> <span>0.00</span></td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="w-2/3 pr-1 align-bottom pt-1">
+                                    <table class="w-full border border-black">
+                                        <tr><td class="h-12 text-center align-bottom p-1">Common Seal</td></tr>
+                                    </table>
+                                </td>
+                                <td class="w-1/3 pl-1 align-bottom pt-1">
+                                    <table class="w-full border border-black">
+                                        <tr><td class="px-1 text-center text-xxs">Certified that the particulars given above are true and correct</td></tr>
+                                        <tr><td class="px-1 text-center font-bold">For Bagalkot Distilleries Pvt.Ltd</td></tr>
+                                        <tr><td class="h-12 text-center align-bottom p-1">Authorised signatory</td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-4 p-6 pt-0 flex justify-end space-x-2 no-print">
+                    <button class="close-modal-btn bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">Close</button>
+                    <button onclick="window.print()" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Print</button>
+                </div>
+            `;
+            document.getElementById('invoiceModalContent').innerHTML = invoiceHTML;
+            // Re-attach close event listener for the new button
+            invoiceModal.querySelector('.close-modal-btn').onclick = () => invoiceModal.style.display = 'none';
+        }
+
+        // --- EVENT LISTENERS ---
+        const newOrderModal = document.getElementById('newOrderModal');
+        document.getElementById('openNewOrderModalBtn').onclick = () => newOrderModal.style.display = 'block';
+        newOrderModal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => newOrderModal.style.display = 'none');
+        
+        document.getElementById('newOrderForm').addEventListener('submit', e => {
+            e.preventDefault();
+            salesOrderData.unshift({ 
+                id: `SO-25-${Math.floor(Math.random() * 100) + 100}`, 
+                customer: document.getElementById('customer').value, 
+                product: document.getElementById('product').value, 
+                qty: parseInt(document.getElementById('quantity').value), 
+                dispatched: 0, 
+                price: parseInt(document.getElementById('price').value),
+                hsn: document.getElementById('product').value === 'Ethanol' ? '2207' : '2303' // Assign HSN based on product
+            });
+            renderOrdersTable();
+            newOrderModal.style.display = 'none';
+            document.getElementById('newOrderForm').reset();
+        });
+
+        const invoiceModal = document.getElementById('invoiceModal');
+        ordersTableBody.addEventListener('click', e => {
+            if (e.target.classList.contains('create-invoice-btn')) {
+                const order = salesOrderData.find(o => o.id === e.target.dataset.id);
+                renderInvoice(order);
+                invoiceModal.style.display = 'block';
+            }
+        });
+        
+        // Close modal on outside click
+        window.onclick = (e) => { 
+            if(e.target == newOrderModal) newOrderModal.style.display = 'none'; 
+            if(e.target == invoiceModal) invoiceModal.style.display = 'none'; 
+        };
+
+        // --- INITIAL RENDER ---
+        renderOrdersTable();
+    </script>
+</body>
+</html>

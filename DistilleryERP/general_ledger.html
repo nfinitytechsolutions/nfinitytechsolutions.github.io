@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - General Ledger</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #3b82f6; /* blue-500 */
+        }
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+				<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-8">
+                <a href="finance.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Finance & Accounting
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">General Ledger</h1>
+                <p class="mt-1 text-md text-gray-500">Manage the chart of accounts and all journal entries.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Chart of Accounts -->
+                <div class="lg:col-span-2 bg-white shadow-md rounded-lg">
+                     <div class="p-4 border-b flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-800">Chart of Accounts</h2>
+                        <button id="openNewAccountModalBtn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                            <i data-lucide="plus" class="h-4 w-4 mr-1"></i> New Account
+                        </button>
+                     </div>
+                     <div class="overflow-y-auto max-h-[500px]">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 sticky top-0"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Code</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Account Name</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Balance (₹)</th></tr></thead>
+                            <tbody id="accountsTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Journal Entries -->
+                <div class="lg:col-span-1 bg-white shadow-md rounded-lg">
+                    <div class="p-4 border-b flex justify-between items-center">
+                        <h2 class="text-xl font-bold text-gray-800">Journal Entries</h2>
+                        <button id="openNewJournalModalBtn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                            <i data-lucide="plus" class="h-4 w-4 mr-1"></i> New Entry
+                        </button>
+                    </div>
+                    <div id="journalEntriesContainer" class="overflow-y-auto max-h-[500px] p-4 space-y-3">
+                        <!-- Journal entries will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="newAccountModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Add New Account</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="newAccountForm"><div class="space-y-4"><div><label for="accountCode" class="block text-sm font-medium">Account Code</label><input type="number" id="accountCode" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="accountName" class="block text-sm font-medium">Account Name</label><input type="text" id="accountName" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="accountType" class="block text-sm font-medium">Account Type</label><select id="accountType" class="mt-1 block w-full border-gray-300 rounded-md"><option>Asset</option><option>Liability</option><option>Equity</option><option>Revenue</option><option>Expense</option></select></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-md">Save Account</button></div></form></div></div>
+    <div id="newJournalModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-3xl"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Create New Journal Entry</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="newJournalForm"><div class="space-y-4"><div><label for="journalDate" class="block text-sm font-medium">Date</label><input type="date" id="journalDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="journalDesc" class="block text-sm font-medium">Description</label><input type="text" id="journalDesc" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div id="journalLinesContainer" class="space-y-2 border-t pt-4"></div><button type="button" id="addJournalLineBtn" class="text-sm font-medium text-blue-600 hover:text-blue-800">+ Add Line</button><div class="flex justify-between items-center border-t pt-4 font-bold"><span>Totals:</span><div class="flex space-x-4"><span id="debitTotal">₹0.00</span><span id="creditTotal">₹0.00</span></div></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" id="saveJournalBtn" class="ml-3 text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-md">Post Entry</button></div></form></div></div>
+    
+    <script>
+        lucide.createIcons();
+
+        let chartOfAccounts = [
+            { code: 1010, name: 'Cash and Bank', type: 'Asset', balance: 50000000 },
+            { code: 1210, name: 'Accounts Receivable', type: 'Asset', balance: 12000000 },
+            { code: 1410, name: 'Raw Material Inventory', type: 'Asset', balance: 25000000 },
+            { code: 2010, name: 'Accounts Payable', type: 'Liability', balance: 8000000 },
+            { code: 3010, name: 'Share Capital', type: 'Equity', balance: 100000000 },
+            { code: 4010, name: 'Ethanol Sales', type: 'Revenue', balance: 150000000 },
+            { code: 5010, name: 'Raw Material Cost', type: 'Expense', balance: 75000000 },
+            { code: 5020, name: 'Salaries and Wages', type: 'Expense', balance: 18500000 },
+        ];
+
+        let journalEntries = [
+            { id: 'JE-001', date: '2025-07-01', description: 'Paid salaries for June', lines: [{ account: 'Salaries and Wages', debit: 18500000, credit: 0 }, { account: 'Cash and Bank', debit: 0, credit: 18500000 }] },
+            { id: 'JE-002', date: '2025-07-02', description: 'Purchase of corn on credit', lines: [{ account: 'Raw Material Inventory', debit: 5000000, credit: 0 }, { account: 'Accounts Payable', debit: 0, credit: 5000000 }] },
+        ];
+
+        const accountsTableBody = document.getElementById('accountsTableBody');
+        const journalEntriesContainer = document.getElementById('journalEntriesContainer');
+
+        function renderAccountsTable() {
+            accountsTableBody.innerHTML = '';
+            chartOfAccounts.sort((a,b) => a.code - b.code).forEach(acc => {
+                const row = `<tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${acc.code}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${acc.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${acc.type}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">${acc.balance.toLocaleString('en-IN')}</td>
+                </tr>`;
+                accountsTableBody.innerHTML += row;
+            });
+        }
+
+        function renderJournalEntries() {
+            journalEntriesContainer.innerHTML = '';
+            journalEntries.forEach(je => {
+                const entry = `
+                    <div class="border rounded-md p-3 bg-white">
+                        <div class="flex justify-between items-center">
+                            <p class="font-bold text-sm">${je.id}</p>
+                            <p class="text-xs text-gray-500">${new Date(je.date).toLocaleDateString('en-IN')}</p>
+                        </div>
+                        <p class="text-sm my-2">${je.description}</p>
+                        <div class="text-xs space-y-1 border-t pt-2">
+                            ${je.lines.map(line => `
+                                <div class="flex justify-between">
+                                    <span>${line.account}</span>
+                                    <div class="flex space-x-4">
+                                        <span>${line.debit > 0 ? `₹${line.debit.toLocaleString('en-IN')}` : ''}</span>
+                                        <span>${line.credit > 0 ? `₹${line.credit.toLocaleString('en-IN')}` : ''}</span>
+                                    </div>
+                                </div>`).join('')}
+                        </div>
+                    </div>`;
+                journalEntriesContainer.innerHTML += entry;
+            });
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+
+        const newAccountModal = setupModal('newAccountModal', 'openNewAccountModalBtn');
+        const newJournalModal = setupModal('newJournalModal', 'openNewJournalModalBtn');
+
+        document.getElementById('newAccountForm').addEventListener('submit', e => {
+            e.preventDefault();
+            chartOfAccounts.push({
+                code: parseInt(document.getElementById('accountCode').value),
+                name: document.getElementById('accountName').value,
+                type: document.getElementById('accountType').value,
+                balance: 0
+            });
+            renderAccountsTable();
+            newAccountModal.style.display = 'none';
+        });
+
+        // Journal Entry Form Logic
+        const journalLinesContainer = document.getElementById('journalLinesContainer');
+        const addJournalLineBtn = document.getElementById('addJournalLineBtn');
+        const debitTotalEl = document.getElementById('debitTotal');
+        const creditTotalEl = document.getElementById('creditTotal');
+
+        function addJournalLine() {
+            const lineId = Date.now();
+            const lineHtml = `
+                <div id="line-${lineId}" class="grid grid-cols-12 gap-2 items-center">
+                    <div class="col-span-5"><select class="w-full border-gray-300 rounded-md text-sm journal-account">${chartOfAccounts.map(a => `<option>${a.name}</option>`).join('')}</select></div>
+                    <div class="col-span-3"><input type="number" placeholder="Debit" class="w-full border-gray-300 rounded-md text-sm journal-debit"></div>
+                    <div class="col-span-3"><input type="number" placeholder="Credit" class="w-full border-gray-300 rounded-md text-sm journal-credit"></div>
+                    <div class="col-span-1"><button type="button" onclick="removeJournalLine(${lineId})" class="text-red-500 hover:text-red-700">&times;</button></div>
+                </div>`;
+            journalLinesContainer.insertAdjacentHTML('beforeend', lineHtml);
+        }
+
+        function removeJournalLine(id) { document.getElementById(`line-${id}`).remove(); updateJournalTotals(); }
+
+        function updateJournalTotals() {
+            let debitTotal = 0, creditTotal = 0;
+            journalLinesContainer.querySelectorAll('.journal-debit').forEach(i => debitTotal += parseFloat(i.value) || 0);
+            journalLinesContainer.querySelectorAll('.journal-credit').forEach(i => creditTotal += parseFloat(i.value) || 0);
+            debitTotalEl.textContent = `₹${debitTotal.toLocaleString('en-IN')}`;
+            creditTotalEl.textContent = `₹${creditTotal.toLocaleString('en-IN')}`;
+            
+            if(debitTotal === creditTotal && debitTotal > 0) {
+                debitTotalEl.classList.add('text-green-600');
+                creditTotalEl.classList.add('text-green-600');
+            } else {
+                debitTotalEl.classList.remove('text-green-600');
+                creditTotalEl.classList.remove('text-green-600');
+            }
+        }
+        
+        journalLinesContainer.addEventListener('input', updateJournalTotals);
+        addJournalLineBtn.addEventListener('click', addJournalLine);
+        document.getElementById('openNewJournalModalBtn').onclick = () => { addJournalLine(); addJournalLine(); newJournalModal.style.display = 'block'; };
+
+        document.getElementById('newJournalForm').addEventListener('submit', e => {
+            e.preventDefault();
+            let debitTotal = 0, creditTotal = 0;
+            const lines = [];
+            journalLinesContainer.querySelectorAll('.grid').forEach(line => {
+                const debit = parseFloat(line.querySelector('.journal-debit').value) || 0;
+                const credit = parseFloat(line.querySelector('.journal-credit').value) || 0;
+                debitTotal += debit;
+                creditTotal += credit;
+                lines.push({
+                    account: line.querySelector('.journal-account').value,
+                    debit: debit,
+                    credit: credit
+                });
+            });
+
+            if(debitTotal !== creditTotal || debitTotal === 0) {
+                alert('Journal entry must be balanced and not zero.');
+                return;
+            }
+            
+            journalEntries.unshift({
+                id: `JE-${String(journalEntries.length + 3).padStart(3, '0')}`,
+                date: document.getElementById('journalDate').value,
+                description: document.getElementById('journalDesc').value,
+                lines: lines
+            });
+            
+            renderJournalEntries();
+            newJournalModal.style.display = 'none';
+            journalLinesContainer.innerHTML = '';
+            updateJournalTotals();
+        });
+
+
+        // Initial Render
+        renderAccountsTable();
+        renderJournalEntries();
+    </script>
+</body>
+</html>

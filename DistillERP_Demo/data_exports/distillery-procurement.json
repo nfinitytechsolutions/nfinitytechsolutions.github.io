@@ -1,0 +1,401 @@
+{
+  "total_rows": 15,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "contract:EQUIP-2024-001",
+      "key": "contract:EQUIP-2024-001",
+      "value": {
+        "rev": "1-1c35a2c4b5b0271b8a6976d7600d7a24"
+      },
+      "doc": {
+        "_id": "contract:EQUIP-2024-001",
+        "_rev": "1-1c35a2c4b5b0271b8a6976d7600d7a24",
+        "type": "service_agreement",
+        "contractNumber": "EQUIP-2024-001",
+        "title": "Equipment Maintenance Service Agreement",
+        "vendorId": "vendor:EQUIP-001",
+        "vendorName": "Industrial Equipment Solutions",
+        "startDate": "2024-01-01",
+        "endDate": "2025-12-31",
+        "value": 120000,
+        "currency": "INR",
+        "paymentTerms": "45",
+        "status": "active",
+        "description": "Comprehensive maintenance service for all distillery equipment",
+        "terms": "Monthly preventive maintenance, emergency repair service with 4-hour response time.",
+        "autoRenewal": false,
+        "renewalPeriod": "24",
+        "created": "2025-08-03T05:05:46.457Z"
+      }
+    },
+    {
+      "id": "contract:GRAIN-2024-001",
+      "key": "contract:GRAIN-2024-001",
+      "value": {
+        "rev": "1-d0b962a4e7f9627fc1f3e48b056fd69e"
+      },
+      "doc": {
+        "_id": "contract:GRAIN-2024-001",
+        "_rev": "1-d0b962a4e7f9627fc1f3e48b056fd69e",
+        "type": "supply_agreement",
+        "contractNumber": "GRAIN-2024-001",
+        "title": "Annual Corn Supply Agreement",
+        "vendorId": "vendor:GRAIN-001",
+        "vendorName": "Midwest Grain Supply Co.",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31",
+        "value": 500000,
+        "currency": "INR",
+        "paymentTerms": "30",
+        "status": "active",
+        "description": "Annual supply contract for premium corn (minimum 10,000 bushels)",
+        "terms": "Delivery terms: FOB destination. Quality specifications: #2 Yellow Corn, moisture content max 15%.",
+        "autoRenewal": true,
+        "renewalPeriod": "12",
+        "created": "2025-08-03T05:05:46.457Z"
+      }
+    },
+    {
+      "id": "purchase_order:112",
+      "key": "purchase_order:112",
+      "value": {
+        "rev": "1-37ca125bd65e46729cd62113dfdcb45a"
+      },
+      "doc": {
+        "_id": "purchase_order:112",
+        "_rev": "1-37ca125bd65e46729cd62113dfdcb45a",
+        "type": "purchase_order",
+        "poNumber": "112",
+        "vendorId": "vendor:EQUIP-001",
+        "orderDate": "2025-08-03",
+        "deliveryDate": "",
+        "paymentTerms": "30",
+        "shippingAddress": "aa",
+        "items": [
+          {
+            "description": "ssss",
+            "quantity": "133",
+            "unitPrice": "22",
+            "amount": 2926,
+            "taxRate": 0
+          }
+        ],
+        "subtotal": 2926,
+        "tax": 234.08,
+        "shipping": 0,
+        "total": 3160.08,
+        "status": "draft",
+        "notes": "",
+        "vendorName": "Industrial Equipment Solutions",
+        "created": "2025-08-03T05:12:01.568Z",
+        "updated": "2025-08-03T05:12:01.568Z"
+      }
+    },
+    {
+      "id": "requisition:REQ-2024-001",
+      "key": "requisition:REQ-2024-001",
+      "value": {
+        "rev": "2-56fd8e808c5df69d82c130a1bf21efe2"
+      },
+      "doc": {
+        "_id": "requisition:REQ-2024-001",
+        "_rev": "2-56fd8e808c5df69d82c130a1bf21efe2",
+        "type": "requisition",
+        "requestNumber": "REQ-2024-001",
+        "requester": "Production Manager",
+        "department": "Production",
+        "priority": "high",
+        "requestedDate": "2025-08-03",
+        "requiredDate": "2025-08-10",
+        "items": [
+          {
+            "description": "Corn - Premium Grade #2",
+            "quantity": 1000,
+            "estimatedPrice": 4.5,
+            "category": "raw_materials",
+            "notes": "For next week's production batch"
+          }
+        ],
+        "justification": "Required for planned production schedule to meet customer orders",
+        "budgetCode": "PROD-001",
+        "status": "approved",
+        "created": "2025-08-03T05:05:46.457Z",
+        "updated": "2025-08-03T05:07:17.816Z"
+      }
+    },
+    {
+      "id": "rfq:22211",
+      "key": "rfq:22211",
+      "value": {
+        "rev": "1-4b5642b0a6f4cfc98911e3c2efe6318f"
+      },
+      "doc": {
+        "_id": "rfq:22211",
+        "_rev": "1-4b5642b0a6f4cfc98911e3c2efe6318f",
+        "type": "rfq",
+        "rfqNumber": "22211",
+        "title": "sss",
+        "issueDate": "2025-08-03",
+        "closingDate": "2025-08-05",
+        "vendors": [
+          "vendor:GRAIN-001"
+        ],
+        "items": [
+          {
+            "description": "",
+            "quantity": 1,
+            "specifications": "",
+            "deliveryRequired": ""
+          }
+        ],
+        "termsConditions": "",
+        "evaluationCriteria": "",
+        "status": "draft",
+        "created": "2025-08-03T05:14:18.671Z",
+        "updated": "2025-08-03T05:14:18.671Z"
+      }
+    },
+    {
+      "id": "supplier:SUP473257",
+      "key": "supplier:SUP473257",
+      "value": {
+        "rev": "1-dc641153d1b9d457c0403b5caf73c399"
+      },
+      "doc": {
+        "_id": "supplier:SUP473257",
+        "_rev": "1-dc641153d1b9d457c0403b5caf73c399",
+        "type": "supplier",
+        "supplierCode": "SUP473257",
+        "companyName": "Mareni rice mills",
+        "contactPerson": "",
+        "email": "",
+        "phone": "",
+        "address": {
+          "street": "",
+          "city": "",
+          "state": "",
+          "zipCode": "",
+          "country": "India"
+        },
+        "supplierType": "grain",
+        "paymentTerms": "NET30",
+        "status": "active",
+        "taxId": "",
+        "bankDetails": {
+          "bankName": "",
+          "accountNumber": "",
+          "routingNumber": ""
+        },
+        "certifications": [],
+        "notes": "",
+        "created": "2025-08-02T16:51:13.257Z",
+        "updated": "2025-08-02T16:51:13.257Z",
+        "performance": {
+          "totalOrders": 0,
+          "onTimeDeliveries": 0,
+          "qualityRating": 0,
+          "averageLeadTime": 0
+        }
+      }
+    },
+    {
+      "id": "vendor:EQUIP-001",
+      "key": "vendor:EQUIP-001",
+      "value": {
+        "rev": "1-a82a3dbd3319ec6e23d1de904fe9a4a8"
+      },
+      "doc": {
+        "_id": "vendor:EQUIP-001",
+        "_rev": "1-a82a3dbd3319ec6e23d1de904fe9a4a8",
+        "type": "vendor",
+        "vendorCode": "EQUIP-001",
+        "companyName": "Industrial Equipment Solutions",
+        "contactPerson": "Sarah Johnson",
+        "email": "sarah@iesequipment.com",
+        "phone": "(555) 987-6543",
+        "address": "5678 Industrial Blvd",
+        "city": "Louisville",
+        "state": "KY",
+        "zipCode": "40202",
+        "taxId": "98-7654321",
+        "paymentTerms": "45",
+        "category": "equipment",
+        "status": "active",
+        "rating": "4",
+        "notes": "Specializes in distillery equipment and maintenance",
+        "created": "2025-08-03T05:05:46.457Z"
+      }
+    },
+    {
+      "id": "vendor:GRAIN-001",
+      "key": "vendor:GRAIN-001",
+      "value": {
+        "rev": "1-6842da69b82c112894feef9f71d9c218"
+      },
+      "doc": {
+        "_id": "vendor:GRAIN-001",
+        "_rev": "1-6842da69b82c112894feef9f71d9c218",
+        "type": "vendor",
+        "vendorCode": "GRAIN-001",
+        "companyName": "Midwest Grain Supply Co.",
+        "contactPerson": "John Miller",
+        "email": "john.miller@midwestgrain.com",
+        "phone": "(555) 123-4567",
+        "address": "1234 Grain Road",
+        "city": "Des Moines",
+        "state": "IA",
+        "zipCode": "50309",
+        "taxId": "12-3456789",
+        "paymentTerms": "30",
+        "category": "raw_materials",
+        "status": "active",
+        "rating": "5",
+        "notes": "Primary corn supplier with excellent quality",
+        "created": "2025-08-03T05:05:46.457Z"
+      }
+    },
+    {
+      "id": "vendor:PACK-001",
+      "key": "vendor:PACK-001",
+      "value": {
+        "rev": "1-a553fa63f6cae37cd202519f9d5e56c2"
+      },
+      "doc": {
+        "_id": "vendor:PACK-001",
+        "_rev": "1-a553fa63f6cae37cd202519f9d5e56c2",
+        "type": "vendor",
+        "vendorCode": "PACK-001",
+        "companyName": "Premium Packaging Solutions",
+        "contactPerson": "Mike Chen",
+        "email": "mike.chen@premiumpkg.com",
+        "phone": "(555) 456-7890",
+        "address": "9876 Packaging Way",
+        "city": "Nashville",
+        "state": "TN",
+        "zipCode": "37201",
+        "taxId": "45-6789012",
+        "paymentTerms": "15",
+        "category": "packaging",
+        "status": "active",
+        "rating": "4",
+        "notes": "Bottles, labels, and packaging materials",
+        "created": "2025-08-03T05:05:46.457Z"
+      }
+    },
+    {
+      "id": "contract:LOG-2025-001",
+      "key": "contract:LOG-2025-001",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "contract:LOG-2025-001",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "service_agreement",
+        "contractNumber": "LOG-2025-001",
+        "title": "Logistics and Shipping Agreement",
+        "vendorName": "National Freight",
+        "status": "active",
+        "startDate": "2025-01-01",
+        "endDate": "2025-12-31",
+        "created": "2025-08-18T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "purchase_order:PO-2025-001",
+      "key": "purchase_order:PO-2025-001",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "purchase_order:PO-2025-001",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "purchase_order",
+        "poNumber": "PO-2025-001",
+        "vendorName": "Oak Barrel Co-op",
+        "items": [
+          {
+            "description": "American Oak Barrels",
+            "quantity": 100,
+            "unitPrice": 450
+          }
+        ],
+        "status": "approved",
+        "created": "2025-08-18T12:05:00.000Z"
+      }
+    },
+    {
+      "id": "requisition:REQ-2025-002",
+      "key": "requisition:REQ-2025-002",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "requisition:REQ-2025-002",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "requisition",
+        "requestNumber": "REQ-2025-002",
+        "requester": "Marketing Department",
+        "items": [
+          {
+            "description": "Promotional Materials",
+            "quantity": 500
+          }
+        ],
+        "status": "pending",
+        "created": "2025-08-18T12:10:00.000Z"
+      }
+    },
+    {
+      "id": "rfq:RFQ-2025-001",
+      "key": "rfq:RFQ-2025-001",
+      "value": {
+        "rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9"
+      },
+      "doc": {
+        "_id": "rfq:RFQ-2025-001",
+        "_rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+        "type": "rfq",
+        "rfqNumber": "RFQ-2025-001",
+        "title": "New Bottle Supplier",
+        "status": "open",
+        "created": "2025-08-18T12:15:00.000Z"
+      }
+    },
+    {
+      "id": "supplier:SUP-BOT-01",
+      "key": "supplier:SUP-BOT-01",
+      "value": {
+        "rev": "1-e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+      },
+      "doc": {
+        "_id": "supplier:SUP-BOT-01",
+        "_rev": "1-e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+        "type": "supplier",
+        "supplierCode": "SUP-BOT-01",
+        "companyName": "Glassworks Inc.",
+        "supplierType": "packaging",
+        "status": "active",
+        "created": "2025-08-18T12:20:00.000Z"
+      }
+    },
+    {
+      "id": "vendor:VEND-LOG-01",
+      "key": "vendor:VEND-LOG-01",
+      "value": {
+        "rev": "1-f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1"
+      },
+      "doc": {
+        "_id": "vendor:VEND-LOG-01",
+        "_rev": "1-f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+        "type": "vendor",
+        "vendorCode": "VEND-LOG-01",
+        "companyName": "National Freight",
+        "category": "logistics",
+        "status": "active",
+        "created": "2025-08-18T12:25:00.000Z"
+      }
+    }
+  ]
+}

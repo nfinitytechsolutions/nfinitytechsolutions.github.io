@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - My Leave</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .kpi-card { border-left: 4px solid #f97316; }
+        .status-badge { display: inline-flex; align-items: center; padding: 0.25em 0.6em; font-size: 0.8rem; font-weight: 600; border-radius: 9999px; }
+        .status-approved { background-color: #dcfce7; color: #166534; }
+        .status-pending { background-color: #ffedd5; color: #9a3412; }
+        .status-rejected { background-color: #fee2e2; color: #991b1b; }
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+				<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>Back to Dashboard
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">My Leave</h1>
+                <p class="mt-1 text-md text-gray-500">Apply for leave and track the status of your requests.</p>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-orange-100 rounded-md p-3">
+                            <i data-lucide="calendar-clock" class="h-6 w-6 text-orange-600"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">My Pending Requests</dt>
+                                <dd id="pendingRequestsCount" class="text-3xl font-bold text-gray-900">0</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-green-100 rounded-md p-3">
+                            <i data-lucide="calendar-check" class="h-6 w-6 text-green-600"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Approved (This Month)</dt>
+                                <dd id="approvedThisMonthCount" class="text-3xl font-bold text-gray-900">0</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leave History Table -->
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-gray-800">My Leave History</h2>
+                    <button id="openNewRequestModalBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700">
+                        <i data-lucide="plus" class="h-4 w-4 mr-2"></i>Apply for Leave
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Leave Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dates</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Days</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Leave requests will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Leave Request Modal -->
+    <div id="newRequestModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Apply for Leave</h3>
+                <button class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+            </div>
+            <form id="newRequestForm">
+                <div class="space-y-4">
+                    <div>
+                        <label for="leaveType" class="block text-sm font-medium text-gray-700">Leave Type</label>
+                        <select id="leaveType" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                            <option>Casual Leave</option>
+                            <option>Sick Leave</option>
+                            <option>Earned Leave</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+                            <input type="date" id="startDate" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500" required>
+                        </div>
+                        <div>
+                            <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+                            <input type="date" id="endDate" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="reason" class="block text-sm font-medium text-gray-700">Reason (Optional)</label>
+                        <textarea id="reason" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500"></textarea>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" class="close-modal-btn bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-md">Cancel</button>
+                    <button type="submit" class="text-white bg-orange-600 hover:bg-orange-700 py-2 px-4 rounded-md">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // --- DATA ---
+        // Hardcoded current employee name. In a real app, this would come from a login system.
+        const loggedInEmployee = 'Arjun Singh';
+
+        // Initial leave data for all employees. This simulates a database.
+        let leaveData = [
+            { id: 1, employee: 'Arjun Singh', type: 'Casual Leave', start: '2025-07-10', end: '2025-07-11', days: 2, status: 'Pending' },
+            { id: 2, employee: 'Sita Sharma', type: 'Sick Leave', start: '2025-06-28', end: '2025-06-28', days: 1, status: 'Approved' },
+            { id: 3, employee: 'Ramesh Kumar', type: 'Earned Leave', start: '2025-08-01', end: '2025-08-05', days: 5, status: 'Pending' },
+            { id: 4, employee: 'Priya Patel', type: 'Casual Leave', start: '2025-06-20', end: '2025-06-20', days: 1, status: 'Rejected' },
+            { id: 5, employee: 'Arjun Singh', type: 'Sick Leave', start: '2025-06-15', end: '2025-06-15', days: 1, status: 'Approved' },
+        ];
+
+        // --- DOM ELEMENTS ---
+        const leaveTableBody = document.getElementById('leaveTableBody');
+        const pendingRequestsCountEl = document.getElementById('pendingRequestsCount');
+        const approvedThisMonthCountEl = document.getElementById('approvedThisMonthCount');
+        const newRequestModal = document.getElementById('newRequestModal');
+        const openModalBtn = document.getElementById('openNewRequestModalBtn');
+        const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+        const newRequestForm = document.getElementById('newRequestForm');
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+
+        // --- FUNCTIONS ---
+
+        /**
+         * Renders the leave requests table and updates KPI cards for the logged-in employee.
+         */
+        function renderLeaveTable() {
+            // Filter data to only include requests from the logged-in employee
+            const myRequests = leaveData.filter(req => req.employee === loggedInEmployee);
+            
+            // Clear the table body to prevent duplicate entries
+            leaveTableBody.innerHTML = '';
+            
+            let pendingCount = 0;
+            let approvedThisMonthCount = 0;
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+
+            // Sort requests by start date, most recent first
+            myRequests.sort((a, b) => new Date(b.start) - new Date(a.start));
+
+            myRequests.forEach(req => {
+                // Calculate counts for KPI cards
+                if (req.status === 'Pending') {
+                    pendingCount++;
+                }
+                
+                const reqStartDate = new Date(req.start);
+                if (req.status === 'Approved' && reqStartDate.getMonth() === currentMonth && reqStartDate.getFullYear() === currentYear) {
+                    approvedThisMonthCount++;
+                }
+
+                // Define status badge classes for styling
+                const statusClasses = { 
+                    'Pending': 'status-pending', 
+                    'Approved': 'status-approved', 
+                    'Rejected': 'status-rejected' 
+                };
+
+                // Create and append the table row
+                const row = `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${req.type}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(req.start).toLocaleDateString('en-IN')} - ${new Date(req.end).toLocaleDateString('en-IN')}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${req.days}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="status-badge ${statusClasses[req.status]}">${req.status}</span>
+                        </td>
+                    </tr>
+                `;
+                leaveTableBody.innerHTML += row;
+            });
+
+            // Update KPI card values
+            pendingRequestsCountEl.textContent = pendingCount;
+            approvedThisMonthCountEl.textContent = approvedThisMonthCount;
+        }
+
+        /**
+         * Handles the submission of the new leave request form.
+         * @param {Event} e - The form submission event.
+         */
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const start = new Date(startDateInput.value);
+            const end = new Date(endDateInput.value);
+
+            // Basic validation
+            if (!startDateInput.value || !endDateInput.value) {
+                alert("Please select both a start and end date.");
+                return;
+            }
+            if (end < start) {
+                alert("End date cannot be before the start date.");
+                return;
+            }
+
+            // Calculate the number of days, inclusive of start and end dates
+            const days = Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
+            
+            // Create the new leave request object
+            const newRequest = { 
+                id: Date.now(), // Use timestamp for a unique ID
+                employee: loggedInEmployee, 
+                type: document.getElementById('leaveType').value, 
+                start: startDateInput.value, 
+                end: endDateInput.value, 
+                days: days, 
+                status: 'Pending' 
+            };
+            
+            // Add the new request to the beginning of our data array
+            leaveData.unshift(newRequest);
+
+            // Re-render the table with the new data
+            renderLeaveTable();
+            
+            // Close the modal and reset the form
+            newRequestModal.style.display = 'none';
+            e.target.reset();
+        }
+
+        // --- EVENT LISTENERS ---
+
+        // Open modal when "Apply for Leave" is clicked
+        openModalBtn.addEventListener('click', () => {
+            newRequestModal.style.display = 'block';
+        });
+
+        // Close modal when cancel buttons or 'x' is clicked
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                newRequestModal.style.display = 'none';
+            });
+        });
+
+        // Close modal if user clicks on the backdrop
+        window.addEventListener('click', (event) => {
+            if (event.target == newRequestModal) {
+                newRequestModal.style.display = 'none';
+            }
+        });
+
+        // Handle the form submission
+        newRequestForm.addEventListener('submit', handleFormSubmit);
+
+        // --- INITIALIZATION ---
+        // Render the table when the page loads
+        renderLeaveTable();
+    </script>
+</body>
+</html>

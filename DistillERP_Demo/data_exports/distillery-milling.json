@@ -1,0 +1,415 @@
+{
+  "total_rows": 16,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "milling_job:MJ240001",
+      "key": "milling_job:MJ240001",
+      "value": {
+        "rev": "1-milling001rev"
+      },
+      "doc": {
+        "_id": "milling_job:MJ240001",
+        "_rev": "1-milling001rev",
+        "type": "milling_job",
+        "jobNumber": "MJ240001",
+        "grainType": "corn",
+        "grainBatchId": "grain_batch:GB240001",
+        "quantity": "10000",
+        "targetMeshSize": "20",
+        "equipment": "equipment:HM001",
+        "startTime": "2024-01-15T08:00:00Z",
+        "endTime": "2024-01-15T13:00:00Z",
+        "operator": "John Miller",
+        "status": "completed",
+        "actualMeshSize": "22",
+        "yield": "98.5",
+        "notes": "Good grind quality, minimal fines",
+        "created": "2024-01-15T08:00:00Z",
+        "updated": "2024-01-15T13:00:00Z"
+      }
+    },
+    {
+      "id": "milling_job:MJ240002",
+      "key": "milling_job:MJ240002",
+      "value": {
+        "rev": "1-milling002rev"
+      },
+      "doc": {
+        "_id": "milling_job:MJ240002",
+        "_rev": "1-milling002rev",
+        "type": "milling_job",
+        "jobNumber": "MJ240002",
+        "grainType": "wheat",
+        "grainBatchId": "grain_batch:GB240002",
+        "quantity": "5000",
+        "targetMeshSize": "30",
+        "equipment": "equipment:HM001",
+        "startTime": "2024-01-18T09:00:00Z",
+        "endTime": "",
+        "operator": "Sarah Thompson",
+        "status": "in_progress",
+        "actualMeshSize": "",
+        "yield": "",
+        "notes": "Wheat milling for specialty batch",
+        "created": "2024-01-18T09:00:00Z",
+        "updated": "2024-01-18T10:30:00Z"
+      }
+    },
+    {
+      "id": "slurry_batch:SB240001",
+      "key": "slurry_batch:SB240001",
+      "value": {
+        "rev": "1-slurry001rev"
+      },
+      "doc": {
+        "_id": "slurry_batch:SB240001",
+        "_rev": "1-slurry001rev",
+        "type": "slurry_batch",
+        "batchNumber": "SB240001",
+        "millingJobId": "milling_job:MJ240001",
+        "recipe": "standard_corn_mash",
+        "grainWeight": "10000",
+        "waterVolume": "3500",
+        "waterTemperature": "185",
+        "enzymes": ["alpha_amylase", "glucoamylase"],
+        "cookingTemperature": "180",
+        "cookingDuration": "60",
+        "coolingTarget": "85",
+        "phLevel": "5.8",
+        "status": "complete",
+        "operator": "Sarah Johnson",
+        "startTime": "2024-01-15T14:00:00Z",
+        "notes": "Standard corn mash recipe, good conversion",
+        "created": "2024-01-15T14:00:00Z",
+        "updated": "2024-01-15T18:00:00Z"
+      }
+    },
+    {
+      "id": "slurry_batch:SB240002",
+      "key": "slurry_batch:SB240002",
+      "value": {
+        "rev": "1-slurry002rev"
+      },
+      "doc": {
+        "_id": "slurry_batch:SB240002",
+        "_rev": "1-slurry002rev",
+        "type": "slurry_batch",
+        "batchNumber": "SB240002",
+        "millingJobId": "",
+        "recipe": "wheat_mash",
+        "grainWeight": "5000",
+        "waterVolume": "2000",
+        "waterTemperature": "180",
+        "enzymes": ["alpha_amylase", "beta_amylase"],
+        "cookingTemperature": "175",
+        "cookingDuration": "75",
+        "coolingTarget": "80",
+        "phLevel": "5.5",
+        "status": "preparing",
+        "operator": "Mike Rodriguez",
+        "startTime": "",
+        "notes": "Wheat-based mash for premium whiskey",
+        "created": "2024-01-18T11:00:00Z",
+        "updated": "2024-01-18T11:00:00Z"
+      }
+    },
+    {
+      "id": "equipment:HM001",
+      "key": "equipment:HM001",
+      "value": {
+        "rev": "1-equip001rev"
+      },
+      "doc": {
+        "_id": "equipment:HM001",
+        "_rev": "1-equip001rev",
+        "type": "equipment",
+        "equipmentId": "HM001",
+        "name": "Primary Hammer Mill",
+        "type": "hammer_mill",
+        "manufacturer": "GrainTech Industries",
+        "model": "GT-2000",
+        "capacity": "2000 lbs/hr",
+        "status": "operational",
+        "lastMaintenance": "2024-01-15",
+        "nextMaintenance": "2024-04-15",
+        "operatingHours": "2340",
+        "notes": "Primary mill for corn processing",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-15T13:00:00Z"
+      }
+    },
+    {
+      "id": "equipment:MT001",
+      "key": "equipment:MT001",
+      "value": {
+        "rev": "1-equip002rev"
+      },
+      "doc": {
+        "_id": "equipment:MT001",
+        "_rev": "1-equip002rev",
+        "type": "equipment",
+        "equipmentId": "MT001",
+        "name": "Mash Tun #1",
+        "type": "mash_tun",
+        "manufacturer": "BrewMaster",
+        "model": "BM-5000",
+        "capacity": "5000 gallons",
+        "status": "operational",
+        "lastMaintenance": "2024-01-20",
+        "nextMaintenance": "2024-07-20",
+        "operatingHours": "1850",
+        "notes": "Main mashing vessel with temperature control",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-20T16:00:00Z"
+      }
+    },
+    {
+      "id": "equipment:CV001",
+      "key": "equipment:CV001",
+      "value": {
+        "rev": "1-equip003rev"
+      },
+      "doc": {
+        "_id": "equipment:CV001",
+        "_rev": "1-equip003rev",
+        "type": "equipment",
+        "equipmentId": "CV001",
+        "name": "Cooking Vessel #1",
+        "type": "cooking_vessel",
+        "manufacturer": "SteamMaster",
+        "model": "SM-3000",
+        "capacity": "3000 gallons",
+        "status": "maintenance",
+        "lastMaintenance": "2024-01-22",
+        "nextMaintenance": "2024-04-22",
+        "operatingHours": "2100",
+        "notes": "Steam heating cooking vessel, currently under maintenance",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-22T10:00:00Z"
+      }
+    },
+    {
+      "id": "grain_batch:GB240001",
+      "key": "grain_batch:GB240001",
+      "value": {
+        "rev": "1-grain001rev"
+      },
+      "doc": {
+        "_id": "grain_batch:GB240001",
+        "_rev": "1-grain001rev",
+        "type": "grain_batch",
+        "batchNumber": "GB240001",
+        "grainType": "corn",
+        "variety": "Yellow Dent #2",
+        "supplier": "Midwest Grain Co",
+        "quantity": "50000",
+        "unit": "lbs",
+        "moistureContent": "14.2",
+        "receivedDate": "2024-01-10",
+        "testResults": {
+          "protein": "8.5",
+          "starch": "72.3",
+          "fat": "3.8"
+        },
+        "status": "available",
+        "storageLocation": "Silo A",
+        "notes": "Premium corn for whiskey production",
+        "created": "2024-01-10T00:00:00Z",
+        "updated": "2024-01-15T08:00:00Z"
+      }
+    },
+    {
+      "id": "grain_batch:GB240002",
+      "key": "grain_batch:GB240002",
+      "value": {
+        "rev": "1-grain002rev"
+      },
+      "doc": {
+        "_id": "grain_batch:GB240002",
+        "_rev": "1-grain002rev",
+        "type": "grain_batch",
+        "batchNumber": "GB240002",
+        "grainType": "wheat",
+        "variety": "Hard Red Winter",
+        "supplier": "Prairie Grain Supply",
+        "quantity": "25000",
+        "unit": "lbs",
+        "moistureContent": "13.8",
+        "receivedDate": "2024-01-17",
+        "testResults": {
+          "protein": "12.1",
+          "starch": "68.5",
+          "fat": "2.2"
+        },
+        "status": "reserved",
+        "storageLocation": "Silo B",
+        "notes": "Wheat for premium blend, reserved for specialty batch",
+        "created": "2024-01-17T00:00:00Z",
+        "updated": "2024-01-18T09:00:00Z"
+      }
+    },
+    {
+      "id": "grain_batch:GB240003",
+      "key": "grain_batch:GB240003",
+      "value": {
+        "rev": "1-grain003rev"
+      },
+      "doc": {
+        "_id": "grain_batch:GB240003",
+        "_rev": "1-grain003rev",
+        "type": "grain_batch",
+        "batchNumber": "GB240003",
+        "grainType": "barley",
+        "variety": "Malted 2-Row",
+        "supplier": "Barley Brothers",
+        "quantity": "15000",
+        "unit": "lbs",
+        "moistureContent": "4.5",
+        "receivedDate": "2024-01-20",
+        "testResults": {
+          "protein": "10.8",
+          "starch": "62.1",
+          "fat": "2.9"
+        },
+        "status": "quarantine",
+        "storageLocation": "Warehouse C",
+        "notes": "Malted barley in quarantine pending quality approval",
+        "created": "2024-01-20T00:00:00Z",
+        "updated": "2024-01-21T14:00:00Z"
+      }
+    },
+    {
+      "id": "grain_batch:GB240004",
+      "key": "grain_batch:GB240004",
+      "value": {
+        "rev": "1-grain004rev"
+      },
+      "doc": {
+        "_id": "grain_batch:GB240004",
+        "_rev": "1-grain004rev",
+        "type": "grain_batch",
+        "batchNumber": "GB240004",
+        "grainType": "rye",
+        "variety": "Cereal Rye",
+        "supplier": "Heritage Grains",
+        "quantity": "8000",
+        "unit": "lbs",
+        "moistureContent": "12.9",
+        "receivedDate": "2024-01-22",
+        "testResults": {
+          "protein": "11.2",
+          "starch": "58.7",
+          "fat": "1.8"
+        },
+        "status": "available",
+        "storageLocation": "Silo D",
+        "notes": "Rye grain for spicy whiskey blend",
+        "created": "2024-01-22T00:00:00Z",
+        "updated": "2024-01-22T10:00:00Z"
+      }
+    },
+    {
+      "id": "grain_batch:GB240005",
+      "key": "grain_batch:GB240005",
+      "value": {
+        "rev": "1-grain005rev"
+      },
+      "doc": {
+        "_id": "grain_batch:GB240005",
+        "_rev": "1-grain005rev",
+        "type": "grain_batch",
+        "batchNumber": "GB240005",
+        "grainType": "corn",
+        "variety": "White Dent",
+        "supplier": "Midwest Grain Co",
+        "quantity": "30000",
+        "unit": "lbs",
+        "moistureContent": "15.1",
+        "receivedDate": "2024-01-23",
+        "testResults": {
+          "protein": "7.9",
+          "starch": "74.2",
+          "fat": "4.1"
+        },
+        "status": "consumed",
+        "storageLocation": "Silo A",
+        "notes": "White corn batch, fully processed",
+        "created": "2024-01-23T00:00:00Z",
+        "updated": "2024-01-25T16:00:00Z"
+      }
+    },
+    {
+      "id": "milling_job:MJ240003",
+      "key": "milling_job:MJ240003",
+      "value": {
+        "rev": "1-milling003rev"
+      },
+      "doc": {
+        "_id": "milling_job:MJ240003",
+        "_rev": "1-milling003rev",
+        "type": "milling_job",
+        "jobNumber": "MJ240003",
+        "grainType": "rye",
+        "quantity": "8000",
+        "status": "pending",
+        "created": "2025-08-18T11:00:00Z",
+        "updated": "2025-08-18T11:00:00Z"
+      }
+    },
+    {
+      "id": "slurry_batch:SB240003",
+      "key": "slurry_batch:SB240003",
+      "value": {
+        "rev": "1-slurry003rev"
+      },
+      "doc": {
+        "_id": "slurry_batch:SB240003",
+        "_rev": "1-slurry003rev",
+        "type": "slurry_batch",
+        "batchNumber": "SB240003",
+        "recipe": "rye_mash",
+        "grainWeight": "8000",
+        "status": "pending",
+        "created": "2025-08-18T11:05:00Z",
+        "updated": "2025-08-18T11:05:00Z"
+      }
+    },
+    {
+      "id": "equipment:RM001",
+      "key": "equipment:RM001",
+      "value": {
+        "rev": "1-equip004rev"
+      },
+      "doc": {
+        "_id": "equipment:RM001",
+        "_rev": "1-equip004rev",
+        "type": "equipment",
+        "equipmentId": "RM001",
+        "name": "Roller Mill",
+        "type": "roller_mill",
+        "status": "available",
+        "created": "2025-08-18T11:10:00Z",
+        "updated": "2025-08-18T11:10:00Z"
+      }
+    },
+    {
+      "id": "grain_batch:GB240006",
+      "key": "grain_batch:GB240006",
+      "value": {
+        "rev": "1-grain006rev"
+      },
+      "doc": {
+        "_id": "grain_batch:GB240006",
+        "_rev": "1-grain006rev",
+        "type": "grain_batch",
+        "batchNumber": "GB240006",
+        "grainType": "oats",
+        "quantity": "5000",
+        "status": "available",
+        "created": "2025-08-18T11:15:00Z",
+        "updated": "2025-08-18T11:15:00Z"
+      }
+    }
+  ]
+}

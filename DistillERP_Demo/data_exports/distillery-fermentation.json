@@ -1,0 +1,304 @@
+{
+  "total_rows": 11,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "fermentation_batch:FB240001",
+      "key": "fermentation_batch:FB240001",
+      "value": {
+        "rev": "1-abc123def456"
+      },
+      "doc": {
+        "_id": "fermentation_batch:FB240001",
+        "_rev": "1-abc123def456",
+        "type": "fermentation_batch",
+        "batchNumber": "FB240001",
+        "slurryBatchId": "slurry_batch:SB240001",
+        "tankId": "fermentation_tank:FT001",
+        "yeastStrainId": "yeast_strain:YS001",
+        "yeastQuantity": "5",
+        "startingGravity": "1.080",
+        "targetGravity": "1.010",
+        "fermentationTemperature": "78",
+        "phLevel": "4.2",
+        "startDate": "2024-01-15T16:00:00Z",
+        "estimatedEndDate": "2024-01-22T16:00:00Z",
+        "actualEndDate": "",
+        "status": "active",
+        "operator": "Mike Johnson",
+        "notes": "Standard corn mash fermentation, good yeast activity",
+        "created": "2024-01-15T16:00:00Z",
+        "updated": "2024-01-16T10:30:00Z"
+      }
+    },
+    {
+      "id": "fermentation_batch:FB240002",
+      "key": "fermentation_batch:FB240002",
+      "value": {
+        "rev": "1-def456ghi789"
+      },
+      "doc": {
+        "_id": "fermentation_batch:FB240002",
+        "_rev": "1-def456ghi789",
+        "type": "fermentation_batch",
+        "batchNumber": "FB240002",
+        "slurryBatchId": "slurry_batch:SB240002",
+        "tankId": "fermentation_tank:FT002",
+        "yeastStrainId": "yeast_strain:YS002",
+        "yeastQuantity": "8",
+        "startingGravity": "1.085",
+        "targetGravity": "1.008",
+        "fermentationTemperature": "82",
+        "phLevel": "4.0",
+        "startDate": "2024-01-18T08:00:00Z",
+        "estimatedEndDate": "2024-01-24T08:00:00Z",
+        "actualEndDate": "2024-01-24T12:00:00Z",
+        "status": "complete",
+        "operator": "Sarah Williams",
+        "notes": "High gravity fermentation with turbo yeast, completed ahead of schedule",
+        "created": "2024-01-18T08:00:00Z",
+        "updated": "2024-01-24T12:00:00Z"
+      }
+    },
+    {
+      "id": "fermentation_batch:FB240003",
+      "key": "fermentation_batch:FB240003",
+      "value": {
+        "rev": "1-ghi789jkl012"
+      },
+      "doc": {
+        "_id": "fermentation_batch:FB240003",
+        "_rev": "1-ghi789jkl012",
+        "type": "fermentation_batch",
+        "batchNumber": "FB240003",
+        "slurryBatchId": "slurry_batch:SB240003",
+        "tankId": "fermentation_tank:FT003",
+        "yeastStrainId": "yeast_strain:YS001",
+        "yeastQuantity": "6",
+        "startingGravity": "1.078",
+        "targetGravity": "1.012",
+        "fermentationTemperature": "76",
+        "phLevel": "4.3",
+        "startDate": "2024-01-20T14:00:00Z",
+        "estimatedEndDate": "2024-01-27T14:00:00Z",
+        "actualEndDate": "",
+        "status": "slow",
+        "operator": "Tom Anderson",
+        "notes": "Fermentation progressing slowly, monitoring temperature and pH",
+        "created": "2024-01-20T14:00:00Z",
+        "updated": "2024-01-23T09:15:00Z"
+      }
+    },
+    {
+      "id": "fermentation_tank:FT001",
+      "key": "fermentation_tank:FT001",
+      "value": {
+        "rev": "1-tank001rev"
+      },
+      "doc": {
+        "_id": "fermentation_tank:FT001",
+        "_rev": "1-tank001rev",
+        "type": "fermentation_tank",
+        "tankId": "FT001",
+        "name": "Primary Fermenter #1",
+        "capacity": "5000",
+        "material": "stainless_steel",
+        "temperatureControl": true,
+        "currentTemperature": "78",
+        "maxTemperature": "90",
+        "minTemperature": "70",
+        "status": "occupied",
+        "lastCleaning": "2024-01-10",
+        "nextMaintenance": "2024-04-10",
+        "notes": "Primary fermentation tank with glycol cooling system",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-15T16:00:00Z"
+      }
+    },
+    {
+      "id": "fermentation_tank:FT002",
+      "key": "fermentation_tank:FT002",
+      "value": {
+        "rev": "1-tank002rev"
+      },
+      "doc": {
+        "_id": "fermentation_tank:FT002",
+        "_rev": "1-tank002rev",
+        "type": "fermentation_tank",
+        "tankId": "FT002",
+        "name": "Primary Fermenter #2",
+        "capacity": "5000",
+        "material": "stainless_steel",
+        "temperatureControl": true,
+        "currentTemperature": "",
+        "maxTemperature": "90",
+        "minTemperature": "70",
+        "status": "cleaning",
+        "lastCleaning": "2024-01-24",
+        "nextMaintenance": "2024-04-15",
+        "notes": "Secondary fermentation tank, recently completed batch",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-24T13:00:00Z"
+      }
+    },
+    {
+      "id": "fermentation_tank:FT003",
+      "key": "fermentation_tank:FT003",
+      "value": {
+        "rev": "1-tank003rev"
+      },
+      "doc": {
+        "_id": "fermentation_tank:FT003",
+        "_rev": "1-tank003rev",
+        "type": "fermentation_tank",
+        "tankId": "FT003",
+        "name": "Secondary Fermenter #1",
+        "capacity": "3000",
+        "material": "stainless_steel",
+        "temperatureControl": true,
+        "currentTemperature": "76",
+        "maxTemperature": "85",
+        "minTemperature": "70",
+        "status": "occupied",
+        "lastCleaning": "2024-01-18",
+        "nextMaintenance": "2024-05-01",
+        "notes": "Smaller capacity tank for specialty batches",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-20T14:00:00Z"
+      }
+    },
+    {
+      "id": "yeast_strain:YS001",
+      "key": "yeast_strain:YS001",
+      "value": {
+        "rev": "1-yeast001rev"
+      },
+      "doc": {
+        "_id": "yeast_strain:YS001",
+        "_rev": "1-yeast001rev",
+        "type": "yeast_strain",
+        "strainId": "YS001",
+        "name": "WhiskyFerm Premium",
+        "supplier": "Lallemand",
+        "type": "distillers_yeast",
+        "alcoholTolerance": "18%",
+        "temperatureRange": "75-85°F",
+        "flocculation": "medium",
+        "expirationDate": "2024-12-31",
+        "quantityInStock": "45",
+        "unit": "lbs",
+        "storageConditions": "Keep refrigerated at 35-40°F",
+        "notes": "High-performance distillers yeast for whiskey production. Excellent for corn and grain-based mashes.",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-20T10:00:00Z"
+      }
+    },
+    {
+      "id": "yeast_strain:YS002",
+      "key": "yeast_strain:YS002",
+      "value": {
+        "rev": "1-yeast002rev"
+      },
+      "doc": {
+        "_id": "yeast_strain:YS002",
+        "_rev": "1-yeast002rev",
+        "type": "yeast_strain",
+        "strainId": "YS002",
+        "name": "TurboMax 24HR",
+        "supplier": "Still Spirits",
+        "type": "turbo_yeast",
+        "alcoholTolerance": "20%",
+        "temperatureRange": "70-90°F",
+        "flocculation": "high",
+        "expirationDate": "2024-08-15",
+        "quantityInStock": "18",
+        "unit": "lbs",
+        "storageConditions": "Store in cool, dry place",
+        "notes": "Fast-acting turbo yeast for neutral spirits. Completes fermentation in 24-48 hours.",
+        "created": "2024-01-01T00:00:00Z",
+        "updated": "2024-01-18T14:30:00Z"
+      }
+    },
+    {
+      "id": "fermentation_batch:FB240004",
+      "key": "fermentation_batch:FB240004",
+      "value": {
+        "rev": "1-jkl012mno345"
+      },
+      "doc": {
+        "_id": "fermentation_batch:FB240004",
+        "_rev": "1-jkl012mno345",
+        "type": "fermentation_batch",
+        "batchNumber": "FB240004",
+        "slurryBatchId": "slurry_batch:SB240004",
+        "tankId": "fermentation_tank:FT001",
+        "yeastStrainId": "yeast_strain:YS002",
+        "yeastQuantity": "7",
+        "startingGravity": "1.090",
+        "targetGravity": "1.005",
+        "fermentationTemperature": "80",
+        "phLevel": "4.1",
+        "startDate": "2025-08-18T10:00:00Z",
+        "estimatedEndDate": "2025-08-25T10:00:00Z",
+        "actualEndDate": "",
+        "status": "pending",
+        "operator": "Jane Doe",
+        "notes": "High gravity rum wash.",
+        "created": "2025-08-18T10:00:00Z",
+        "updated": "2025-08-18T10:00:00Z"
+      }
+    },
+    {
+      "id": "fermentation_tank:FT004",
+      "key": "fermentation_tank:FT004",
+      "value": {
+        "rev": "1-tank004rev"
+      },
+      "doc": {
+        "_id": "fermentation_tank:FT004",
+        "_rev": "1-tank004rev",
+        "type": "fermentation_tank",
+        "tankId": "FT004",
+        "name": "Primary Fermenter #4",
+        "capacity": "10000",
+        "material": "stainless_steel",
+        "temperatureControl": true,
+        "currentTemperature": "",
+        "maxTemperature": "90",
+        "minTemperature": "70",
+        "status": "available",
+        "lastCleaning": "2025-08-15",
+        "nextMaintenance": "2025-11-15",
+        "notes": "Large capacity tank for main production.",
+        "created": "2025-08-01T00:00:00Z",
+        "updated": "2025-08-15T11:00:00Z"
+      }
+    },
+    {
+      "id": "yeast_strain:YS003",
+      "key": "yeast_strain:YS003",
+      "value": {
+        "rev": "1-yeast003rev"
+      },
+      "doc": {
+        "_id": "yeast_strain:YS003",
+        "_rev": "1-yeast003rev",
+        "type": "yeast_strain",
+        "strainId": "YS003",
+        "name": "Rum Turbo Yeast",
+        "supplier": "BSG HandCraft",
+        "type": "turbo_yeast",
+        "alcoholTolerance": "15%",
+        "temperatureRange": "70-90°F",
+        "flocculation": "medium",
+        "expirationDate": "2026-01-01",
+        "quantityInStock": "25",
+        "unit": "lbs",
+        "storageConditions": "Store in cool, dry place",
+        "notes": "Ideal for rum production from molasses or sugar.",
+        "created": "2025-08-01T00:00:00Z",
+        "updated": "2025-08-17T10:00:00Z"
+      }
+    }
+  ]
+}

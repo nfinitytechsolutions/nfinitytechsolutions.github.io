@@ -1,0 +1,618 @@
+{
+  "total_rows": 24,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "gatepass:GP-10094",
+      "key": "gatepass:GP-10094",
+      "value": {
+        "rev": "1-cd15796a0e7f4c567f5d002e08f15f99"
+      },
+      "doc": {
+        "_id": "gatepass:GP-10094",
+        "_rev": "1-cd15796a0e7f4c567f5d002e08f15f99",
+        "type": "gate_pass",
+        "gatePassNumber": "GP-10094",
+        "vehicleNumber": "33SS",
+        "driverName": "GGR",
+        "fromLocation": "AA",
+        "toLocation": "Bagalkot Distilleries Pvt.Ltd",
+        "materialDescription": "",
+        "quantity": "",
+        "remarks": "",
+        "dateTime": "2025-08-03T06:05:40.621Z",
+        "created": "2025-08-03T06:05:40.621Z"
+      }
+    },
+    {
+      "id": "gatepass:GP-10592",
+      "key": "gatepass:GP-10592",
+      "value": {
+        "rev": "1-afa8c3392fb32d1fe50d1f3f802fee0d"
+      },
+      "doc": {
+        "_id": "gatepass:GP-10592",
+        "_rev": "1-afa8c3392fb32d1fe50d1f3f802fee0d",
+        "type": "gate_pass",
+        "gatePassNumber": "GP-10592",
+        "vehicleNumber": "33SS",
+        "driverName": "GGR",
+        "fromLocation": "Bagalkot Distilleries Pvt.Ltd",
+        "toLocation": "AA",
+        "materialDescription": "",
+        "quantity": "",
+        "remarks": "",
+        "dateTime": "2025-08-03T06:09:06.701Z",
+        "created": "2025-08-03T06:09:06.701Z"
+      }
+    },
+    {
+      "id": "gatepass:GP-2850",
+      "key": "gatepass:GP-2850",
+      "value": {
+        "rev": "1-8f6a6e448442b02377d9a9ee895966df"
+      },
+      "doc": {
+        "_id": "gatepass:GP-2850",
+        "_rev": "1-8f6a6e448442b02377d9a9ee895966df",
+        "type": "gate_pass",
+        "gatePassNumber": "GP-2850",
+        "vehicleNumber": "11AAA",
+        "driverName": "SFDDD",
+        "fromLocation": "Bagalkot Distilleries Pvt.Ltd",
+        "toLocation": "ADDD",
+        "materialDescription": "",
+        "quantity": "",
+        "remarks": "",
+        "dateTime": "2025-08-03T05:57:57.630Z",
+        "created": "2025-08-03T05:57:57.630Z"
+      }
+    },
+    {
+      "id": "gatepass:GP-5182",
+      "key": "gatepass:GP-5182",
+      "value": {
+        "rev": "1-4755b69477234e6ff66a7a852295969e"
+      },
+      "doc": {
+        "_id": "gatepass:GP-5182",
+        "_rev": "1-4755b69477234e6ff66a7a852295969e",
+        "type": "gate_pass",
+        "gatePassNumber": "GP-5182",
+        "vehicleNumber": "EE",
+        "driverName": "EWWW",
+        "fromLocation": "Bagalkot Distilleries Pvt.Ltd",
+        "toLocation": "GG",
+        "materialDescription": "",
+        "quantity": "",
+        "remarks": "",
+        "dateTime": "2025-08-03T06:05:15.981Z",
+        "created": "2025-08-03T06:05:15.981Z"
+      }
+    },
+    {
+      "id": "gatepass:GP-8834",
+      "key": "gatepass:GP-8834",
+      "value": {
+        "rev": "1-505ceb18e387cd81d2a536b1221b5b9d"
+      },
+      "doc": {
+        "_id": "gatepass:GP-8834",
+        "_rev": "1-505ceb18e387cd81d2a536b1221b5b9d",
+        "type": "gate_pass",
+        "gatePassNumber": "GP-8834",
+        "vehicleNumber": "333S",
+        "driverName": "DDD",
+        "fromLocation": "",
+        "toLocation": "Bagalkot Distilleries Pvt.Ltd",
+        "materialDescription": "",
+        "quantity": "",
+        "remarks": "",
+        "dateTime": "2025-08-03T06:06:05.773Z",
+        "created": "2025-08-03T06:06:05.773Z"
+      }
+    },
+    {
+      "id": "vehicle:VEH-1754638856683",
+      "key": "vehicle:VEH-1754638856683",
+      "value": {
+        "rev": "3-cedea28ff95f7a1eb884f997225dac11"
+      },
+      "doc": {
+        "_id": "vehicle:VEH-1754638856683",
+        "_rev": "3-cedea28ff95f7a1eb884f997225dac11",
+        "type": "vehicle",
+        "vehicleId": "VEH-1754638856683",
+        "vehicleType": "suv",
+        "make": "Scorpion",
+        "model": "Scorpion",
+        "year": "2022",
+        "licensePlate": "KA01MM2221",
+        "vin": "",
+        "status": "available",
+        "driver": "",
+        "lastMaintenanceDate": "",
+        "outOfStationName": "",
+        "created": "2025-08-08T07:40:56.683Z",
+        "updated": "2025-08-08T07:57:06.386Z",
+        "createdBy": "100144",
+        "createdAt": "2025-08-08T07:40:58.598Z"
+      }
+    },
+    {
+      "id": "vehicle:VEH-1754639759594",
+      "key": "vehicle:VEH-1754639759594",
+      "value": {
+        "rev": "2-23f3a10b6d9c79caecc163ad1939a37f"
+      },
+      "doc": {
+        "_id": "vehicle:VEH-1754639759594",
+        "_rev": "2-23f3a10b6d9c79caecc163ad1939a37f",
+        "type": "vehicle",
+        "vehicleId": "VEH-1754639759594",
+        "vehicleType": "car",
+        "make": "sss",
+        "model": "dddd",
+        "year": "3332",
+        "licensePlate": "ddd",
+        "vin": "",
+        "status": "in-transit",
+        "driver": "",
+        "lastMaintenanceDate": "",
+        "outOfStationName": "",
+        "created": "2025-08-08T07:55:59.594Z",
+        "updated": "2025-08-08T07:56:12.617Z",
+        "updatedBy": "100144",
+        "updatedAt": "2025-08-08T07:56:14.542Z"
+      }
+    },
+    {
+      "id": "visitor:V1754640768746937",
+      "key": "visitor:V1754640768746937",
+      "value": {
+        "rev": "4-449508e646a683fcbdb86a44a871a7cc"
+      },
+      "doc": {
+        "_id": "visitor:V1754640768746937",
+        "_rev": "4-449508e646a683fcbdb86a44a871a7cc",
+        "visitorId": "V1754640768746937",
+        "name": "AAA",
+        "company": "",
+        "phone": "3334233445",
+        "email": "",
+        "purpose": "SFDF",
+        "hostName": "FFF",
+        "hostDepartment": "Production",
+        "vehicleNumber": "",
+        "idProofType": "aadhar",
+        "idProofNumber": "",
+        "accompaniedBy": 0,
+        "notes": "",
+        "type": "visitor",
+        "status": "checked-in",
+        "checkInTime": "2025-08-08T08:18:54.015Z",
+        "created": "2025-08-08T08:13:14.791Z",
+        "updated": "2025-08-08T08:18:55.918Z",
+        "createdBy": "100144",
+        "updatedBy": "100144",
+        "checkOutTime": "2025-08-08T08:18:19.937Z"
+      }
+    },
+    {
+      "id": "visitor:V1754641174457",
+      "key": "visitor:V1754641174457",
+      "value": {
+        "rev": "2-f015fef801d3e0bc42bd5e1488f1730e"
+      },
+      "doc": {
+        "_id": "visitor:V1754641174457",
+        "_rev": "2-f015fef801d3e0bc42bd5e1488f1730e",
+        "type": "visitor",
+        "visitorId": "V1754641174457",
+        "name": "etgdg",
+        "company": "",
+        "phone": "6666677777",
+        "email": "",
+        "purpose": "rrr",
+        "hostName": "ffffrrr",
+        "hostDepartment": "Production",
+        "vehicleNumber": "",
+        "idProofType": "aadhar",
+        "idProofNumber": "",
+        "accompaniedBy": 0,
+        "notes": "",
+        "status": "checked-in",
+        "checkInTime": "2025-08-08T13:52:48.143Z",
+        "created": "2025-08-08T08:19:34.457Z",
+        "updated": "2025-08-08T13:52:48.747Z",
+        "updatedBy": "100144"
+      }
+    },
+    {
+      "id": "wb_device:WB-001",
+      "key": "wb_device:WB-001",
+      "value": {
+        "rev": "1-753751e1c3fdbefee19d1d022842cc1c"
+      },
+      "doc": {
+        "_id": "wb_device:WB-001",
+        "_rev": "1-753751e1c3fdbefee19d1d022842cc1c",
+        "type": "weighbridge_device",
+        "deviceId": "WB-001",
+        "name": "Main Gate Weighbridge",
+        "location": "Main Gate",
+        "capacity": "100T",
+        "status": "Online",
+        "currentReading": "12,500 kg",
+        "lastActivity": "2025-08-03T06:11:44.482Z",
+        "model": "AVERY-WB-100",
+        "serialNumber": "AWB-2024-001",
+        "calibrationDate": "2024-01-15",
+        "nextCalibration": "2025-01-15"
+      }
+    },
+    {
+      "id": "wb_device:WB-002",
+      "key": "wb_device:WB-002",
+      "value": {
+        "rev": "1-0a7add20602f9966e7493232920cd6a6"
+      },
+      "doc": {
+        "_id": "wb_device:WB-002",
+        "_rev": "1-0a7add20602f9966e7493232920cd6a6",
+        "type": "weighbridge_device",
+        "deviceId": "WB-002",
+        "name": "Loading Bay Weighbridge",
+        "location": "Loading Bay A",
+        "capacity": "80T",
+        "status": "Online",
+        "currentReading": "0 kg",
+        "lastActivity": "2025-08-03T05:41:44.482Z",
+        "model": "AVERY-WB-80",
+        "serialNumber": "AWB-2024-002",
+        "calibrationDate": "2024-02-10",
+        "nextCalibration": "2025-02-10"
+      }
+    },
+    {
+      "id": "wb_device:WB-003",
+      "key": "wb_device:WB-003",
+      "value": {
+        "rev": "1-e811eb3a35a4c4dac09271dd0d4c55bc"
+      },
+      "doc": {
+        "_id": "wb_device:WB-003",
+        "_rev": "1-e811eb3a35a4c4dac09271dd0d4c55bc",
+        "type": "weighbridge_device",
+        "deviceId": "WB-003",
+        "name": "Secondary Weighbridge",
+        "location": "Side Gate",
+        "capacity": "60T",
+        "status": "Maintenance",
+        "currentReading": "N/A",
+        "lastActivity": "2025-08-03T04:11:44.482Z",
+        "model": "TOLEDO-WB-60",
+        "serialNumber": "TWB-2024-003",
+        "calibrationDate": "2024-03-05",
+        "nextCalibration": "2025-03-05"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-001",
+      "key": "weighbridge:WB-2025-001",
+      "value": {
+        "rev": "2-757e9cb3b12f5e3af522a68ad5190ee8"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-001",
+        "_rev": "2-757e9cb3b12f5e3af522a68ad5190ee8",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-001",
+        "vehicleNumber": "KA-01-AB-1234",
+        "driverName": "Raman Kumar p",
+        "driverPhone": "+91-9876543210",
+        "driverLicense": "KA1234567890",
+        "supplierId": "supplier:SUP001",
+        "supplierName": "Sahyadri Agro Traders",
+        "materialType": "corn",
+        "challanNumber": "CH-001-2025",
+        "tareWeight": 8500,
+        "grossWeight": 28500,
+        "netWeight": 20000,
+        "entryTime": "2025-08-02T20:20",
+        "exitTime": "",
+        "status": "weighed_full",
+        "weighbridgeOperator": "Operator 1",
+        "gateGuard": "Guard A",
+        "remarks": "Good quality corn, moisture content checked",
+        "qualitySampled": true,
+        "sampleNumber": "QS-2025-001",
+        "vehicleType": "truck",
+        "created": "2025-08-02T20:20:04.401Z",
+        "updated": "2025-08-02T20:20:49.711Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-002",
+      "key": "weighbridge:WB-2025-002",
+      "value": {
+        "rev": "2-2015035be30d63301508fa307d2884fe"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-002",
+        "_rev": "2-2015035be30d63301508fa307d2884fe",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-002",
+        "vehicleNumber": "KA-02-CD-5678",
+        "driverName": "Suresh Patil",
+        "driverPhone": "+91-9876543211",
+        "driverLicense": "KA1234567891",
+        "supplierId": "supplier:SUP002",
+        "supplierName": "Deccan Grains Pvt. Ltd.",
+        "materialType": "wheat",
+        "challanNumber": "CH-002-2025",
+        "tareWeight": 9200,
+        "grossWeight": "",
+        "netWeight": 0,
+        "entryTime": "2025-08-02T20:20",
+        "exitTime": "",
+        "status": "weighed_full",
+        "weighbridgeOperator": "Operator 2",
+        "gateGuard": "Guard B",
+        "remarks": "Vehicle waiting for loading",
+        "qualitySampled": false,
+        "sampleNumber": "",
+        "vehicleType": "trailer",
+        "created": "2025-08-02T20:20:04.401Z",
+        "updated": "2025-08-02T20:21:40.647Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-003",
+      "key": "weighbridge:WB-2025-003",
+      "value": {
+        "rev": "1-fcc2334bfac71df037f6d278ed71f805"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-003",
+        "_rev": "1-fcc2334bfac71df037f6d278ed71f805",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-003",
+        "vehicleNumber": "KA-03-EF-9012",
+        "driverName": "Manjunath Gowda",
+        "driverPhone": "+91-9876543212",
+        "driverLicense": "KA1234567892",
+        "supplierId": "supplier:SUP003",
+        "supplierName": "Patil Krishi Udyog",
+        "materialType": "rice",
+        "challanNumber": "CH-003-2025",
+        "tareWeight": 7800,
+        "grossWeight": 22800,
+        "netWeight": 15000,
+        "entryTime": "2025-08-01T20:20:04.401Z",
+        "exitTime": "2025-08-02T20:20:04.401Z",
+        "status": "completed",
+        "weighbridgeOperator": "Operator 1",
+        "gateGuard": "Guard A",
+        "remarks": "Delivery completed successfully",
+        "qualitySampled": true,
+        "sampleNumber": "QS-2025-002",
+        "vehicleType": "truck",
+        "created": "2025-08-01T20:20:04.401Z",
+        "updated": "2025-08-02T20:20:04.401Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-004",
+      "key": "weighbridge:WB-2025-004",
+      "value": {
+        "rev": "1-cfe297bc8bd242f4abb91ae14585096f"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-004",
+        "_rev": "1-cfe297bc8bd242f4abb91ae14585096f",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-004",
+        "vehicleNumber": "KA-04-GH-3456",
+        "driverName": "Krishnamurthy S",
+        "driverPhone": "+91-9876543213",
+        "driverLicense": "KA1234567893",
+        "supplierId": "supplier:SUP004",
+        "supplierName": "Godavari Feeds & Grains",
+        "materialType": "barley",
+        "challanNumber": "CH-004-2025",
+        "tareWeight": 8200,
+        "grossWeight": 0,
+        "netWeight": 0,
+        "entryTime": "2025-08-02T20:20:04.401Z",
+        "exitTime": null,
+        "status": "pending_entry",
+        "weighbridgeOperator": "",
+        "gateGuard": "Guard C",
+        "remarks": "Waiting for gate clearance",
+        "qualitySampled": false,
+        "sampleNumber": "",
+        "vehicleType": "bulker",
+        "created": "2025-08-02T20:20:04.401Z",
+        "updated": "2025-08-02T20:20:04.401Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2792-1012",
+      "key": "weighbridge:WB-2792-1012",
+      "value": {
+        "rev": "1-329927573a78f8c49e60ae7ce8c0075f"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2792-1012",
+        "_rev": "1-329927573a78f8c49e60ae7ce8c0075f",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2792-1012",
+        "vehicleNumber": "333SS",
+        "driverName": "FSS",
+        "tareWeight": 0,
+        "grossWeight": 0,
+        "netWeight": 0,
+        "dateTime": "2025-08-03T05:58:13.869Z",
+        "created": "2025-08-03T05:58:13.869Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2792-122",
+      "key": "weighbridge:WB-2792-122",
+      "value": {
+        "rev": "1-f9ef7ddc76715271dcf0a0ea1c929851"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2792-122",
+        "_rev": "1-f9ef7ddc76715271dcf0a0ea1c929851",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2792-122",
+        "vehicleNumber": "KA-01-AB-1234",
+        "driverName": "Raman Kumar",
+        "tareWeight": 8500,
+        "grossWeight": 28500,
+        "netWeight": 20000,
+        "dateTime": "2025-08-03T06:11:44.482Z",
+        "created": "2025-08-03T06:11:44.482Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2792-123",
+      "key": "weighbridge:WB-2792-123",
+      "value": {
+        "rev": "1-344e80041a0cd59eaece19bc5b116b7f"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2792-123",
+        "_rev": "1-344e80041a0cd59eaece19bc5b116b7f",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2792-123",
+        "vehicleNumber": "KA-02-CD-5678",
+        "driverName": "Suresh Patil",
+        "tareWeight": 9200,
+        "grossWeight": 32200,
+        "netWeight": 23000,
+        "dateTime": "2025-08-03T06:11:44.482Z",
+        "created": "2025-08-03T06:11:44.482Z"
+      }
+    },
+    {
+      "id": "gatepass:GP-2025-001",
+      "key": "gatepass:GP-2025-001",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "gatepass:GP-2025-001",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "gate_pass",
+        "gatePassNumber": "GP-2025-001",
+        "vehicleNumber": "MH-12-AB-3456",
+        "driverName": "Sandeep Sharma",
+        "fromLocation": "Warehouse A",
+        "toLocation": "City Distributor",
+        "materialDescription": "Finished Goods - 100 cases",
+        "quantity": "100 cases",
+        "remarks": "Scheduled delivery",
+        "dateTime": "2025-08-18T14:00:00.000Z",
+        "created": "2025-08-18T14:00:00.000Z",
+        "status": "departed"
+      }
+    },
+    {
+      "id": "vehicle:VEH-2025-001",
+      "key": "vehicle:VEH-2025-001",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "vehicle:VEH-2025-001",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "vehicle",
+        "vehicleId": "VEH-2025-001",
+        "vehicleType": "truck",
+        "make": "Tata",
+        "model": "407",
+        "year": "2023",
+        "licensePlate": "MH-12-AB-3456",
+        "vin": "TAT123456789",
+        "status": "available",
+        "driver": "Sandeep Sharma",
+        "lastMaintenanceDate": "2025-07-15",
+        "created": "2025-08-01T00:00:00.000Z",
+        "updated": "2025-08-18T14:00:00.000Z"
+      }
+    },
+    {
+      "id": "visitor:V20250818-001",
+      "key": "visitor:V20250818-001",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "visitor:V20250818-001",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "visitor",
+        "visitorId": "V20250818-001",
+        "name": "Priya Singh",
+        "company": "ABC Auditing",
+        "phone": "9876543210",
+        "purpose": "Annual Audit",
+        "hostName": "Finance Department",
+        "status": "checked-out",
+        "checkInTime": "2025-08-18T09:00:00.000Z",
+        "checkOutTime": "2025-08-18T17:00:00.000Z",
+        "created": "2025-08-18T08:55:00.000Z",
+        "updated": "2025-08-18T17:00:00.000Z"
+      }
+    },
+    {
+      "id": "wb_device:WB-004",
+      "key": "wb_device:WB-004",
+      "value": {
+        "rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9"
+      },
+      "doc": {
+        "_id": "wb_device:WB-004",
+        "_rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+        "type": "weighbridge_device",
+        "deviceId": "WB-004",
+        "name": "Ethanol Loading Weighbridge",
+        "location": "Ethanol Loading Bay",
+        "capacity": "50T",
+        "status": "Online",
+        "model": "METTLER-TOLEDO-VTS231",
+        "serialNumber": "MT-2025-001",
+        "calibrationDate": "2025-06-01",
+        "nextCalibration": "2026-06-01"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-005",
+      "key": "weighbridge:WB-2025-005",
+      "value": {
+        "rev": "1-e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-005",
+        "_rev": "1-e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-005",
+        "vehicleNumber": "MH-12-AB-3456",
+        "driverName": "Sandeep Sharma",
+        "materialType": "ethanol",
+        "tareWeight": 6000,
+        "grossWeight": 26000,
+        "netWeight": 20000,
+        "entryTime": "2025-08-18T14:05:00.000Z",
+        "exitTime": "2025-08-18T14:30:00.000Z",
+        "status": "completed",
+        "weighbridgeOperator": "Operator 3",
+        "remarks": "Ethanol tanker loaded for dispatch.",
+        "created": "2025-08-18T14:05:00.000Z",
+        "updated": "2025-08-18T14:30:00.000Z"
+      }
+    }
+  ]
+}

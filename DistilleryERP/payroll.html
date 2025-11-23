@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Payroll Processing</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .kpi-card { border-left: 4px solid #16a34a; }
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+        @media print { body * { visibility: hidden; } .printable-area, .printable-area * { visibility: visible; } .printable-area { position: absolute; left: 0; top: 0; width: 100%; } .no-print { display: none; } }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 no-print"><a href="emp_main.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center"><i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>Back to Employee Management</a><h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Payroll Processing</h1><p class="mt-1 text-md text-gray-500">Run monthly payroll, generate payslips, and manage salary data.</p></div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-1 space-y-8">
+                    <div class="bg-white shadow-md rounded-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800">Run Payroll</h2>
+                        <p class="text-sm text-gray-500 mt-1 mb-4">Process payroll for the selected month.</p>
+                        <form id="runPayrollForm">
+                            <label for="payrollMonth" class="block text-sm font-medium">Select Month</label>
+                            <input type="month" id="payrollMonth" value="2025-06" class="mt-1 block w-full border-gray-300 rounded-md">
+                            <button type="submit" class="mt-4 w-full text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-md flex items-center justify-center"><i data-lucide="play" class="h-4 w-4 mr-2"></i>Run Payroll</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 bg-white shadow-md rounded-lg">
+                    <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Payroll History</h2>
+                    <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Period</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Payout (₹)</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Employees Paid</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead><tbody id="payrollHistoryBody"></tbody></table></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="selectEmployeeModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 id="selectEmployeeTitle" class="text-2xl font-bold text-gray-800">Select Employee</h3><button class="close-modal-btn text-gray-500">&times;</button></div><input type="text" id="employeeSearch" placeholder="Search for employee..." class="w-full border-gray-300 rounded-md mb-4"><div id="employeeListContainer" class="max-h-96 overflow-y-auto"></div></div></div>
+    <div id="payslipModal" class="modal-backdrop"><div id="payslipModalContent" class="modal-content w-full max-w-2xl"></div></div>
+    <script>
+        lucide.createIcons();
+        let employeeData = [
+            { id: 'D00123', name: 'Ramesh Kumar', department: 'Production', designation: 'Shift In-charge', salary: { basic: 25000, hra: 10000, special: 8000 }, deductions: { pf: 1800, pt: 200 } },
+            { id: 'D00124', name: 'Sita Sharma', department: 'Quality', designation: 'Lab Chemist', salary: { basic: 30000, hra: 12000, special: 9000 }, deductions: { pf: 2100, pt: 200 } },
+            { id: 'D00125', name: 'Arjun Singh', department: 'Maintenance', designation: 'Mechanical Engineer', salary: { basic: 45000, hra: 18000, special: 12000 }, deductions: { pf: 2500, pt: 200 } },
+        ];
+        let payrollHistory = [
+            { period: 'June 2025', payout: 18500000, employees: 418, status: 'Paid', employeeIds: ['D00123', 'D00124', 'D00125'] },
+            { period: 'May 2025', payout: 18450000, employees: 415, status: 'Paid', employeeIds: ['D00123', 'D00124'] },
+            { period: 'April 2025', payout: 18300000, employees: 412, status: 'Paid', employeeIds: ['D00123'] },
+        ];
+        const payrollHistoryBody = document.getElementById('payrollHistoryBody');
+        function renderPayrollHistory() {
+            payrollHistoryBody.innerHTML = '';
+            payrollHistory.forEach(p => {
+                const row = `<tr><td class="px-6 py-4 text-sm font-medium text-gray-900">${p.period}</td><td class="px-6 py-4 text-sm text-gray-500">${p.payout.toLocaleString('en-IN')}</td><td class="px-6 py-4 text-sm text-gray-500">${p.employees}</td><td class="px-6 py-4 text-sm text-green-600 font-semibold">${p.status}</td><td class="px-6 py-4 text-right text-sm font-medium"><button class="text-green-600 hover:text-green-900 view-payslip-btn" data-period="${p.period}">View Payslips</button></td></tr>`;
+                payrollHistoryBody.innerHTML += row;
+            });
+        }
+        document.getElementById('runPayrollForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const monthYear = new Date(document.getElementById('payrollMonth').value).toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+            if(payrollHistory.find(p => p.period === monthYear)) { alert('Payroll for this month has already been processed.'); return; }
+            payrollHistory.unshift({ period: monthYear, payout: 18600000, employees: 421, status: 'Paid', employeeIds: ['D00123', 'D00124', 'D00125'] });
+            renderPayrollHistory();
+        });
+        const selectEmployeeModal = document.getElementById('selectEmployeeModal');
+        const payslipModal = document.getElementById('payslipModal');
+        const employeeListContainer = document.getElementById('employeeListContainer');
+        const employeeSearchInput = document.getElementById('employeeSearch');
+        let currentPayrollRun = null;
+
+        function renderEmployeeList(filter = '') {
+            employeeListContainer.innerHTML = '';
+            const employeeIds = currentPayrollRun.employeeIds;
+            const filteredEmployees = employeeData.filter(emp => 
+                employeeIds.includes(emp.id) && 
+                (emp.name.toLowerCase().includes(filter.toLowerCase()) || emp.id.toLowerCase().includes(filter.toLowerCase()))
+            );
+            filteredEmployees.forEach(emp => {
+                const item = `<div data-id="${emp.id}" class="p-2 hover:bg-gray-100 cursor-pointer rounded-md select-employee-item">
+                                <p class="font-semibold">${emp.name}</p>
+                                <p class="text-xs text-gray-500">${emp.id} - ${emp.department}</p>
+                              </div>`;
+                employeeListContainer.innerHTML += item;
+            });
+        }
+        
+        payrollHistoryBody.addEventListener('click', e => {
+            if (e.target.classList.contains('view-payslip-btn')) {
+                const period = e.target.dataset.period;
+                currentPayrollRun = payrollHistory.find(p => p.period === period);
+                document.getElementById('selectEmployeeTitle').textContent = `Select Employee for ${period}`;
+                renderEmployeeList();
+                selectEmployeeModal.style.display = 'block';
+            }
+        });
+
+        employeeSearchInput.addEventListener('input', (e) => renderEmployeeList(e.target.value));
+
+        employeeListContainer.addEventListener('click', e => {
+            const item = e.target.closest('.select-employee-item');
+            if (item) {
+                const empId = item.dataset.id;
+                const employee = employeeData.find(emp => emp.id === empId);
+                renderPayslip(employee, currentPayrollRun.period);
+                selectEmployeeModal.style.display = 'none';
+                payslipModal.style.display = 'block';
+            }
+        });
+
+        function renderPayslip(employee, period) {
+            const gross = Object.values(employee.salary).reduce((a, b) => a + b, 0);
+            const totalDeductions = Object.values(employee.deductions).reduce((a, b) => a + b, 0);
+            const net = gross - totalDeductions;
+            document.getElementById('payslipModalContent').innerHTML = `
+                <div class="bg-white p-8 rounded-lg shadow-xl printable-area">
+                    <div class="text-center border-b pb-4 mb-4"><h2 class="text-2xl font-bold">Payslip</h2><p class="text-gray-500">${period}</p></div>
+                    <div class="grid grid-cols-2 gap-4"><div><p><strong>Employee:</strong> ${employee.name}</p><p><strong>ID:</strong> ${employee.id}</p></div><div class="text-right"><p><strong>Department:</strong> ${employee.department}</p><p><strong>Designation:</strong> ${employee.designation}</p></div></div>
+                    <table class="w-full my-4 text-sm">
+                        <thead><tr class="bg-gray-100"><th class="p-2 text-left">Earnings</th><th class="p-2 text-right">Amount (₹)</th><th class="p-2 text-left">Deductions</th><th class="p-2 text-right">Amount (₹)</th></tr></thead>
+                        <tbody>
+                            <tr class="border-b"><td class="p-2">Basic Salary</td><td class="p-2 text-right">${employee.salary.basic.toLocaleString('en-IN')}</td><td class="p-2">Provident Fund (PF)</td><td class="p-2 text-right">${employee.deductions.pf.toLocaleString('en-IN')}</td></tr>
+                            <tr class="border-b"><td class="p-2">HRA</td><td class="p-2 text-right">${employee.salary.hra.toLocaleString('en-IN')}</td><td class="p-2">Professional Tax</td><td class="p-2 text-right">${employee.deductions.pt.toLocaleString('en-IN')}</td></tr>
+                            <tr class="border-b"><td class="p-2">Special Allowance</td><td class="p-2 text-right">${employee.salary.special.toLocaleString('en-IN')}</td><td></td><td></td></tr>
+                            <tr class="bg-gray-50 font-bold"><td class="p-2">Gross Earnings</td><td class="p-2 text-right">${gross.toLocaleString('en-IN')}</td><td class="p-2">Total Deductions</td><td class="p-2 text-right">${totalDeductions.toLocaleString('en-IN')}</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right font-bold text-lg mt-4">Net Salary: ₹${net.toLocaleString('en-IN')}</div>
+                </div>
+                <div class="mt-4 flex justify-end space-x-2 no-print"><button class="close-modal-btn bg-white py-2 px-4 border rounded-md">Close</button><button onclick="window.print()" class="text-white bg-blue-600 py-2 px-4 rounded-md">Print</button></div>
+            `;
+            payslipModal.querySelector('.close-modal-btn').onclick = () => payslipModal.style.display = 'none';
+        }
+
+        selectEmployeeModal.querySelector('.close-modal-btn').onclick = () => selectEmployeeModal.style.display = 'none';
+        window.onclick = (e) => { if (e.target == selectEmployeeModal) selectEmployeeModal.style.display = 'none'; if (e.target == payslipModal) payslipModal.style.display = 'none'; };
+        renderPayrollHistory();
+    </script>
+</body>
+</html>

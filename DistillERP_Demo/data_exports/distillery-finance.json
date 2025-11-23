@@ -1,0 +1,599 @@
+{
+  "total_rows": 26,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "account:1000",
+      "key": "account:1000",
+      "value": {
+        "rev": "1-33492814f07575d9789ad5eefe8f0671"
+      },
+      "doc": {
+        "_id": "account:1000",
+        "_rev": "1-33492814f07575d9789ad5eefe8f0671",
+        "type": "account",
+        "accountCode": "1000",
+        "accountName": "Cash - Operating",
+        "accountType": "asset",
+        "category": "current_assets",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:1100",
+      "key": "account:1100",
+      "value": {
+        "rev": "1-164158a85d83e6cecc4119fab8818f5a"
+      },
+      "doc": {
+        "_id": "account:1100",
+        "_rev": "1-164158a85d83e6cecc4119fab8818f5a",
+        "type": "account",
+        "accountCode": "1100",
+        "accountName": "Accounts Receivable",
+        "accountType": "asset",
+        "category": "current_assets",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:1200",
+      "key": "account:1200",
+      "value": {
+        "rev": "1-7c7e94b1676d45893529fbf9d6bd764d"
+      },
+      "doc": {
+        "_id": "account:1200",
+        "_rev": "1-7c7e94b1676d45893529fbf9d6bd764d",
+        "type": "account",
+        "accountCode": "1200",
+        "accountName": "Inventory - Raw Materials",
+        "accountType": "asset",
+        "category": "current_assets",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:1500",
+      "key": "account:1500",
+      "value": {
+        "rev": "1-130516e3051652dc9384af12576adac9"
+      },
+      "doc": {
+        "_id": "account:1500",
+        "_rev": "1-130516e3051652dc9384af12576adac9",
+        "type": "account",
+        "accountCode": "1500",
+        "accountName": "Equipment",
+        "accountType": "asset",
+        "category": "fixed_assets",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:2000",
+      "key": "account:2000",
+      "value": {
+        "rev": "1-8e601bdf6b14bf4a99a85d75397328e0"
+      },
+      "doc": {
+        "_id": "account:2000",
+        "_rev": "1-8e601bdf6b14bf4a99a85d75397328e0",
+        "type": "account",
+        "accountCode": "2000",
+        "accountName": "Accounts Payable",
+        "accountType": "liability",
+        "category": "current_liabilities",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:2100",
+      "key": "account:2100",
+      "value": {
+        "rev": "1-c285387230569d380e02074dc8cbc94a"
+      },
+      "doc": {
+        "_id": "account:2100",
+        "_rev": "1-c285387230569d380e02074dc8cbc94a",
+        "type": "account",
+        "accountCode": "2100",
+        "accountName": "Accrued Expenses",
+        "accountType": "liability",
+        "category": "current_liabilities",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:2500",
+      "key": "account:2500",
+      "value": {
+        "rev": "1-342b0204bc598fcfb1ef55b6c80e60e8"
+      },
+      "doc": {
+        "_id": "account:2500",
+        "_rev": "1-342b0204bc598fcfb1ef55b6c80e60e8",
+        "type": "account",
+        "accountCode": "2500",
+        "accountName": "Long-term Debt",
+        "accountType": "liability",
+        "category": "long_term_liabilities",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:3000",
+      "key": "account:3000",
+      "value": {
+        "rev": "1-8ded4212bc409972c4340235258a4bb8"
+      },
+      "doc": {
+        "_id": "account:3000",
+        "_rev": "1-8ded4212bc409972c4340235258a4bb8",
+        "type": "account",
+        "accountCode": "3000",
+        "accountName": "Owner's Equity",
+        "accountType": "equity",
+        "category": "equity",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:3100",
+      "key": "account:3100",
+      "value": {
+        "rev": "1-cfd6f8b42d2532e9ce4a4c9f7119fe7c"
+      },
+      "doc": {
+        "_id": "account:3100",
+        "_rev": "1-cfd6f8b42d2532e9ce4a4c9f7119fe7c",
+        "type": "account",
+        "accountCode": "3100",
+        "accountName": "Retained Earnings",
+        "accountType": "equity",
+        "category": "equity",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:4000",
+      "key": "account:4000",
+      "value": {
+        "rev": "1-5bb16b6bf85d127bfd7958602255a17a"
+      },
+      "doc": {
+        "_id": "account:4000",
+        "_rev": "1-5bb16b6bf85d127bfd7958602255a17a",
+        "type": "account",
+        "accountCode": "4000",
+        "accountName": "Sales Revenue",
+        "accountType": "revenue",
+        "category": "operating_revenue",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:4100",
+      "key": "account:4100",
+      "value": {
+        "rev": "1-e63ff6f0f047b18df29107c5d69070d4"
+      },
+      "doc": {
+        "_id": "account:4100",
+        "_rev": "1-e63ff6f0f047b18df29107c5d69070d4",
+        "type": "account",
+        "accountCode": "4100",
+        "accountName": "Co-Product Sales",
+        "accountType": "revenue",
+        "category": "operating_revenue",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:5000",
+      "key": "account:5000",
+      "value": {
+        "rev": "1-ce3d68718fb03be148d51e5e56c32959"
+      },
+      "doc": {
+        "_id": "account:5000",
+        "_rev": "1-ce3d68718fb03be148d51e5e56c32959",
+        "type": "account",
+        "accountCode": "5000",
+        "accountName": "Cost of Goods Sold",
+        "accountType": "expense",
+        "category": "cost_of_sales",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:6000",
+      "key": "account:6000",
+      "value": {
+        "rev": "1-b4c675cce4931382aa67cee6253f5c2d"
+      },
+      "doc": {
+        "_id": "account:6000",
+        "_rev": "1-b4c675cce4931382aa67cee6253f5c2d",
+        "type": "account",
+        "accountCode": "6000",
+        "accountName": "Operating Expenses",
+        "accountType": "expense",
+        "category": "operating_expenses",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:6100",
+      "key": "account:6100",
+      "value": {
+        "rev": "1-1869cd991eb908159171043429b056bf"
+      },
+      "doc": {
+        "_id": "account:6100",
+        "_rev": "1-1869cd991eb908159171043429b056bf",
+        "type": "account",
+        "accountCode": "6100",
+        "accountName": "Utilities",
+        "accountType": "expense",
+        "category": "operating_expenses",
+        "isActive": true
+      }
+    },
+    {
+      "id": "account:6200",
+      "key": "account:6200",
+      "value": {
+        "rev": "1-87848c961ac60372cbfa9b3191d2d7c1"
+      },
+      "doc": {
+        "_id": "account:6200",
+        "_rev": "1-87848c961ac60372cbfa9b3191d2d7c1",
+        "type": "account",
+        "accountCode": "6200",
+        "accountName": "Labor Costs",
+        "accountType": "expense",
+        "category": "operating_expenses",
+        "isActive": true
+      }
+    },
+    {
+      "id": "expense:1754197072600",
+      "key": "expense:1754197072600",
+      "value": {
+        "rev": "1-dbc837370bb81d0c507a6cf66859daac"
+      },
+      "doc": {
+        "_id": "expense:1754197072600",
+        "_rev": "1-dbc837370bb81d0c507a6cf66859daac",
+        "type": "expense",
+        "date": "2025-08-03",
+        "category": "supplies",
+        "description": "s",
+        "amount": 222,
+        "vendor": "",
+        "paymentMethod": "cash",
+        "reference": "",
+        "account": "",
+        "status": "recorded",
+        "created": "2025-08-03T04:57:52.600Z",
+        "updated": "2025-08-03T04:57:52.600Z"
+      }
+    },
+    {
+      "id": "invoice:222333",
+      "key": "invoice:222333",
+      "value": {
+        "rev": "1-f21ff0c6b9fccc687b107e9df4ad616f"
+      },
+      "doc": {
+        "_id": "invoice:222333",
+        "_rev": "1-f21ff0c6b9fccc687b107e9df4ad616f",
+        "type": "invoice",
+        "invoiceNumber": "222333",
+        "customer": {
+          "id": "",
+          "name": "SSAA",
+          "email": ""
+        },
+        "date": "2025-08-03",
+        "dueDate": "",
+        "items": [
+          {
+            "description": "AAA",
+            "quantity": 122,
+            "unitPrice": 33,
+            "amount": 4026
+          }
+        ],
+        "subtotal": 4026,
+        "tax": 402.6,
+        "total": 4428.6,
+        "amountPaid": 0,
+        "balance": 4428.6,
+        "status": "draft",
+        "notes": "",
+        "created": "2025-08-03T17:09:36.814Z",
+        "updated": "2025-08-03T17:09:36.814Z"
+      }
+    },
+    {
+      "id": "invoice:INV-1122-1754241732989",
+      "key": "invoice:INV-1122-1754241732989",
+      "value": {
+        "rev": "1-abc7cdbed11b3bb99f46e8505beac48f"
+      },
+      "doc": {
+        "_id": "invoice:INV-1122-1754241732989",
+        "_rev": "1-abc7cdbed11b3bb99f46e8505beac48f",
+        "type": "invoice",
+        "invoiceNumber": "INV-1122-1754241732989",
+        "customer": {
+          "id": "customer:san",
+          "name": "San",
+          "email": "sss@dds.dd"
+        },
+        "date": "2025-08-03",
+        "dueDate": "2025-09-02",
+        "items": [
+          {
+            "description": "Spirit",
+            "quantity": 2111,
+            "unitPrice": 9.99,
+            "amount": 21088.89
+          }
+        ],
+        "subtotal": 21088.89,
+        "tax": 2108.889,
+        "total": 23247.779,
+        "amountPaid": 0,
+        "balance": 23247.779,
+        "status": "sent",
+        "notes": "Generated from Sales Order: 1122",
+        "created": "2025-08-03T17:22:12.989Z",
+        "updated": "2025-08-03T17:22:12.989Z"
+      }
+    },
+    {
+      "id": "journal:1754197010896",
+      "key": "journal:1754197010896",
+      "value": {
+        "rev": "1-832113bc58e5de8a0b221abb077da87a"
+      },
+      "doc": {
+        "_id": "journal:1754197010896",
+        "_rev": "1-832113bc58e5de8a0b221abb077da87a",
+        "type": "journal_entry",
+        "date": "2025-08-03",
+        "description": "ss",
+        "reference": "",
+        "entries": [
+          {
+            "account": "1100",
+            "debit": "0",
+            "credit": "1000",
+            "description": "ww"
+          },
+          {
+            "account": "2000",
+            "debit": "1000",
+            "credit": "0",
+            "description": "ww"
+          }
+        ],
+        "totalAmount": 1000,
+        "status": "posted",
+        "created": "2025-08-03T04:56:50.897Z",
+        "updated": "2025-08-03T04:56:50.897Z"
+      }
+    },
+    {
+      "id": "journal:1754202356220",
+      "key": "journal:1754202356220",
+      "value": {
+        "rev": "1-55db164f3e2603189d20285d00155a03"
+      },
+      "doc": {
+        "_id": "journal:1754202356220",
+        "_rev": "1-55db164f3e2603189d20285d00155a03",
+        "type": "journal_entry",
+        "date": "2025-08-03",
+        "description": "rrr",
+        "reference": "",
+        "entries": [
+          {
+            "account": "1100",
+            "debit": "",
+            "credit": "2221",
+            "description": ""
+          },
+          {
+            "account": "4000",
+            "debit": "2221",
+            "credit": "",
+            "description": ""
+          }
+        ],
+        "totalAmount": 2221,
+        "status": "posted",
+        "created": "2025-08-03T06:25:56.220Z",
+        "updated": "2025-08-03T06:25:56.220Z"
+      }
+    },
+    {
+      "id": "journal:1754202399716",
+      "key": "journal:1754202399716",
+      "value": {
+        "rev": "1-319ff4a91c7d53e6e21a2085e1849c7b"
+      },
+      "doc": {
+        "_id": "journal:1754202399716",
+        "_rev": "1-319ff4a91c7d53e6e21a2085e1849c7b",
+        "type": "journal_entry",
+        "date": "2025-08-03",
+        "description": "ee",
+        "reference": "",
+        "entries": [
+          {
+            "account": "4000",
+            "debit": "",
+            "credit": "1112",
+            "description": ""
+          },
+          {
+            "account": "4000",
+            "debit": "1112",
+            "credit": "",
+            "description": ""
+          }
+        ],
+        "totalAmount": 1112,
+        "status": "posted",
+        "created": "2025-08-03T06:26:39.716Z",
+        "updated": "2025-08-03T06:26:39.716Z"
+      }
+    },
+    {
+      "id": "journal:1754202443732",
+      "key": "journal:1754202443732",
+      "value": {
+        "rev": "1-139217732a5b5a6e8d191908e9cfe55f"
+      },
+      "doc": {
+        "_id": "journal:1754202443732",
+        "_rev": "1-139217732a5b5a6e8d191908e9cfe55f",
+        "type": "journal_entry",
+        "date": "2025-08-03",
+        "description": "t",
+        "reference": "",
+        "entries": [
+          {
+            "account": "4000",
+            "debit": "2221",
+            "credit": "",
+            "description": ""
+          },
+          {
+            "account": "2000",
+            "debit": "",
+            "credit": "2221",
+            "description": ""
+          }
+        ],
+        "totalAmount": 2221,
+        "status": "posted",
+        "created": "2025-08-03T06:27:23.732Z",
+        "updated": "2025-08-03T06:27:23.732Z"
+      }
+    },
+    {
+      "id": "account:1300",
+      "key": "account:1300",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "account:1300",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "account",
+        "accountCode": "1300",
+        "accountName": "Inventory - Finished Goods",
+        "accountType": "asset",
+        "category": "current_assets",
+        "isActive": true
+      }
+    },
+    {
+      "id": "expense:1755894400000",
+      "key": "expense:1755894400000",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "expense:1755894400000",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "expense",
+        "date": "2025-08-18",
+        "category": "utilities",
+        "description": "Electricity Bill",
+        "amount": 1500,
+        "vendor": "State Electric Co.",
+        "paymentMethod": "bank_transfer",
+        "reference": "ELEC-08-2025",
+        "account": "6100",
+        "status": "paid",
+        "created": "2025-08-18T10:00:00.000Z",
+        "updated": "2025-08-18T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "invoice:INV-2025-001",
+      "key": "invoice:INV-2025-001",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "invoice:INV-2025-001",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "invoice",
+        "invoiceNumber": "INV-2025-001",
+        "customer": {
+          "id": "customer:globalbev",
+          "name": "Global Beverages"
+        },
+        "date": "2025-08-19",
+        "dueDate": "2025-09-18",
+        "items": [
+          {
+            "description": "Bourbon Whiskey",
+            "quantity": 100,
+            "unitPrice": 35,
+            "amount": 3500
+          }
+        ],
+        "subtotal": 3500,
+        "tax": 350,
+        "total": 3850,
+        "amountPaid": 0,
+        "balance": 3850,
+        "status": "sent",
+        "notes": "",
+        "created": "2025-08-19T11:00:00.000Z",
+        "updated": "2025-08-19T11:00:00.000Z"
+      }
+    },
+    {
+      "id": "journal:1755894400001",
+      "key": "journal:1755894400001",
+      "value": {
+        "rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9"
+      },
+      "doc": {
+        "_id": "journal:1755894400001",
+        "_rev": "1-d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+        "type": "journal_entry",
+        "date": "2025-08-18",
+        "description": "Record electricity expense",
+        "reference": "ELEC-08-2025",
+        "entries": [
+          {
+            "account": "6100",
+            "debit": "1500",
+            "credit": "0",
+            "description": "Utilities Expense"
+          },
+          {
+            "account": "1000",
+            "debit": "0",
+            "credit": "1500",
+            "description": "Cash Payment"
+          }
+        ],
+        "totalAmount": 1500,
+        "status": "posted",
+        "created": "2025-08-18T10:05:00.000Z",
+        "updated": "2025-08-18T10:05:00.000Z"
+      }
+    }
+  ]
+}

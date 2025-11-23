@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Accounts Receivable</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #22c55e; /* green-500 */
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25em 0.6em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+        .status-paid { background-color: #dcfce7; color: #166534; }
+        .status-sent { background-color: #dbeafe; color: #1e40af; }
+        .status-overdue { background-color: #fee2e2; color: #991b1b; }
+        .status-draft { background-color: #f3f4f6; color: #4b5563; }
+
+        /* Modal Styles */
+        .modal-backdrop { display: none; align-items: center; justify-content: center; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; background-color: rgba(0,0,0,0.6); animation: fadeIn 0.3s; padding: 1rem; }
+        .modal-content { position: relative; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {transform: translateY(-50px); opacity: 0} to {transform: translateY(0); opacity: 1} }
+
+        /* Invoice Styles */
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            font-size: 14px;
+            line-height: 20px;
+            font-family: 'Roboto', sans-serif;
+            color: #555;
+            background: #fff;
+        }
+        .invoice-box table { width: 100%; line-height: inherit; text-align: left; border-collapse: collapse; }
+        .invoice-box table td { padding: 5px; vertical-align: top; }
+        .invoice-box table tr.heading td { background: #eee; border-bottom: 1px solid #ddd; font-weight: bold; }
+        .invoice-box table tr.details td { padding-bottom: 20px; }
+        .invoice-box table tr.item td{ border-bottom: 1px solid #eee; }
+        .invoice-box .invoice-header { text-align: center; margin-bottom: 20px; }
+        .invoice-box .invoice-header h1 { margin: 0; font-size: 28px; font-weight: 700; color: #333; }
+        .invoice-box .invoice-header p { margin: 2px 0; }
+        .invoice-box .invoice-details-table td { border: 1px solid #ddd; padding: 8px; }
+        
+        .invoice-box .items-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        .invoice-box .items-table th, 
+        .invoice-box .items-table td { 
+            border: 1px solid #ddd; 
+            padding: 8px; 
+            text-align: right; 
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        .invoice-box .items-table th { background: #f9f9f9; text-align: center; }
+
+        .invoice-box .totals-table td { text-align: right; padding: 8px; }
+        .invoice-box .totals-table .label { font-weight: bold; text-align: left;}
+
+        /* --- STYLES FOR FULL-PAGE INVOICE MODAL --- */
+        #showBillModal {
+            overflow-y: auto; /* Allow the whole modal backdrop to scroll */
+            align-items: flex-start; /* Align the modal content to the top */
+        }
+        #showBillModal .modal-content {
+            margin: 2rem auto; /* Center horizontally and provide vertical margin */
+            max-height: none !important; /* Ensure it's not constrained in height */
+        }
+        #showBillModal .invoice-box {
+             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* --- REVISED PRINT STYLES --- */
+        @media print {
+            body > *:not(#showBillModal) {
+                display: none !important;
+            }
+            #showBillModal {
+                display: block !important;
+                position: static !important;
+                width: 100% !important;
+                height: 100% !important;
+                overflow: visible !important;
+                background: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .modal-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100% !important;
+                max-height: 100% !important;
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            #invoiceContent {
+               overflow: visible !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .invoice-box {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
+                padding: 15px !important;
+                box-sizing: border-box;
+                border: none !important;
+                box-shadow: none !important;
+                font-size: 10pt;
+                line-height: 1.3;
+                color: #000;
+                background: #fff;
+            }
+            .invoice-box table { 
+                font-size: 9pt;
+                color: #000;
+            }
+            .invoice-box .heading td {
+                background-color: #eee !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10 no-print">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-8">
+                <a href="finance.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Finance & Accounting
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Accounts Receivable</h1>
+                <p class="mt-1 text-md text-gray-500">Manage customer invoices, track outstanding payments, and record collections.</p>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Receivables</dt><dd id="totalReceivables" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-red-100 rounded-md p-3"><i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Overdue Invoices</dt><dd id="overdueInvoices" class="text-3xl font-bold text-gray-900"></dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="calendar-check" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Collected (This Month)</dt><dd class="text-xl font-bold text-gray-900">₹1.5 Cr</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-gray-100 rounded-md p-3"><i data-lucide="briefcase" class="h-6 w-6 text-gray-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Collection (DSO)</dt><dd class="text-3xl font-bold text-gray-900">28</dd></dl></div></div></div>
+            </div>
+
+            <!-- Invoices Table -->
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-gray-800">Customer Invoices</h2>
+                    <button id="openNewInvoiceModalBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                        <i data-lucide="plus" class="h-4 w-4 mr-2"></i>Create New Invoice
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Invoice #</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Due Date</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Amount (₹)</th><th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+                        <tbody id="invoicesTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="newInvoiceModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Create New Invoice</h3><button class="close-modal-btn text-gray-500 text-3xl leading-none">&times;</button></div><form id="newInvoiceForm"><div class="space-y-4"><div><label for="invCustomer" class="block text-sm font-medium">Customer</label><input type="text" id="invCustomer" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div class="grid grid-cols-2 gap-4"><div><label for="invNumber" class="block text-sm font-medium">Invoice Number</label><input type="text" id="invNumber" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="invDate" class="block text-sm font-medium">Invoice Date</label><input type="date" id="invDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="grid grid-cols-2 gap-4"><div><label for="invDueDate" class="block text-sm font-medium">Due Date</label><input type="date" id="invDueDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="invAmount" class="block text-sm font-medium">Amount (₹)</label><input type="number" id="invAmount" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-md">Save Invoice</button></div></form></div></div>
+    <div id="viewInvoiceModal" class="modal-backdrop"><div id="viewInvoiceModalContent" class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl"></div></div>
+    
+    <div id="showBillModal" class="modal-backdrop">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-4xl flex flex-col">
+            <div id="invoiceContent">
+                <!-- Invoice HTML will be injected here -->
+            </div>
+            <div class="p-4 bg-gray-100 text-right no-print border-t flex-shrink-0">
+                <button class="close-modal-btn bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">Close</button>
+                <button onclick="window.print()" class="ml-3 text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-md shadow-sm">Print</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        lucide.createIcons();
+
+        let invoiceData = [
+            { id: 'INV-07-112', customer: 'IOCL - Pune', dueDate: '2025-07-25', amount: 1300000, status: 'Sent' },
+            { id: 'INV-06-201', customer: 'BPCL - Mumbai', dueDate: '2025-06-28', amount: 16100000, status: 'Overdue' },
+            { 
+                id: 'INV-06-198', 
+                customer: 'HPCL - Nagpur', 
+                dueDate: '2025-06-20', 
+                amount: 1320000, 
+                status: 'Paid',
+                customerDetails: {
+                    name: 'HPCL - Nagpur',
+                    address: 'Plot 101, Butibori Industrial Area, Nagpur, Maharashtra - 441122',
+                    gstin: '27AAFCH1234A1Z2'
+                },
+                invoiceDetails: {
+                    invoiceDate: '05/06/2025',
+                    transportMode: 'Tanker',
+                    vehicleNumber: 'MH-31-CQ-1234',
+                    dateOfSupply: '05/06/2025',
+                    placeOfSupply: 'Nagpur',
+                    items: [
+                        { sno: 1, desc: 'Ethanol (ENA)', hsn: 2207, qty: 20000, unit: 'LTR', rate: 55.93, amount: 1118644.07 }
+                    ]
+                }
+            },
+            { id: 'INV-07-115', customer: 'Krishna Feeds', dueDate: '2025-07-30', amount: 1225000, status: 'Sent' },
+        ];
+
+        const invoicesTableBody = document.getElementById('invoicesTableBody');
+        const totalReceivablesEl = document.getElementById('totalReceivables');
+        const overdueInvoicesEl = document.getElementById('overdueInvoices');
+
+        function renderInvoicesTable() {
+            invoicesTableBody.innerHTML = '';
+            let totalReceivables = 0;
+            let overdueCount = 0;
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            invoiceData.forEach(inv => {
+                let status = inv.status;
+                if (status === 'Sent' && new Date(inv.dueDate) < today) {
+                    status = 'Overdue';
+                }
+                
+                if (status === 'Sent' || status === 'Overdue') {
+                    totalReceivables += inv.amount;
+                    if (status === 'Overdue') overdueCount++;
+                }
+
+                const statusClasses = { 'Paid': 'status-paid', 'Sent': 'status-sent', 'Overdue': 'status-overdue', 'Draft': 'status-draft' };
+                
+                let actionButtons = '';
+                if (status === 'Paid') {
+                    actionButtons = `<button class="text-blue-600 hover:text-blue-900 mr-4 show-bill-btn">Show Bill</button>
+                                     <button class="text-green-600 hover:text-green-900 view-invoice-btn">View</button>`;
+                } else {
+                    actionButtons = `<button class="text-green-600 hover:text-green-900 view-invoice-btn">View</button>`;
+                }
+
+                const row = `
+                    <tr data-id="${inv.id}" class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${inv.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${inv.customer}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${new Date(inv.dueDate).toLocaleDateString('en-IN')}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-right">${inv.amount.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-center"><span class="status-badge ${statusClasses[status]}">${status}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">${actionButtons}</td>
+                    </tr>`;
+                invoicesTableBody.innerHTML += row;
+            });
+
+            totalReceivablesEl.textContent = `₹${(totalReceivables/100000).toFixed(2)}L`;
+            overdueInvoicesEl.textContent = overdueCount;
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return null;
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'flex';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+
+        const newInvoiceModal = setupModal('newInvoiceModal', 'openNewInvoiceModalBtn');
+        const viewInvoiceModal = setupModal('viewInvoiceModal', null);
+        const showBillModal = setupModal('showBillModal', null);
+
+
+        document.getElementById('newInvoiceForm').addEventListener('submit', e => {
+            e.preventDefault();
+            invoiceData.unshift({
+                id: document.getElementById('invNumber').value,
+                customer: document.getElementById('invCustomer').value,
+                dueDate: document.getElementById('invDueDate').value,
+                amount: parseInt(document.getElementById('invAmount').value),
+                status: 'Sent'
+            });
+            renderInvoicesTable();
+            newInvoiceModal.style.display = 'none';
+            e.target.reset();
+        });
+
+        invoicesTableBody.addEventListener('click', e => {
+            const invId = e.target.closest('tr').dataset.id;
+            const inv = invoiceData.find(i => i.id == invId);
+
+            if (e.target.classList.contains('view-invoice-btn')) {
+                renderViewInvoiceModal(inv);
+                viewInvoiceModal.style.display = 'flex';
+            }
+            if (e.target.classList.contains('show-bill-btn')) {
+                if (inv && inv.invoiceDetails) {
+                    renderInvoiceModal(inv);
+                    showBillModal.style.display = 'flex';
+                } else {
+                    alert('No detailed invoice available for this entry.');
+                }
+            }
+        });
+        
+        function renderViewInvoiceModal(inv) {
+            let actionsHtml = '';
+            if (inv.status !== 'Paid') {
+                actionsHtml = `<div class="border-t pt-4 mt-4">
+                                 <h4 class="text-lg font-semibold mb-2">Record Payment Received</h4>
+                                 <form id="paymentForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div><label class="block text-sm font-medium">Payment Date</label><input type="date" id="paymentDate" value="${new Date().toISOString().slice(0,10)}" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                                    <div><label class="block text-sm font-medium">Reference No.</label><input type="text" id="paymentRef" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                                    <div class="flex items-end"><button type="submit" class="w-full text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-md">Record Payment</button></div>
+                                 </form>
+                               </div>`;
+            }
+
+            document.getElementById('viewInvoiceModalContent').innerHTML = `
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <div><h3 class="text-2xl font-bold text-gray-800">Invoice Details</h3><p class="text-gray-500">${inv.id}</p></div>
+                    <button class="close-modal-btn text-gray-500 text-3xl leading-none">&times;</button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><p class="text-sm text-gray-500">Customer</p><p class="font-semibold">${inv.customer}</p></div>
+                    <div><p class="text-sm text-gray-500">Due Date</p><p class="font-semibold">${new Date(inv.dueDate).toLocaleDateString('en-IN')}</p></div>
+                    <div><p class="text-sm text-gray-500">Amount</p><p class="font-semibold text-2xl">${inv.amount.toLocaleString('en-IN', { style: 'currency', currency: 'INR' })}</p></div>
+                    <div><p class="text-sm text-gray-500">Status</p><span class="status-badge ${inv.status === 'Paid' ? 'status-paid' : (new Date(inv.dueDate) < new Date() && inv.status !== 'Paid' ? 'status-overdue' : 'status-sent')}">${inv.status === 'Paid' ? 'Paid' : (new Date(inv.dueDate) < new Date() ? 'Overdue' : 'Sent')}</span></div>
+                </div>
+                ${actionsHtml}
+            `;
+            viewInvoiceModal.querySelector('.close-modal-btn').onclick = () => viewInvoiceModal.style.display = 'none';
+
+            if(inv.status !== 'Paid') {
+                document.getElementById('paymentForm').addEventListener('submit', e => {
+                    e.preventDefault();
+                    inv.status = 'Paid';
+                    // --- FIX: Generate details if they don't exist ---
+                    if (!inv.invoiceDetails) {
+                        const { customerDetails, invoiceDetails } = generateRandomInvoiceDetails(inv);
+                        inv.customerDetails = customerDetails;
+                        inv.invoiceDetails = invoiceDetails;
+                    }
+                    renderInvoicesTable();
+                    viewInvoiceModal.style.display = 'none';
+                });
+            }
+        }
+
+        function renderInvoiceModal(inv) {
+            const c_details = inv.customerDetails;
+            const i_details = inv.invoiceDetails;
+            
+            const our_details = {
+                name: 'Bagalkot Distilleries Pvt.Ltd',
+                address: '123 Industrial Area, Bagalkot, Karnataka - 587101',
+                gstin: '29ABCDE1234F1Z5',
+                state: 'KARNATAKA',
+                code: '29',
+                bankDetails: { name: 'State Bank of India', account: '12345678901', ifsc: 'SBIN0001234' }
+            };
+            
+            const totalBeforeTax = i_details.items.reduce((sum, item) => sum + item.amount, 0);
+            const gstRate = 0.18; // 18%
+            const cgst = totalBeforeTax * (gstRate / 2);
+            const sgst = totalBeforeTax * (gstRate / 2);
+            const grandTotal = inv.amount;
+
+
+            const itemsHtml = i_details.items.map(item => `
+                <tr class="item">
+                    <td style="text-align:center;">${item.sno}</td>
+                    <td style="text-align:left;">${item.desc}</td>
+                    <td>${item.hsn}</td>
+                    <td>${item.qty.toLocaleString('en-IN')} ${item.unit}</td>
+                    <td>${item.rate.toFixed(2)}</td>
+                    <td>0.00</td>
+                    <td>${item.amount.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                </tr>
+            `).join('');
+
+            const invoiceHTML = `
+                <div class="invoice-box">
+                    <div class="invoice-header">
+                        <h1>${our_details.name}</h1>
+                        <p>${our_details.address}</p>
+                        <p><strong>GSTIN: ${our_details.gstin}</strong></p>
+                    </div>
+                    <h2 style="text-align:center; font-size: 20px; font-weight: bold; border: 1px solid #ddd; padding: 5px; margin-bottom: 15px;">Tax Invoice</h2>
+                    
+                    <table class="invoice-details-table">
+                        <tr>
+                            <td><strong>Invoice No:</strong> ${inv.id}</td>
+                            <td><strong>Transport Mode:</strong> ${i_details.transportMode}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Invoice date:</strong> ${i_details.invoiceDate}</td>
+                            <td><strong>Vehicle number:</strong> ${i_details.vehicleNumber}</td>
+                        </tr>
+                         <tr>
+                            <td><strong>Reverse Charge (Y/N):</strong> NO</td>
+                            <td><strong>Date of Supply:</strong> ${i_details.dateOfSupply}</td>
+                        </tr>
+                         <tr>
+                            <td><strong>State:</strong> ${our_details.state} <span style="margin-left: 20px;"><strong>Code:</strong> ${our_details.code}</span></td>
+                            <td><strong>Place of Supply:</strong> ${i_details.placeOfSupply}</td>
+                        </tr>
+                    </table>
+
+                    <table style="margin-top: 15px;">
+                        <tr class="heading">
+                            <td style="width:50%;">Bill to Party</td>
+                            <td style="width:50%;">Ship to Party</td>
+                        </tr>
+                        <tr class="details">
+                            <td>
+                                <strong>Name:</strong> ${c_details.name}<br>
+                                <strong>Address:</strong> ${c_details.address}<br>
+                                <strong>GSTIN:</strong> ${c_details.gstin}<br>
+                                <strong>State:</strong> MAHARASHTRA <span style="margin-left: 20px;"><strong>Code:</strong> ${c_details.gstin.substring(0,2)}</span>
+                            </td>
+                            <td>
+                                <strong>Name:</strong> ${c_details.name}<br>
+                                <strong>Address:</strong> ${c_details.address}<br>
+                                <strong>GSTIN:</strong> ${c_details.gstin}<br>
+                                <strong>State:</strong> MAHARASHTRA <span style="margin-left: 20px;"><strong>Code:</strong> ${c_details.gstin.substring(0,2)}</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="items-table">
+                         <thead>
+                            <tr class="heading">
+                                <th>S. No.</th>
+                                <th style="text-align:left;">Product Description</th>
+                                <th>HSN Code</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Disc.</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHtml}
+                        </tbody>
+                    </table>
+                    
+                    <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 60%; vertical-align: top; padding-right: 20px;">
+                                <p><strong>Total invoice amount in words:</strong><br><span id="amountInWords" style="font-weight: bold;"></span></p>
+                                <br>
+                                <p><strong>Bank Details</strong></p>
+                                <p>Bank Name: ${our_details.bankDetails.name}</p>
+                                <p>Bank A/C: ${our_details.bankDetails.account}</p>
+                                <p>Bank IFSC: ${our_details.bankDetails.ifsc}</p>
+                            </td>
+                            <td style="width: 40%; vertical-align: top;">
+                                <table class="totals-table" style="width: 100%;">
+                                    <tr><td class="label">Total Amount before Tax:</td><td>${totalBeforeTax.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
+                                    <tr><td class="label">Add: CGST @9.00%:</td><td>${cgst.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
+                                    <tr><td class="label">Add: SGST @9.00%:</td><td>${sgst.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
+                                    <tr style="border-top: 2px solid #333; font-weight: bold;"><td class="label">Total Amount after Tax:</td><td>${grandTotal.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td></tr>
+                                    <tr><td class="label">GST on Reverse Charge:</td><td>0.00</td></tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 30px;">
+                                <p style="font-size: 12px;">Certified that the particulars given above are true and correct</p>
+                            </td>
+                        </tr>
+                        <tr>
+                             <td style="padding-top: 60px; vertical-align: bottom;">Common Seal</td>
+                             <td style="padding-top: 60px; vertical-align: bottom; text-align: right;">
+                                <p style="margin-bottom: 0; font-weight: bold;">For ${our_details.name}</p>
+                                <br><br><br>
+                                <p style="border-top: 1px solid #555; padding-top: 5px; display: inline-block;">Authorised signatory</p>
+                             </td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+            document.getElementById('invoiceContent').innerHTML = invoiceHTML;
+            document.getElementById('amountInWords').textContent = amountToWords(grandTotal) + " Only";
+        }
+
+        function generateRandomInvoiceDetails(inv) {
+            const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+            const randomString = (length) => Math.random().toString(36).substring(2, length + 2).toUpperCase();
+            const states = [ { code: '27', name: 'MAHARASHTRA' }, { code: '29', name: 'KARNATAKA' }, { code: '10', name: 'BIHAR' }, { code: '07', name: 'DELHI' } ];
+            const randomState = states[randomNum(0, states.length - 1)];
+
+            const customerDetails = {
+                name: inv.customer,
+                address: `Plot ${randomNum(1, 200)}, ${randomString(8)} Industrial Area, ${randomString(6)}, ${randomState.name}`,
+                gstin: `${randomState.code}ABCDE${randomNum(1000,9999)}F1Z${randomNum(1,9)}`
+            };
+
+            const grandTotal = inv.amount;
+            const taxRate = 0.18; 
+            const totalBeforeTax = grandTotal / (1 + taxRate);
+            const invDate = inv.dueDate ? new Date(new Date(inv.dueDate).setDate(new Date(inv.dueDate).getDate() - 15)) : new Date();
+
+
+            const invoiceDetails = {
+                invoiceDate: invDate.toLocaleDateString('en-IN'),
+                transportMode: 'Tanker',
+                vehicleNumber: `${randomString(2)}-${randomNum(10,99)}-${randomString(2)}-${randomNum(1000,9999)}`,
+                dateOfSupply: invDate.toLocaleDateString('en-IN'),
+                placeOfSupply: randomState.name,
+                items: [
+                    {
+                        sno: 1, desc: `Supply to ${inv.customer}`, hsn: 2207,
+                        qty: 1, unit: 'Unit', rate: totalBeforeTax, amount: totalBeforeTax
+                    }
+                ]
+            };
+            
+            return { customerDetails, invoiceDetails };
+        }
+
+        function amountToWords(amount) {
+            const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            const scales = ['', 'Thousand', 'Lakh', 'Crore'];
+
+            function toWords(n) {
+                if (n < 20) return ones[n];
+                if (n < 100) return tens[Math.floor(n / 10)] + (n % 10 !== 0 ? ' ' + ones[n % 10] : '');
+                if (n < 1000) return ones[Math.floor(n / 100)] + ' Hundred' + (n % 100 !== 0 ? ' and ' + toWords(n % 100) : '');
+                return '';
+            }
+
+            let numStr = Math.floor(amount).toString();
+            let result = [];
+            let i = numStr.length;
+            let scaleIndex = 0;
+
+            while (i > 0) {
+                let chunk;
+                if (scaleIndex === 0) {
+                    chunk = parseInt(numStr.slice(Math.max(0, i - 3)));
+                    i -= 3;
+                } else { 
+                    chunk = parseInt(numStr.slice(Math.max(0, i - 2)));
+                    i -= 2;
+                }
+                
+                if (chunk > 0) {
+                    result.unshift(toWords(chunk) + (scales[scaleIndex] ? ' ' + scales[scaleIndex] : ''));
+                }
+                scaleIndex++;
+            }
+            return "Rupees " + result.join(' ').replace(/ and$/, '');
+        }
+
+        // --- INITIALIZATION ---
+        renderInvoicesTable();
+    </script>
+</body>
+</html>

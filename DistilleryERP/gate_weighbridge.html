@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Gate & Weighbridge</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .status-indicator {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status-available { background-color: #22c55e; }
+        .status-busy { background-color: #f97316; }
+        .status-offline { background-color: #ef4444; }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            bottom: -12px;
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+        .timeline-item:last-child::before { display: none; }
+        .timeline-icon {
+            position: absolute; left: 0; top: 0;
+            transform: translateX(-50%);
+            width: 2.5rem; height: 2.5rem;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 9999px;
+        }
+
+        /* Modal Styles */
+        .modal-backdrop {
+            display: none; position: fixed; z-index: 100;
+            left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0,0,0,0.5);
+            -webkit-animation-name: fadeIn; animation-name: fadeIn;
+            -webkit-animation-duration: 0.3s; animation-duration: 0.3s;
+        }
+        .modal-content {
+            position: relative; margin: 5% auto;
+            -webkit-animation-name: slideIn; animation-name: slideIn;
+            -webkit-animation-duration: 0.4s; animation-duration: 0.4s;
+        }
+        @-webkit-keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @-webkit-keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+
+        /* Ticket Styles */
+        .ticket {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: auto;
+            border: 1px solid #e5e7eb;
+        }
+        .ticket-header {
+            background-color: #f3f4f6;
+            padding: 1rem;
+            border-bottom: 2px dashed #d1d5db;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .ticket-body { padding: 1.5rem; }
+        .ticket-footer {
+            padding: 1rem;
+            border-top: 2px dashed #d1d5db;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+        .ticket-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .ticket-row:last-child { border-bottom: none; }
+        .ticket-label { color: #6b7280; }
+        .ticket-value { font-weight: 600; color: #111827; }
+
+        /* Print Styles */
+        @media print {
+            body * { visibility: hidden; }
+            .printable-area, .printable-area * { visibility: visible; }
+            .printable-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+				<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10 no-print">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+				 <a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Main Dashboard
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Gate & Weighbridge Operations</h1>
+                    <p class="mt-1 text-md text-gray-500">Live monitoring of all vehicle movements and weighments.</p>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4">
+                    <button id="openCreateManualWeighmentModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <i data-lucide="scale" class="mr-2 h-5 w-5"></i>
+                        Create Manual Weighment
+                    </button>
+                    <button id="openCreateGatePassModalBtn" type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <i data-lucide="file-plus-2" class="mr-2 h-5 w-5"></i>
+                        Create Gate Pass
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Live Gate Activity -->
+                <div class="lg:col-span-1 bg-white p-6 shadow-md rounded-lg">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Live Gate Activity</h2>
+                    <div class="relative pl-6 space-y-8">
+                        <div class="timeline-item relative"><div class="timeline-icon bg-green-100 text-green-600"><i data-lucide="arrow-right-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Entry: MH 14 HU 5521</p><p class="text-sm text-gray-500">Driver: Suresh Yadav</p><time class="text-xs text-gray-400 font-medium">02:15 PM</time></div></div>
+                        <div class="timeline-item relative"><div class="timeline-icon bg-blue-100 text-blue-600"><i data-lucide="arrow-left-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Exit: KA 05 N 9876</p><p class="text-sm text-gray-500">Tare Weight: 7,250 kg</p><time class="text-xs text-gray-400 font-medium">02:12 PM</time></div></div>
+                        <div class="timeline-item relative"><div class="timeline-icon bg-green-100 text-green-600"><i data-lucide="arrow-right-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Entry: AP 28 DJ 1111</p><p class="text-sm text-gray-500">Driver: Mohan Kumar</p><time class="text-xs text-gray-400 font-medium">02:05 PM</time></div></div>
+                        <div class="timeline-item relative"><div class="timeline-icon bg-blue-100 text-blue-600"><i data-lucide="arrow-left-circle"></i></div><div class="ml-10"><p class="font-semibold text-gray-800">Vehicle Exit: TN 38 G 4321</p><p class="text-sm text-gray-500">Tare Weight: 6,980 kg</p<time class="text-xs text-gray-400 font-medium">01:58 PM</time></div></div>
+                    </div>
+                </div>
+
+                <!-- Weighbridge Status & Recent Weighments -->
+                <div class="lg:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-6 shadow-md rounded-lg"><h3 class="text-lg font-bold text-gray-800">Weighbridge 1</h3><div class="flex items-center justify-between mt-4"><div><p class="text-sm text-gray-500">Status</p><p class="font-semibold text-lg flex items-center"><span class="status-indicator status-busy"></span>Busy</p></div><div><p class="text-sm text-gray-500">Current Reading</p><p class="font-semibold text-lg">26,450 kg</p></div></div></div>
+                        <div class="bg-white p-6 shadow-md rounded-lg"><h3 class="text-lg font-bold text-gray-800">Weighbridge 2</h3><div class="flex items-center justify-between mt-4"><div><p class="text-sm text-gray-500">Status</p><p class="font-semibold text-lg flex items-center"><span class="status-indicator status-available"></span>Available</p></div><div><p class="text-sm text-gray-500">Current Reading</p><p class="font-semibold text-lg">0 kg</p></div></div></div>
+                    </div>
+
+                    <div class="bg-white shadow-md rounded-lg">
+                        <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Recent Weighments</h2>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50"><tr><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket No.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle No.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gross Wt.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tare Wt.</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Net Wt.</th><th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+                                <!-- MODIFIED: Added id to tbody -->
+                                <tbody id="recentWeighmentsTbody" class="bg-white divide-y divide-gray-200">
+                                    <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WT-0702-112</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">KA 05 N 9876</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25,880 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7,250 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">18,630 kg</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td></tr>
+                                    <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WT-0702-111</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">TN 38 G 4321</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">24,550 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">6,980 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">17,570 kg</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td></tr>
+                                    <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WT-0702-110</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">MH 12 XY 4567</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">26,120 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7,110 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">19,010 kg</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td></tr>
+                                    <tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WT-0702-109</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">GJ 01 AB 1234</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25,990 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">7,300 kg</td><td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">18,690 kg</td><td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- View Ticket Modal -->
+    <div id="viewTicketModal" class="modal-backdrop">
+        <div id="viewTicketContent" class="modal-content">
+            <!-- Ticket content will be injected here -->
+        </div>
+    </div>
+
+    <!-- Create Gate Pass Modal -->
+    <div id="createGatePassModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Create New Gate Pass</h3>
+                <button id="closeCreateModalBtn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            </div>
+            <form id="createGatePassForm">
+                <div class="space-y-4">
+                    <div><label for="vehicleNo" class="block text-sm font-medium text-gray-700">Vehicle Number</label><input type="text" id="vehicleNo" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., MH 12 XY 4567"></div>
+                    <div><label for="driverName" class="block text-sm font-medium text-gray-700">Driver Name</label><input type="text" id="driverName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., Anil Kumar"></div>
+                    <div><label for="supplierName" class="block text-sm font-medium text-gray-700">Supplier</label><input type="text" id="supplierName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., Sahyadri Agro Traders"></div>
+                    <div><label for="material" class="block text-sm font-medium text-gray-700">Material</label><input type="text" id="material" value="Corn" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required></div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" id="cancelCreateBtn" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">Cancel</button>
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">Generate Gate Pass</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Manual Weighment Modal -->
+    <div id="createManualWeighmentModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Create Manual Weighment</h3>
+                <button id="closeCreateWeighmentModalBtn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            </div>
+            <form id="createManualWeighmentForm">
+                <div class="space-y-4">
+                    <div><label for="mwVehicleNo" class="block text-sm font-medium text-gray-700">Vehicle Number</label><input type="text" id="mwVehicleNo" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., MH 12 XY 4567"></div>
+                    <div><label for="mwGrossWt" class="block text-sm font-medium text-gray-700">Gross Weight (kg)</label><input type="number" id="mwGrossWt" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., 25000"></div>
+                    <div><label for="mwTareWt" class="block text-sm font-medium text-gray-700">Tare Weight (kg)</label><input type="number" id="mwTareWt" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required placeholder="e.g., 7000"></div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" id="cancelCreateWeighmentBtn" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">Cancel</button>
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none">Generate Weighment Slip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // --- Modal Setup ---
+        function setupModal(modalId, openBtnId, closeBtnIds) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            closeBtnIds.forEach(id => {
+                const closeBtn = document.getElementById(id);
+                if (closeBtn) closeBtn.onclick = () => modal.style.display = 'none';
+            });
+            window.addEventListener('click', (event) => {
+                if (event.target == modal) modal.style.display = 'none';
+            });
+            return modal;
+        }
+
+        const viewModal = setupModal('viewTicketModal', null, []);
+        const createModal = setupModal('createGatePassModal', 'openCreateGatePassModalBtn', ['closeCreateModalBtn', 'cancelCreateBtn']);
+        const createWeighmentModal = setupModal('createManualWeighmentModal', 'openCreateManualWeighmentModalBtn', ['closeCreateWeighmentModalBtn', 'cancelCreateWeighmentBtn']);
+
+        // --- View Ticket Logic (Using Event Delegation) ---
+        // MODIFIED: This now handles clicks for existing and dynamically added "View Ticket" buttons.
+        document.getElementById('recentWeighmentsTbody').addEventListener('click', function(event) {
+            if (event.target.classList.contains('view-ticket-btn')) {
+                event.preventDefault();
+                const row = event.target.closest('tr');
+                const cells = row.querySelectorAll('td');
+                const ticketData = {
+                    ticketNo: cells[0].textContent,
+                    vehicleNo: cells[1].textContent,
+                    grossWt: cells[2].textContent,
+                    tareWt: cells[3].textContent,
+                    netWt: cells[4].textContent,
+                    dateTime: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+                };
+                document.getElementById('viewTicketContent').innerHTML = generateWeighmentTicketHTML(ticketData);
+                viewModal.style.display = 'block';
+                // Attach listeners to the new buttons in the modal
+                document.getElementById('closeViewTicketBtn').onclick = () => viewModal.style.display = 'none';
+                document.getElementById('printWeighmentBtn').onclick = () => window.print();
+                lucide.createIcons();
+            }
+        });
+
+        // --- Create Gate Pass Logic ---
+        document.getElementById('createGatePassForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const gatePassData = {
+                vehicleNo: document.getElementById('vehicleNo').value,
+                driverName: document.getElementById('driverName').value,
+                supplier: document.getElementById('supplierName').value,
+                material: document.getElementById('material').value,
+                passNo: 'GP-' + Math.floor(Math.random() * 9000) + 1000,
+                dateTime: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+            };
+            document.getElementById('viewTicketContent').innerHTML = generateGatePassTicketHTML(gatePassData);
+            createModal.style.display = 'none';
+            viewModal.style.display = 'block';
+            document.getElementById('createGatePassForm').reset();
+            // Attach listeners to the new buttons
+            document.getElementById('closeViewTicketBtn').onclick = () => viewModal.style.display = 'none';
+            document.getElementById('printGatePassBtn').onclick = () => window.print();
+            lucide.createIcons();
+        });
+        
+        // --- Create Manual Weighment Logic ---
+        document.getElementById('createManualWeighmentForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const grossWt = parseFloat(document.getElementById('mwGrossWt').value);
+            const tareWt = parseFloat(document.getElementById('mwTareWt').value);
+            
+            if (isNaN(grossWt) || isNaN(tareWt) || grossWt < tareWt) {
+                alert("Please enter valid weights. Gross Weight must be greater than Tare Weight.");
+                return;
+            }
+
+            const netWt = grossWt - tareWt;
+
+            const weighmentData = {
+                ticketNo: 'MW-' + Math.floor(Math.random() * 9000) + 1000,
+                vehicleNo: document.getElementById('mwVehicleNo').value,
+                grossWt: grossWt.toLocaleString('en-IN') + ' kg',
+                tareWt: tareWt.toLocaleString('en-IN') + ' kg',
+                netWt: netWt.toLocaleString('en-IN') + ' kg',
+                dateTime: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+            };
+            
+            // NEW: Add the new weighment to the table
+            addWeighmentToTable(weighmentData);
+
+            document.getElementById('viewTicketContent').innerHTML = generateWeighmentTicketHTML(weighmentData);
+            createWeighmentModal.style.display = 'none';
+            viewModal.style.display = 'block';
+            document.getElementById('createManualWeighmentForm').reset();
+            // Attach listeners to the new buttons
+            document.getElementById('closeViewTicketBtn').onclick = () => viewModal.style.display = 'none';
+            document.getElementById('printWeighmentBtn').onclick = () => window.print();
+            lucide.createIcons();
+        });
+
+        // --- NEW: Function to add a row to the weighments table ---
+        function addWeighmentToTable(data) {
+            const tableBody = document.getElementById('recentWeighmentsTbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${data.ticketNo}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${data.vehicleNo}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${data.grossWt}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${data.tareWt}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">${data.netWt}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-blue-600 hover:text-blue-900 view-ticket-btn">View Ticket</a></td>
+            `;
+            tableBody.prepend(newRow); // Adds the new row to the top of the table
+        }
+
+
+        // --- HTML Generation Functions ---
+        function generateWeighmentTicketHTML(data) {
+            return `
+                <div class="ticket printable-area">
+                    <div class="ticket-header">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-lg">Weighment Slip</h3>
+                                <p class="text-sm text-gray-600">DistillERP Solutions</p>
+                            </div>
+                            <button id="closeViewTicketBtn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none no-print">&times;</button>
+                        </div>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="text-center mb-4"><p class="text-sm text-gray-500">TICKET NO.</p><p class="text-2xl font-bold tracking-wider">${data.ticketNo}</p></div>
+                        <div class="ticket-row"><span class="ticket-label">VEHICLE NO.</span><span class="ticket-value">${data.vehicleNo}</span></div>
+                        <div class="ticket-row"><span class="ticket-label">DATE & TIME</span><span class="ticket-value">${data.dateTime}</span></div>
+                        <div class="ticket-row"><span class="ticket-label">GROSS WEIGHT</span><span class="ticket-value">${data.grossWt}</span></div>
+                        <div class="ticket-row"><span class="ticket-label">TARE WEIGHT</span><span class="ticket-value">${data.tareWt}</span></div>
+                        <div class="mt-4 pt-4 border-t-2 border-black border-dashed"><div class="ticket-row"><span class="ticket-label text-lg">NET WEIGHT</span><span class="ticket-value text-lg">${data.netWt}</span></div></div>
+                    </div>
+                    <div class="p-4 no-print">
+                         <button id="printWeighmentBtn" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center">
+                            <i data-lucide="printer" class="mr-2 h-5 w-5"></i> Print Slip
+                         </button>
+                    </div>
+                    <div class="ticket-footer">Operator: R. Desai | WB-1</div>
+                </div>
+            `;
+        }
+        
+        function generateGatePassTicketHTML(data) {
+             return `
+                <div class="ticket printable-area">
+                    <div class="ticket-header">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-lg">GATE PASS (ENTRY)</h3>
+                                <p class="text-sm text-gray-600">DistillERP Solutions</p>
+                            </div>
+                            <button id="closeViewTicketBtn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none no-print">&times;</button>
+                        </div>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="text-center mb-4"><p class="text-sm text-gray-500">PASS NO.</p><p class="text-2xl font-bold tracking-wider">${data.passNo}</p></div>
+                        <div class="ticket-row"><span class="ticket-label">VEHICLE NO.</span><span class="ticket-value">${data.vehicleNo}</span></div>
+                        <div class="ticket-row"><span class="ticket-label">DRIVER NAME</span><span class="ticket-value">${data.driverName}</span></div>
+                        <div class="ticket-row"><span class="ticket-label">SUPPLIER</span><span class="ticket-value">${data.supplier}</span></div>
+                        <div class="ticket-row"><span class="ticket-label">MATERIAL</span><span class="ticket-value">${data.material}</span></div>
+                        <div class="ticket-row"><span class="ticket-label">DATE & TIME</span><span class="ticket-value">${data.dateTime}</span></div>
+                    </div>
+                    <div class="p-4 no-print">
+                         <button id="printGatePassBtn" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center">
+                            <i data-lucide="printer" class="mr-2 h-5 w-5"></i> Print Gate Pass
+                         </button>
+                    </div>
+                    <div class="ticket-footer">Authorised Signatory</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

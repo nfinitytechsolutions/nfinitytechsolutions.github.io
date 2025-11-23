@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Finance & Accounting</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .module-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e5e7eb;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+				<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                   
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-8">
+                <a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Main Dashboard
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Finance & Accounting</h1>
+                <p class="mt-1 text-md text-gray-500">Oversee the company's complete financial operations, from daily transactions to strategic reporting.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- General Ledger -->
+                <a href="general_ledger.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                    <div class="p-3 bg-blue-100 rounded-lg mb-4">
+                        <i data-lucide="book-open" class="h-10 w-10 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">General Ledger</h3>
+                    <p class="text-sm text-gray-500 mt-1 flex-grow">Manage the chart of accounts and all journal entries. The core of the accounting system.</p>
+                    <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                </a>
+
+                <!-- Accounts Payable -->
+                <a href="accounts_payble.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                    <div class="p-3 bg-red-100 rounded-lg mb-4">
+                        <i data-lucide="arrow-down-circle" class="h-10 w-10 text-red-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Accounts Payable</h3>
+                    <p class="text-sm text-gray-500 mt-1 flex-grow">Track and manage all money owed to suppliers, from vendor bills to payments.</p>
+                    <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                </a>
+
+                <!-- Accounts Receivable -->
+                <a href="account_recievable.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                    <div class="p-3 bg-green-100 rounded-lg mb-4">
+                        <i data-lucide="arrow-up-circle" class="h-10 w-10 text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Accounts Receivable</h3>
+                    <p class="text-sm text-gray-500 mt-1 flex-grow">Manage all money owed by customers, from creating invoices to tracking collections.</p>
+                    <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                </a>
+
+                <!-- Financial Reporting -->
+                <a href="finance_reports.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                    <div class="p-3 bg-gray-200 rounded-lg mb-4">
+                        <i data-lucide="bar-chart-3" class="h-10 w-10 text-gray-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Financial Reporting</h3>
+                    <p class="text-sm text-gray-500 mt-1 flex-grow">Generate key statements like the P&L, Balance Sheet, and Cash Flow reports.</p>
+                    <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

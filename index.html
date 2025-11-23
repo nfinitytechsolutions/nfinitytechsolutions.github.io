@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nfinity InfoTech - Precision-Built Software at Unmatched Speed</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            overflow-x: hidden;
+            cursor: auto;
+            color: #ffffff;
+        }
+        
+        #canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            cursor: auto;
+        }
+        
+        .content-overlay {
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .interactive {
+            pointer-events: auto;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #4ecdc4;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #0f0f23;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #4ecdc4;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            color: #0f0f23;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 40px;
+        }
+        
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .hero-cta .cta-button {
+            padding: 18px 36px;
+            font-size: 16px;
+        }
+        
+        .hero-cta .secondary-button {
+            background: transparent;
+            color: #4ecdc4;
+            border: 2px solid #4ecdc4;
+        }
+        
+        .hero-cta .secondary-button:hover {
+            background: #4ecdc4;
+            color: #0f0f23;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 100px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 80px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(78, 205, 196, 0.3);
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.1);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .service-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        /* Tech Stack */
+        .tech-stack {
+            padding: 100px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            text-align: center;
+        }
+        
+        .tech-strip {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .tech-track {
+            display: inline-flex;
+            gap: 30px;
+            animation: scroll-horizontal 60s linear infinite;
+            will-change: transform;
+        }
+        
+        .tech-track:hover {
+            animation-play-state: paused;
+        }
+        
+        @keyframes scroll-horizontal {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-weight: 600;
+            color: #4ecdc4;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            white-space: nowrap;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .tech-item:hover {
+            transform: translateY(-5px);
+            background: rgba(78, 205, 196, 0.1);
+            border-color: #4ecdc4;
+        }
+        
+        /* Features */
+        .features {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+        }
+        
+        .feature {
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px auto;
+            color: #0f0f23;
+        }
+        
+        .feature h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .feature p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            text-align: center;
+        }
+        
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+        }
+        
+        .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .contact-item h4 {
+            color: #4ecdc4;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .contact-item p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 60px 40px 30px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #4ecdc4;
+        }
+        
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+        
+        /* 3D Visualization Controls */
+        .viz-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .viz-button {
+            background: rgba(78, 205, 196, 0.9);
+            border: none;
+            color: #0f0f23;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+        
+        .viz-button:hover {
+            background: rgba(78, 205, 196, 1);
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 0 20px;
+            }
+            
+            .services, .features, .contact {
+                padding: 60px 20px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .tech-track {
+                gap: 20px;
+            }
+            
+            .tech-item {
+                min-width: 100px;
+                padding: 15px 20px;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .viz-controls {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(78, 205, 196, 0.3);
+            border-top: 3px solid #4ecdc4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #4ecdc4;
+            font-weight: 600;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Something awesome is brewing...</div>
+    </div>
+    
+    <!-- 3D Canvas -->
+    <canvas id="canvas"></canvas>
+    
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Header -->
+        <header class="header interactive">
+            <nav class="nav">
+                <div class="logo">
+                    <div class="logo-icon"><img src='12.32.09_7732daef-.png' alt='Nfinity InfoTech Logo' /></div>
+                    <span>nfinity<strong>infotech</strong></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#features">Why Us</a></li>
+                    <li><a href="#tech">Tech Stack</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#contact" class="cta-button">Get Started</a>
+            </nav>
+        </header>
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">Precision-Built Software<br>at Unmatched Speed</h1>
+            <p class="hero-subtitle">We turn your complex business challenges into simple, scalable, and high-performance digital solutions—fast.</p>
+            <div class="hero-cta interactive">
+                <a href="mailto:info@nfinityinfotech.com?subject=Turn My Idea Into Software&body=Hi, I'd like to discuss turning my idea into software. Please contact me to get started." class="cta-button">Turn Your Idea Into Software</a>
+                <a href="#services" class="cta-button secondary-button">Explore Services</a>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2 class="section-title">What We Do</h2>
+            <p class="section-subtitle">We don't just write code—we deliver business leverage. Our specialties are designed to solve your exact problems and fuel your growth.</p>
+            
+            <div class="services-grid interactive">
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Rapid Custom Development</h3>
+                    <p>End-to-end software delivery in weeks, not months, using agile pods and proven rapid development frameworks.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🏭</div>
+                    <h3>Industry-Specific Solutions</h3>
+                    <p>Accelerated delivery for manufacturing, healthcare, retail, and fintech with tailored, not templated, solutions.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>Legacy Modernization</h3>
+                    <p>Transition from clunky, outdated systems to sleek, modern platforms with minimal business disruption.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔗</div>
+                    <h3>Integration-First Architecture</h3>
+                    <p>We build APIs and systems that plug seamlessly into your existing workflows, ERPs, or third-party apps.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>UI/UX Excellence</h3>
+                    <p>We combine functional clarity with visual simplicity to create software people actually enjoy using.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">📈</div>
+                    <h3>Scalability for Growth</h3>
+                    <p>Start with an MVP delivered in weeks, with an architecture built from the ground up to scale as your business grows.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <h2 class="section-title">What Makes Us Different</h2>
+            <p class="section-subtitle">Our approach is simple: deliver exceptional value with speed and transparency. We are problem-led, not tech-led.</p>
+            
+            <div class="features-grid interactive">
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Speed with Discipline</h3>
+                    <p>We follow a Lean + Modular approach—building only what matters and leaving room for rapid iteration without cutting corners.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Built for Your Business</h3>
+                    <p>We create solutions tailored specifically to your operational needs, ensuring complete alignment with your business processes.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <h3>Transparent Communication</h3>
+                    <p>Weekly demos, clear milestone tracking, and zero jargon. We keep you informed and in control throughout the project.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tech Stack Section -->
+        <section class="tech-stack" id="tech">
+            <h2 class="section-title">Our Tech Stack Expertise</h2>
+            <p class="section-subtitle">We use modern, robust, and scalable technologies to build future-proof software.</p>
+            
+            <div class="tech-strip interactive">
+                <div class="tech-track">
+                    <div class="tech-item">React</div>
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">Python</div>
+                    <div class="tech-item">AWS</div>
+                    <div class="tech-item">Flutter</div>
+                    <div class="tech-item">Docker</div>
+                    <div class="tech-item">Kubernetes</div>
+                    <div class="tech-item">PostgreSQL</div>
+                    <div class="tech-item">MongoDB</div>
+                    <div class="tech-item">Redis</div>
+                    <div class="tech-item">GraphQL</div>
+                    <div class="tech-item">TypeScript</div>
+                    <div class="tech-item">Vue.js</div>
+                    <div class="tech-item">Next.js</div>
+                    <div class="tech-item">Express.js</div>
+                    <div class="tech-item">FastAPI</div>
+                    <div class="tech-item">Go</div>
+                    <div class="tech-item">Rust</div>
+                    <div class="tech-item">TensorFlow</div>
+                    <div class="tech-item">PyTorch</div>
+                    <div class="tech-item">Elasticsearch</div>
+                    <div class="tech-item">Apache Kafka</div>
+                    <div class="tech-item">Jenkins</div>
+                    <div class="tech-item">GitHub Actions</div>
+                    <div class="tech-item">Terraform</div>
+                    <div class="tech-item">Azure</div>
+                    <div class="tech-item">GCP</div>
+                    <div class="tech-item">Nginx</div>
+                    <div class="tech-item">RabbitMQ</div>
+                    <div class="tech-item">Prometheus</div>
+                    
+                    <!-- Duplicate for seamless loop -->
+                    <div class="tech-item">React</div>
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">Python</div>
+                    <div class="tech-item">AWS</div>
+                    <div class="tech-item">Flutter</div>
+                    <div class="tech-item">Docker</div>
+                    <div class="tech-item">Kubernetes</div>
+                    <div class="tech-item">PostgreSQL</div>
+                    <div class="tech-item">MongoDB</div>
+                    <div class="tech-item">Redis</div>
+                    <div class="tech-item">GraphQL</div>
+                    <div class="tech-item">TypeScript</div>
+                    <div class="tech-item">Vue.js</div>
+                    <div class="tech-item">Next.js</div>
+                    <div class="tech-item">Express.js</div>
+                    <div class="tech-item">FastAPI</div>
+                    <div class="tech-item">Go</div>
+                    <div class="tech-item">Rust</div>
+                    <div class="tech-item">TensorFlow</div>
+                    <div class="tech-item">PyTorch</div>
+                    <div class="tech-item">Elasticsearch</div>
+                    <div class="tech-item">Apache Kafka</div>
+                    <div class="tech-item">Jenkins</div>
+                    <div class="tech-item">GitHub Actions</div>
+                    <div class="tech-item">Terraform</div>
+                    <div class="tech-item">Azure</div>
+                    <div class="tech-item">GCP</div>
+                    <div class="tech-item">Nginx</div>
+                    <div class="tech-item">RabbitMQ</div>
+                    <div class="tech-item">Prometheus</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <h2 class="section-title">Ready to Scale Your Operations?</h2>
+            <p class="section-subtitle">Partner with us to optimize your production workflows and streamline your commodity operations with custom software solutions.</p>
+            
+            <div class="contact-info interactive">
+                <div class="contact-item">
+                    <h4>Email Us</h4>
+                    <p>info@nfinityinfotech.com</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>Visit Our Office</h4>
+                    <p>3rd Floor, SLV Sunrise<br>Police station road, Varthur<br>Bangalore India 560087</p><br><p>phone: +91 98862 25140</p>
+                </div>
+            </div>
+            <div class="hero-cta interactive">
+                <a href="mailto:info@nfinityinfotech.com?subject=Turn My Idea Into Software&body=Hi, I'd like to discuss turning my idea into software. Please contact me to get started." class="cta-button">Let's Go!!</a>
+                
+            </div>
+            
+        </section>
+       
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-links interactive">
+                    <a href="#services">Services</a>
+                    <a href="#features">Why Us</a>
+                    <a href="#tech">Tech Stack</a>
+                    <a href="#contact">Contact</a>
+                    <a href="privacypolicy.html">Privacy Policy</a>
+                    <a href="termsofuse.html">Terms of Use</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2024 nfinity infotech. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- 3D Visualization Controls -->
+    <div class="viz-controls interactive">
+        <button class="viz-button" id="switchTheme" title="Switch Theme">🎨</button>
+    </div>
+    
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="nfinity-infotech.js"></script>
+</body>
+</html>

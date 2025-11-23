@@ -1,0 +1,165 @@
+{
+  "total_rows": 7,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "equipment:222ww",
+      "key": "equipment:222ww",
+      "value": {
+        "rev": "3-82739fcf3b51db0d1399665e61036e4d"
+      },
+      "doc": {
+        "_id": "equipment:222ww",
+        "_rev": "3-82739fcf3b51db0d1399665e61036e4d",
+        "type": "equipment",
+        "equipmentId": "222ww",
+        "name": "sfdsf fdsfsd",
+        "location": "SSS",
+        "manufacturer": "",
+        "model": "",
+        "serialNumber": "34433",
+        "installationDate": "2025-08-03",
+        "status": "operational",
+        "lastMaintenance": "",
+        "nextMaintenance": "",
+        "notes": "",
+        "equipmentType": "production",
+        "created": "2025-08-03T14:25:12.663Z",
+        "updated": "2025-08-03T14:25:55.055Z"
+      }
+    },
+    {
+      "id": "preventive:PM-001",
+      "key": "preventive:PM-001",
+      "value": {
+        "rev": "2-0140d0f4ab8f9739261d9617326cacdc"
+      },
+      "doc": {
+        "_id": "preventive:PM-001",
+        "_rev": "2-0140d0f4ab8f9739261d9617326cacdc",
+        "type": "preventive_maintenance",
+        "pmId": "PM-001",
+        "equipmentId": "FERM-001",
+        "title": "Fermentation Tank Cleaning",
+        "description": "Deep cleaning and sanitization of fermentation tank 1",
+        "frequency": "monthly",
+        "lastCompleted": "2024-12-01",
+        "nextDue": "2025-01-01",
+        "estimatedHours": "6",
+        "assignedTo": "Cleaning Team",
+        "status": "active",
+        "instructions": "1. Drain tank completely\n2. Remove all residue\n3. Sanitize with approved chemicals\n4. Rinse thoroughly\n5. Inspect for damage",
+        "created": "2025-08-03T06:18:34.002Z",
+        "updated": "2025-08-03T13:35:58.177Z"
+      }
+    },
+    {
+      "id": "work_order:WO-2025-852",
+      "key": "work_order:WO-2025-852",
+      "value": {
+        "rev": "2-1d2994b5c886f942cfa220d83a66d312"
+      },
+      "doc": {
+        "_id": "work_order:WO-2025-852",
+        "_rev": "2-1d2994b5c886f942cfa220d83a66d312",
+        "type": "work_order",
+        "workOrderNumber": "WO-2025-320",
+        "title": "SSGFD  WAE",
+        "description": "",
+        "equipmentId": "",
+        "priority": "medium",
+        "assignedTo": "",
+        "requestedBy": "",
+        "scheduledDate": "",
+        "estimatedHours": "",
+        "status": "open",
+        "notes": "",
+        "workOrderType": "corrective",
+        "created": "2025-08-03T14:26:07.046Z",
+        "updated": "2025-08-03T14:26:15.423Z"
+      }
+    },
+    {
+      "id": "work_order:WO-2025-991",
+      "key": "work_order:WO-2025-991",
+      "value": {
+        "rev": "1-9acc5c05fb70478a01fd8c3bdff926a2"
+      },
+      "doc": {
+        "_id": "work_order:WO-2025-991",
+        "_rev": "1-9acc5c05fb70478a01fd8c3bdff926a2",
+        "type": "work_order",
+        "workOrderNumber": "WO-2025-872",
+        "title": "SSSRRR",
+        "description": "",
+        "equipmentId": "",
+        "priority": "medium",
+        "assignedTo": "",
+        "requestedBy": "",
+        "scheduledDate": "",
+        "estimatedHours": "",
+        "status": "open",
+        "notes": "",
+        "workOrderType": "corrective",
+        "created": "2025-08-03T14:26:44.503Z",
+        "updated": "2025-08-03T14:26:44.503Z"
+      }
+    },
+    {
+      "id": "equipment:PUMP-001",
+      "key": "equipment:PUMP-001",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "equipment:PUMP-001",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "equipment",
+        "equipmentId": "PUMP-001",
+        "name": "Mash Pump",
+        "location": "Milling Area",
+        "status": "operational",
+        "created": "2025-08-18T10:00:00.000Z",
+        "updated": "2025-08-18T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "preventive:PM-002",
+      "key": "preventive:PM-002",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "preventive:PM-002",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "preventive_maintenance",
+        "pmId": "PM-002",
+        "equipmentId": "PUMP-001",
+        "title": "Pump Lubrication",
+        "frequency": "weekly",
+        "status": "active",
+        "created": "2025-08-18T10:05:00.000Z",
+        "updated": "2025-08-18T10:05:00.000Z"
+      }
+    },
+    {
+      "id": "work_order:WO-2025-001",
+      "key": "work_order:WO-2025-001",
+      "value": {
+        "rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8"
+      },
+      "doc": {
+        "_id": "work_order:WO-2025-001",
+        "_rev": "1-c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
+        "type": "work_order",
+        "workOrderNumber": "WO-2025-001",
+        "title": "Fix Leaky Valve",
+        "equipmentId": "FERM-002",
+        "priority": "high",
+        "status": "in_progress",
+        "created": "2025-08-18T10:10:00.000Z",
+        "updated": "2025-08-18T10:10:00.000Z"
+      }
+    }
+  ]
+}

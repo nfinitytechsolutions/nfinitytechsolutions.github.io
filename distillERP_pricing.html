@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Interactive Pricing Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .module-card {
+            cursor: grab;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .module-card:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
+            z-index: 50;
+        }
+        .drop-zone {
+            border: 2px dashed #93c5fd;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .drop-zone.drag-over {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+        }
+        .selected-module-card .remove-btn {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .selected-module-card:hover .remove-btn {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="#" class="flex items-center">
+                <img src="logo.png" alt="Nfinity Infotech Logo" class="h-12 w-auto">
+            </a> <!--nfinity<span class="text-blue-600">infotech</span> -->
+            </div>
+            
+            <a href="mailto:info@nfinityinfotech.com" id="proceed-button" class="hidden md:block px-5 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                Get a Quote
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4">
+            <a href="#services" class="block py-2 text-gray-600 hover:text-blue-600">Services</a>
+            <a href="#why-us" class="block py-2 text-gray-600 hover:text-blue-600">Why Us</a>
+            <a href="#tech-stack" class="block py-2 text-gray-600 hover:text-blue-600">Tech Stack</a>
+            <a href="#contact" class="block py-2 text-gray-600 hover:text-blue-600">Contact</a>
+            <a href="#contact" class="block mt-2 w-full text-center px-5 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">Get a Quote</a>
+        </div>
+    </header>
+
+  <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left Column: Available Modules -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-3xl font-bold mb-8">Available Modules</h2>
+                    <div id="modules-container">
+                        <!-- Module groups will be injected here by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Your Configuration & Pricing -->
+                <div class="lg:col-span-1">
+                    <div class="sticky top-24">
+                        <h2 class="text-3xl font-bold mb-8">Your Configuration</h2>
+                        
+                        <div class="bg-white rounded-xl shadow-md border">
+                            <!-- Drop Zone -->
+                            <div id="drop-zone" class="drop-zone rounded-t-xl p-6 min-h-[200px]">
+                                <div id="drop-zone-content" class="flex flex-col gap-3">
+                                   <div class="text-center text-gray-500 py-16">
+                                       <p>Drag modules here</p>
+                                   </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Employee Slider -->
+                            <div class="p-6 border-t">
+                                <label for="employee-slider" class="block font-semibold text-lg mb-2">Number of Employees</label>
+                                <div class="flex items-center gap-4">
+                                    <i data-lucide="users" class="text-gray-500"></i>
+                                    <input id="employee-slider" type="range" min="0" max="2000" value="100" step="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                    <span id="employee-count" class="font-bold text-blue-600 w-12 text-center">100</span>
+                                </div>
+                            </div>
+
+                            <!-- Pricing Summary -->
+                            <div class="p-6 bg-gray-50 rounded-b-xl border-t">
+                                <h3 class="text-lg font-semibold mb-4">Cost Summary</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <p class="text-gray-600">One-Time Platform Fee</p>
+                                        <p id="one-time-platform-fee" class="font-bold text-lg">₹0</p>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <p class="text-gray-600">One-Time Modules Cost</p>
+                                        <p id="one-time-modules-cost" class="font-bold text-lg">₹0</p>
+                                    </div>
+                                    <hr>
+                                    <div class="flex justify-between items-center text-blue-600">
+                                        <p class="font-bold text-xl">Total One-Time</p>
+                                        <p id="total-one-time-cost" class="font-extrabold text-2xl">₹0</p>
+                                    </div>
+
+                                    <!-- Yearly Cost Breakdown -->
+                                    <div class="pt-4 mt-4 border-t">
+                                        <h4 class="font-semibold text-lg mb-2">Yearly Subscription</h4>
+                                        <div class="space-y-2 text-sm">
+                                            <div class="flex justify-between items-center">
+                                                <p class="text-gray-600">Employee Licensing</p>
+                                                <p id="yearly-employee-cost" class="font-semibold text-gray-700">₹0</p>
+                                            </div>
+                                            <div class="flex justify-between items-center">
+                                                <p class="text-gray-600">Module Maintenance (2%)</p>
+                                                <p id="yearly-module-cost" class="font-semibold text-gray-700">₹0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="flex justify-between items-center text-green-600">
+                                        <p class="font-bold text-xl">Total Yearly</p>
+                                        <p id="total-yearly-cost" class="font-extrabold text-2xl">₹0</p>
+                                    </div>
+                                </div>
+                                <button class="mt-6 w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                                    Get Started
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA & PRICING LOGIC ---
+            const modules = [
+                { id: 'procurement', name: 'Procurement & Contracts', icon: 'file-text', oneTimePrice: 95000, group: 'Field to Factory' },
+                { id: 'gate', name: 'Gate & Weighbridge', icon: 'truck', oneTimePrice: 110000, group: 'Field to Factory' },
+                { id: 'lims', name: 'Quality Lab (LIMS)', icon: 'flask-conical', oneTimePrice: 85000, group: 'Field to Factory' },
+                { id: 'silo', name: 'Silo & Inventory', icon: 'database', oneTimePrice: 85000, group: 'Field to Factory' },
+                
+                { id: 'milling', name: 'Milling & Slurry', icon: 'blender', oneTimePrice: 85000, group: 'Core Production' },
+                { id: 'fermentation', name: 'Fermentation', icon: 'beaker', oneTimePrice: 95000, group: 'Core Production' },
+                { id: 'distillation', name: 'Distillation', icon: 'flame', oneTimePrice: 95000, group: 'Core Production' },
+                { id: 'coproduct', name: 'Co-Product Management', icon: 'recycle', oneTimePrice: 85000, group: 'Core Production' },
+
+                { id: 'sales', name: 'Sales & Logistics', icon: 'bar-chart-2', oneTimePrice: 115000, group: 'Business & Support' },
+                { id: 'finance', name: 'Finance & Accounting', icon: 'landmark', oneTimePrice: 120000, group: 'Business & Support' },
+                { id: 'maintenance', name: 'Plant Maintenance', icon: 'wrench', oneTimePrice: 85000, group: 'Business & Support' },
+                { id: 'compliance', name: 'Compliance & Reporting', icon: 'shield-check', oneTimePrice: 95000, group: 'Business & Support' },
+                
+                { id: 'hr', name: 'Employee Management', icon: 'users-2', oneTimePrice: 85000, group: 'General Administration' },
+				{ id: 'vehicles', name: 'Company Vehicles Mgmt.', icon: 'bus-front', oneTimePrice: 75000, group: 'General Administration' },
+				{ id: 'canteen', name: 'Canteen Management', icon: 'utensils-crossed', oneTimePrice: 85000, group: 'General Administration' },
+            ];
+
+            const moduleGroups = [
+                'Field to Factory',
+                'Core Production',
+                'Business & Support',
+                'General Administration'
+            ];
+
+            const ONE_TIME_PLATFORM_FEE = 200000;
+            const YEARLY_COST_PER_EMPLOYEE = 150; 
+            const YEARLY_MODULE_MAINTENANCE_PERCENTAGE = 0.02;
+
+            let selectedModules = new Set();
+
+            // --- DOM ELEMENTS ---
+            const modulesContainer = document.getElementById('modules-container');
+            const dropZone = document.getElementById('drop-zone');
+            const dropZoneContent = document.getElementById('drop-zone-content');
+            const employeeSlider = document.getElementById('employee-slider');
+            const employeeCount = document.getElementById('employee-count');
+            
+            const oneTimePlatformFeeEl = document.getElementById('one-time-platform-fee');
+            const oneTimeModulesCostEl = document.getElementById('one-time-modules-cost');
+            const totalOneTimeCostEl = document.getElementById('total-one-time-cost');
+            
+            const yearlyEmployeeCostEl = document.getElementById('yearly-employee-cost');
+            const yearlyModuleCostEl = document.getElementById('yearly-module-cost');
+            const totalYearlyCostEl = document.getElementById('total-yearly-cost');
+
+            const placeholderText = `<div class="text-center text-gray-500 py-16"><p>Drag modules here</p></div>`;
+
+            // --- FUNCTIONS ---
+            
+            const formatCurrency = (amount) => {
+                return new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                }).format(amount);
+            };
+            
+            const renderAvailableModules = () => {
+                modulesContainer.innerHTML = '';
+                // Create a grid that will hold each group as a column
+                modulesContainer.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10';
+                
+                moduleGroups.forEach(groupName => {
+                    // This div is a column for one group
+                    const groupColumnDiv = document.createElement('div');
+                    groupColumnDiv.className = 'space-y-5';
+
+                    // Add the group title
+                    const title = document.createElement('h3');
+                    title.className = 'text-xl font-bold text-gray-900';
+                    title.textContent = groupName;
+                    groupColumnDiv.appendChild(title);
+                    
+                    // This div will list the cards vertically
+                    const cardsList = document.createElement('div');
+                    cardsList.className = 'space-y-4';
+
+                    const groupModules = modules.filter(m => m.group === groupName);
+
+                    groupModules.forEach(module => {
+                        const card = document.createElement('div');
+                        card.className = 'module-card bg-white rounded-xl p-4 flex items-center gap-4';
+                        card.setAttribute('draggable', 'true');
+                        card.dataset.moduleId = module.id;
+
+                        // FIX: Added flex-shrink-0 to icon and flex-1 min-w-0 to text container
+                        card.innerHTML = `
+                            <div class="p-3 bg-blue-50 rounded-lg flex-shrink-0">
+                                <i data-lucide="${module.icon}" class="h-7 w-7 text-blue-600"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-semibold text-gray-800">${module.name}</h4>
+                                <p class="text-sm text-gray-500">${formatCurrency(module.oneTimePrice)}</p>
+                            </div>
+                        `;
+                        cardsList.appendChild(card);
+                    });
+
+                    groupColumnDiv.appendChild(cardsList);
+                    modulesContainer.appendChild(groupColumnDiv);
+                });
+
+                lucide.createIcons();
+            };
+
+            const renderSelectedModules = () => {
+                if (selectedModules.size === 0) {
+                    dropZoneContent.innerHTML = placeholderText;
+                } else {
+                    dropZoneContent.innerHTML = '';
+                    selectedModules.forEach(moduleId => {
+                        const module = modules.find(m => m.id === moduleId);
+                        if (!module) return;
+
+                        const card = document.createElement('div');
+                        card.className = 'selected-module-card bg-white rounded-lg p-3 flex items-center justify-between border shadow-sm';
+                        card.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="${module.icon}" class="h-5 w-5 text-blue-600"></i>
+                                <span class="font-semibold text-sm">${module.name}</span>
+                            </div>
+                            <button class="remove-btn text-red-500 hover:text-red-700" data-module-id="${module.id}">
+                                <i data-lucide="trash-2" class="h-4 w-4"></i>
+                            </button>
+                        `;
+                        dropZoneContent.appendChild(card);
+                    });
+                }
+                lucide.createIcons();
+            };
+            
+            const calculateAndUpdateCosts = () => {
+                const platformFee = selectedModules.size > 0 ? ONE_TIME_PLATFORM_FEE : 0;
+                const modulesCost = Array.from(selectedModules).reduce((acc, moduleId) => {
+                    const module = modules.find(m => m.id === moduleId);
+                    return acc + (module ? module.oneTimePrice : 0);
+                }, 0);
+                const totalOneTime = platformFee + modulesCost;
+
+                const numEmployees = parseInt(employeeSlider.value, 10);
+                const employeeBasedYearlyCost = numEmployees * YEARLY_COST_PER_EMPLOYEE;
+                const moduleBasedYearlyCost = modulesCost * YEARLY_MODULE_MAINTENANCE_PERCENTAGE;
+                const totalYearlyCost = employeeBasedYearlyCost + moduleBasedYearlyCost;
+
+                employeeCount.textContent = numEmployees;
+                oneTimePlatformFeeEl.textContent = formatCurrency(platformFee);
+                oneTimeModulesCostEl.textContent = formatCurrency(modulesCost);
+                totalOneTimeCostEl.textContent = formatCurrency(totalOneTime);
+                
+                yearlyEmployeeCostEl.textContent = formatCurrency(employeeBasedYearlyCost);
+                yearlyModuleCostEl.textContent = formatCurrency(moduleBasedYearlyCost);
+                totalYearlyCostEl.textContent = formatCurrency(totalYearlyCost);
+            };
+
+            // --- EVENT LISTENERS ---
+
+            modulesContainer.addEventListener('dragstart', (e) => {
+                const card = e.target.closest('.module-card');
+                if (card) {
+                    e.dataTransfer.setData('text/plain', card.dataset.moduleId);
+                    card.style.opacity = '0.5';
+                }
+            });
+
+            modulesContainer.addEventListener('dragend', (e) => {
+                const card = e.target.closest('.module-card');
+                if (card) {
+                    card.style.opacity = '1';
+                }
+            });
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                const moduleId = e.dataTransfer.getData('text/plain');
+                if (moduleId && !selectedModules.has(moduleId)) {
+                    selectedModules.add(moduleId);
+                    renderSelectedModules();
+                    calculateAndUpdateCosts();
+                }
+            });
+
+            dropZoneContent.addEventListener('click', (e) => {
+                const removeButton = e.target.closest('.remove-btn');
+                if (removeButton) {
+                    const moduleId = removeButton.dataset.moduleId;
+                    selectedModules.delete(moduleId);
+                    renderSelectedModules();
+                    calculateAndUpdateCosts();
+                }
+            });
+
+            employeeSlider.addEventListener('input', calculateAndUpdateCosts);
+
+            // --- INITIALIZATION ---
+            renderAvailableModules();
+            calculateAndUpdateCosts();
+        });
+    </script>
+	
+	<!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-1">
+                    <h3 class="text-xl font-bold">nfinity<span class="text-blue-400">infotech</span></h3>
+                    
+                    
+                </div>
+
+                
+            </div>
+
+            <div class="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 nfinity infotech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    
+
+</body>
+</html>

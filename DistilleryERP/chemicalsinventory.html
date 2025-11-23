@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Chemical & Enzyme Inventory</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #a855f7; /* purple-500 */
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25em 0.6em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+        .status-ok { background-color: #dcfce7; color: #166534; }
+        .status-low { background-color: #ffedd5; color: #9a3412; }
+        .status-reorder { background-color: #fee2e2; color: #991b1b; }
+        
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+				<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+				<a href="milling.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Milling & Slurry Preparation
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Chemical & Enzyme Inventory</h1>
+                    <p class="mt-1 text-md text-gray-500">Manage stock levels, lot traceability, and consumption of all processing aids.</p>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4 space-x-3">
+                    <button id="openIssueStockModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                        <i data-lucide="minus-circle" class="mr-2 h-5 w-5 text-red-500"></i>
+                        Issue Stock
+                    </button>
+                    <button id="openReceiveStockModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                        <i data-lucide="plus-circle" class="mr-2 h-5 w-5"></i>
+                        Receive Stock
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-purple-100 rounded-md p-3"><i data-lucide="list" class="h-6 w-6 text-purple-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Items in Stock</dt><dd class="text-3xl font-bold text-gray-900">28</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-red-100 rounded-md p-3"><i data-lucide="alert-triangle" class="h-6 w-6 text-red-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Items Below Reorder</dt><dd id="reorderCount" class="text-3xl font-bold text-gray-900">3</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-yellow-100 rounded-md p-3"><i data-lucide="calendar-clock" class="h-6 w-6 text-yellow-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Lots Expiring Soon</dt><dd class="text-3xl font-bold text-gray-900">1</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Stock Value</dt><dd class="text-3xl font-bold text-gray-900">₹45.6 L</dd></dl></div></div></div>
+            </div>
+
+            <!-- Inventory Table -->
+            <div class="bg-white shadow-md rounded-lg">
+                <div class="p-4 border-b border-gray-200">
+                     <div class="relative w-full md:w-1/3"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i data-lucide="search" class="h-5 w-5 text-gray-400"></i></div><input type="text" placeholder="Search by Item Name or Code..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md"></div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Item Code</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Item Name</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Qty on Hand</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reorder Point</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+                        <tbody id="inventoryTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modals -->
+    <div id="viewLotsModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-3xl"><div id="viewLotsModalContent"></div></div></div>
+    <div id="receiveStockModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Receive New Stock</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="receiveStockForm"><div class="space-y-4"><div><label for="receiveItemSelect" class="block text-sm font-medium">Item</label><select id="receiveItemSelect" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="lotNumber" class="block text-sm font-medium">Lot Number</label><input type="text" id="lotNumber" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="quantityReceived" class="block text-sm font-medium">Quantity Received</label><input type="number" id="quantityReceived" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="expiryDate" class="block text-sm font-medium">Expiry Date</label><input type="date" id="expiryDate" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-purple-600 hover:bg-purple-700 py-2 px-4 rounded-md">Receive Stock</button></div></form></div></div>
+    <div id="issueStockModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Issue Stock</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="issueStockForm"><div class="space-y-4"><div><label for="issueItemSelect" class="block text-sm font-medium">Item</label><select id="issueItemSelect" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="issueLotSelect" class="block text-sm font-medium">Lot Number</label><select id="issueLotSelect" class="mt-1 block w-full border-gray-300 rounded-md"></select></div><div><label for="quantityIssued" class="block text-sm font-medium">Quantity to Issue</label><input type="number" id="quantityIssued" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="issueReference" class="block text-sm font-medium">Reference (Batch ID)</label><input type="text" id="issueReference" class="mt-1 block w-full border-gray-300 rounded-md" placeholder="e.g., MASH-0702-05" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-red-600 hover:bg-red-700 py-2 px-4 rounded-md">Issue Stock</button></div></form></div></div>
+
+    <script>
+        lucide.createIcons();
+
+        const inventoryData = [
+            { code: 'ENZ-A-AMY-01', name: 'Alpha-Amylase Enzyme', category: 'Enzymes', reorderPoint: 500, unit: 'kg', lots: [{ lotNo: 'A-AMY-2405-01', qty: 300, expiry: '2026-05-10' },{ lotNo: 'A-AMY-2406-02', qty: 250, expiry: '2026-06-15' }] },
+            { code: 'ENZ-G-AMY-01', name: 'Glucoamylase Enzyme', category: 'Enzymes', reorderPoint: 500, unit: 'kg', lots: [{ lotNo: 'G-AMY-2404-05', qty: 800, expiry: '2025-10-20' }] },
+            { code: 'CHEM-CAU-01', name: 'Caustic Soda', category: 'Chemicals', reorderPoint: 200, unit: 'L', lots: [{ lotNo: 'CS-2406-11', qty: 120, expiry: '2027-01-01' }] },
+            { code: 'YST-DRY-01', name: 'Active Dry Yeast', category: 'Yeast', reorderPoint: 200, unit: 'kg', lots: [{ lotNo: 'YST-2401-98', qty: 50, expiry: '2025-07-15' },{ lotNo: 'YST-2403-105', qty: 200, expiry: '2025-09-30' }] },
+            { code: 'CHEM-SUL-01', name: 'Sulphuric Acid', category: 'Chemicals', reorderPoint: 100, unit: 'L', lots: [{ lotNo: 'SA-2405-23', qty: 45, expiry: '2028-01-01' }] },
+        ];
+
+        const inventoryTableBody = document.getElementById('inventoryTableBody');
+        
+        function renderInventoryTable() {
+            inventoryTableBody.innerHTML = '';
+            let reorderCount = 0;
+            inventoryData.forEach(item => {
+                const totalQty = item.lots.reduce((sum, lot) => sum + lot.qty, 0);
+                let status, statusClass;
+                if (totalQty <= item.reorderPoint) {
+                    status = 'Reorder';
+                    statusClass = 'status-reorder';
+                    reorderCount++;
+                } else if (totalQty <= item.reorderPoint * 1.2) {
+                    status = 'Low';
+                    statusClass = 'status-low';
+                } else {
+                    status = 'OK';
+                    statusClass = 'status-ok';
+                }
+
+                const row = `
+                    <tr data-code="${item.code}">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.code}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${item.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.category}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${totalQty} ${item.unit}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.reorderPoint} ${item.unit}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${statusClass}">${status}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-purple-600 hover:text-purple-900 view-lots-btn">View Lots</a></td>
+                    </tr>`;
+                inventoryTableBody.innerHTML += row;
+            });
+            document.getElementById('reorderCount').textContent = reorderCount;
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+
+        const viewLotsModal = setupModal('viewLotsModal', null);
+        const receiveStockModal = setupModal('receiveStockModal', 'openReceiveStockModalBtn');
+        const issueStockModal = setupModal('issueStockModal', 'openIssueStockModalBtn');
+
+        // View Lots Logic
+        inventoryTableBody.addEventListener('click', e => {
+            if (e.target.classList.contains('view-lots-btn')) {
+                const itemCode = e.target.closest('tr').dataset.code;
+                const item = inventoryData.find(i => i.code === itemCode);
+                const lotsTableRows = item.lots.map(lot => `
+                    <tr>
+                        <td class="px-4 py-2 text-sm">${lot.lotNo}</td>
+                        <td class="px-4 py-2 text-sm">${lot.qty} ${item.unit}</td>
+                        <td class="px-4 py-2 text-sm">${new Date(lot.expiry).toLocaleDateString('en-IN')}</td>
+                    </tr>`).join('');
+
+                document.getElementById('viewLotsModalContent').innerHTML = `
+                    <div class="flex justify-between items-center border-b pb-3 mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800">Lot Details for ${item.name}</h3>
+                        <button class="close-modal-btn text-gray-500">&times;</button>
+                    </div>
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Lot No.</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th><th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Expiry</th></tr></thead>
+                        <tbody class="bg-white divide-y divide-gray-200">${lotsTableRows}</tbody>
+                    </table>
+                    <div class="mt-6 flex justify-end"><button class="close-modal-btn bg-white py-2 px-4 border rounded-md">Close</button></div>`;
+                viewLotsModal.style.display = 'block';
+                viewLotsModal.querySelectorAll('.close-modal-btn').forEach(btn => {
+							btn.onclick = () => {
+								viewLotsModal.style.display = 'none';
+						};
+					});
+            }
+        });
+
+        // Receive Stock Logic
+        const receiveItemSelect = document.getElementById('receiveItemSelect');
+        inventoryData.forEach(item => { receiveItemSelect.innerHTML += `<option value="${item.code}">${item.name}</option>`; });
+        document.getElementById('receiveStockForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const itemCode = receiveItemSelect.value;
+            const item = inventoryData.find(i => i.code === itemCode);
+            item.lots.push({
+                lotNo: document.getElementById('lotNumber').value,
+                qty: parseInt(document.getElementById('quantityReceived').value, 10),
+                expiry: document.getElementById('expiryDate').value,
+            });
+            renderInventoryTable();
+            receiveStockModal.style.display = 'none';
+            e.target.reset();
+        });
+        
+        // Issue Stock Logic
+        const issueItemSelect = document.getElementById('issueItemSelect');
+        const issueLotSelect = document.getElementById('issueLotSelect');
+        inventoryData.forEach(item => { issueItemSelect.innerHTML += `<option value="${item.code}">${item.name}</option>`; });
+        
+        issueItemSelect.addEventListener('change', e => {
+            const item = inventoryData.find(i => i.code === e.target.value);
+            issueLotSelect.innerHTML = '';
+            item.lots.forEach(lot => {
+                if (lot.qty > 0) {
+                    issueLotSelect.innerHTML += `<option value="${lot.lotNo}">${lot.lotNo} (Avail: ${lot.qty} ${item.unit})</option>`;
+                }
+            });
+        });
+        
+        document.getElementById('issueStockForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const item = inventoryData.find(i => i.code === issueItemSelect.value);
+            const lot = item.lots.find(l => l.lotNo === issueLotSelect.value);
+            const qtyToIssue = parseInt(document.getElementById('quantityIssued').value, 10);
+            if (qtyToIssue > lot.qty) {
+                alert(`Error: Cannot issue more than available quantity in lot ${lot.lotNo}.`);
+                return;
+            }
+            lot.qty -= qtyToIssue;
+            renderInventoryTable();
+            issueStockModal.style.display = 'none';
+            e.target.reset();
+        });
+
+        // Initial Render
+        renderInventoryTable();
+        issueItemSelect.dispatchEvent(new Event('change')); // Populate lots for first item
+    </script>
+</body>
+</html>

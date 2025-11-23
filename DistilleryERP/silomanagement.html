@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Inventory & Silo Management</title>
+   <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #f59e0b; /* yellow-500 */
+        }
+        .silo-card {
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .silo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .silo-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fcd34d; /* amber-300 */
+            transition: height 0.5s ease-out;
+        }
+        .silo-body {
+            position: relative;
+            background-color: #e5e7eb; /* gray-200 */
+            overflow: hidden;
+        }
+        .status-ok { background-color: #dcfce7; color: #166534; }
+        .status-low { background-color: #ffedd5; color: #9a3412; }
+        .status-reorder { background-color: #fee2e2; color: #991b1b; }
+        
+        /* Modal & Toast Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+        .toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-index: 200; transition: top 0.5s ease-in-out; }
+        .toast.show { top: 20px; }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+						<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+				 <a href="index.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Main Dashboard
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Inventory & Silo Management</h1>
+                    <p class="mt-1 text-md text-gray-500">Real-time overview of all grain and material stocks.</p>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4">
+                    <button id="openTransferModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                        <i data-lucide="move" class="mr-2 h-5 w-5"></i>
+                        Initiate Stock Transfer
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-yellow-100 rounded-md p-3"><i data-lucide="database" class="h-6 w-6 text-yellow-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Grain Inventory</dt><dd id="totalInventory" class="text-3xl font-bold text-gray-900">82,500 MT</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="pie-chart" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Total Capacity Used</dt><dd id="capacityUsed" class="text-3xl font-bold text-gray-900">75%</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-green-100 rounded-md p-3"><i data-lucide="shield-check" class="h-6 w-6 text-green-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Quality Score</dt><dd class="text-3xl font-bold text-gray-900">A-</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-purple-100 rounded-md p-3"><i data-lucide="warehouse" class="h-6 w-6 text-purple-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Active Silos</dt><dd class="text-3xl font-bold text-gray-900">8 / 10</dd></dl></div></div></div>
+            </div>
+
+            <!-- Silo Visualization -->
+            <div class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Silo Status</h2>
+                <div id="siloContainer" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <!-- Silo cards will be injected by JS -->
+                </div>
+            </div>
+
+            <!-- Recent Inventory Movements -->
+            <div class="bg-white shadow-md rounded-lg">
+                <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Recent Inventory Movements</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th></tr></thead>
+                        <tbody id="movementsTableBody" class="bg-white divide-y divide-gray-200">
+                           <!-- Movement rows will be injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+			
+			<!-- Other Inventory Table -->
+            <div class="bg-white shadow-md rounded-lg">
+                <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Other Consumables & Spares</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Code</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity on Hand</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reorder Point</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ENZ-A-AMY-01</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Alpha-Amylase Enzyme</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Enzymes</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">550 kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">500 kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium status-low">Low</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ENZ-G-AMY-01</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Glucoamylase Enzyme</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Enzymes</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">800 kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">500 kg</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium status-ok">OK</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">CHEM-CAU-01</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Caustic Soda</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Chemicals</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">120 L</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">200 L</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium status-reorder">Reorder</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">SP-PMP-BRG-05</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Pump Bearing #75A</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Spares</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">8 units</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5 units</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium status-ok">OK</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+			
+        </div>
+    </main>
+    
+    <!-- Stock Transfer Modal -->
+    <div id="transferModal" class="modal-backdrop">
+        <div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Initiate Stock Transfer</h3>
+                <button id="closeTransferModalBtn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            </div>
+            <form id="transferForm">
+                <div class="space-y-4">
+                    <div><label for="transferType" class="block text-sm font-medium text-gray-700">Transfer Type</label><select id="transferType" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"><option value="add">Add to Silo</option><option value="remove">Remove from Silo</option></select></div>
+                    <div><label for="siloSelect" class="block text-sm font-medium text-gray-700">Select Silo</label><select id="siloSelect" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"></select></div>
+                    <div><label for="quantity" class="block text-sm font-medium text-gray-700">Quantity (MT)</label><input type="number" id="quantity" step="1000" min="1000" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3" required placeholder="e.g., 2000"></div>
+                    <div><label for="reference" class="block text-sm font-medium text-gray-700">Source / Destination</label><input type="text" id="reference" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3" required placeholder="e.g., From WT-0702-112 or To Milling"></div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" id="cancelTransferBtn" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700">Confirm Transfer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg flex items-center"><i data-lucide="check-circle" class="h-6 w-6 mr-3"></i><span id="toastMessage"></span></div>
+<script src="profile_dropdown.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // --- Initial Data Store ---
+        const siloData = [
+            { id: 'SILO-01', current: 9200, max: 10000, moisture: 14.1 },
+            { id: 'SILO-02', current: 8500, max: 10000, moisture: 14.3 },
+            { id: 'SILO-03', current: 9500, max: 10000, moisture: 13.9 },
+            { id: 'SILO-04', current: 2500, max: 10000, moisture: 14.2 },
+            { id: 'SILO-05', current: 7800, max: 10000, moisture: 14.0 },
+        ];
+
+        // --- DOM Elements ---
+        const siloContainer = document.getElementById('siloContainer');
+        const siloSelect = document.getElementById('siloSelect');
+        const transferForm = document.getElementById('transferForm');
+        const movementsTableBody = document.getElementById('movementsTableBody');
+        const totalInventoryEl = document.getElementById('totalInventory');
+        const capacityUsedEl = document.getElementById('capacityUsed');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // --- Modal Setup ---
+        const transferModal = document.getElementById('transferModal');
+        document.getElementById('openTransferModalBtn').onclick = () => { transferModal.style.display = 'block'; };
+        document.getElementById('closeTransferModalBtn').onclick = () => { transferModal.style.display = 'none'; };
+        document.getElementById('cancelTransferBtn').onclick = () => { transferModal.style.display = 'none'; };
+        window.onclick = (event) => { if (event.target == transferModal) transferModal.style.display = 'none'; };
+
+        // --- Core Functions ---
+        function renderSilos() {
+            siloContainer.innerHTML = '';
+            siloSelect.innerHTML = '';
+            siloData.forEach(silo => {
+                const fillPercentage = (silo.current / silo.max) * 100;
+                const isLow = fillPercentage < 30;
+                const siloCard = `
+                    <div id="${silo.id}" class="silo-card rounded-lg bg-white p-4 text-center flex flex-col">
+                        <h3 class="font-bold text-lg text-gray-800">${silo.id}</h3>
+                        <div class="silo-body my-3 h-48 w-full rounded-md flex-grow">
+                            <div class="silo-fill" style="height: ${fillPercentage}%; ${isLow ? 'background-color: #fca5a5;' : ''}"></div>
+                        </div>
+                        <p class="font-semibold text-xl ${isLow ? 'text-red-600' : 'text-gray-900'}">
+                            <span class="current-qty">${silo.current.toLocaleString()}</span> 
+                            <span class="text-sm font-normal">/ ${silo.max.toLocaleString()} MT</span>
+                        </p>
+                        <p class="text-xs text-gray-500">Avg. Moisture: ${silo.moisture}%</p>
+                    </div>`;
+                siloContainer.innerHTML += siloCard;
+
+                const option = `<option value="${silo.id}">${silo.id}</option>`;
+                siloSelect.innerHTML += option;
+            });
+            updateKPIs();
+        }
+
+        function updateKPIs() {
+            const totalCurrent = siloData.reduce((sum, silo) => sum + silo.current, 0);
+            const totalMax = siloData.reduce((sum, silo) => sum + silo.max, 0);
+            const capacityPercentage = totalMax > 0 ? (totalCurrent / totalMax) * 100 : 0;
+            totalInventoryEl.textContent = `${totalCurrent.toLocaleString()} MT`;
+            capacityUsedEl.textContent = `${capacityPercentage.toFixed(0)}%`;
+        }
+        
+        function addMovementLog(type, quantity, siloId, reference) {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute:'2-digit', hour12: true });
+            const date = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+            
+            const typeClass = type === 'add' ? 'text-green-600' : 'text-red-600';
+            const typeText = type === 'add' ? 'IN' : 'OUT';
+
+            const newRow = `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${date}, ${time}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold ${typeClass}">${typeText}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${quantity.toLocaleString()} MT</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${siloId}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${reference}</td>
+                </tr>
+            `;
+            movementsTableBody.insertAdjacentHTML('afterbegin', newRow);
+        }
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        // --- Event Listener for Form Submission ---
+        transferForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = document.getElementById('transferType').value;
+            const siloId = document.getElementById('siloSelect').value;
+            const quantity = parseInt(document.getElementById('quantity').value, 10);
+            const reference = document.getElementById('reference').value;
+
+            if (isNaN(quantity) || quantity <= 0 || quantity % 1000 !== 0) {
+                alert("Please enter a valid quantity in multiples of 1000.");
+                return;
+            }
+
+            const silo = siloData.find(s => s.id === siloId);
+            if (!silo) return;
+
+            if (type === 'add') {
+                if (silo.current + quantity > silo.max) {
+                    alert(`Error: Adding ${quantity.toLocaleString()} MT exceeds silo capacity of ${silo.max.toLocaleString()} MT.`);
+                    return;
+                }
+                silo.current += quantity;
+            } else { // remove
+                if (silo.current - quantity < 0) {
+                    alert(`Error: Cannot remove ${quantity.toLocaleString()} MT. Only ${silo.current.toLocaleString()} MT available.`);
+                    return;
+                }
+                silo.current -= quantity;
+            }
+
+            // Update UI
+            renderSilos();
+            addMovementLog(type, quantity, siloId, reference);
+            
+            // Close modal and show confirmation
+            transferModal.style.display = 'none';
+            transferForm.reset();
+            showToast('Stock transfer completed successfully!');
+        });
+
+        // --- Initial Render ---
+        document.addEventListener('DOMContentLoaded', renderSilos);
+    </script>
+</body>
+</html>

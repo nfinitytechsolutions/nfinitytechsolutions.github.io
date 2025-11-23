@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Sales & Logistics (Co-Products)</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #0891b2; /* cyan-600 */
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25em 0.6em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+        .status-pending { background-color: #ffedd5; color: #9a3412; }
+        .status-dispatched { background-color: #dbeafe; color: #1e40af; }
+        .status-delivered { background-color: #dcfce7; color: #166534; }
+        .status-cancelled { background-color: #fee2e2; color: #991b1b; }
+
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+        
+        /* Print Styles */
+        @media print {
+            body * { visibility: hidden; }
+            .printable-area, .printable-area * { visibility: visible; }
+            .printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none; }
+        }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10 no-print">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+                <div class="flex-1 min-w-0">
+				<a href="coprod.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Co-Product Management
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Co-Product Sales & Logistics</h1>
+                    <p class="mt-1 text-md text-gray-500">Manage sales orders, dispatch, and invoicing for DDGS and Corn Oil.</p>
+                </div>
+                 <div class="mt-4 flex md:mt-0 md:ml-4">
+                    <button id="openNewOrderModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
+                        <i data-lucide="plus" class="mr-2 h-5 w-5"></i>
+                        Create Sales Order
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-cyan-100 rounded-md p-3"><i data-lucide="indian-rupee" class="h-6 w-6 text-cyan-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Revenue (Month)</dt><dd class="text-3xl font-bold text-gray-900">₹1.2 Cr</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-orange-100 rounded-md p-3"><i data-lucide="package-open" class="h-6 w-6 text-orange-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Open Orders</dt><dd class="text-3xl font-bold text-gray-900">12</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-emerald-100 rounded-md p-3"><i data-lucide="package" class="h-6 w-6 text-emerald-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. DDGS Price</dt><dd class="text-3xl font-bold text-gray-900">₹24.5k/T</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-yellow-100 rounded-md p-3"><i data-lucide="droplet" class="h-6 w-6 text-yellow-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Avg. Corn Oil Price</dt><dd class="text-3xl font-bold text-gray-900">₹92k/T</dd></dl></div></div></div>
+            </div>
+
+            <!-- Sales Orders Table -->
+            <div class="bg-white shadow-md rounded-lg">
+                <h2 class="text-xl font-bold text-gray-800 p-4 border-b">Sales Orders</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Quantity</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Value</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th><th class="relative px-6 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+                        <tbody id="ordersTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="orderDetailsModal" class="modal-backdrop"><div id="orderDetailsModalContent" class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl"></div></div>
+    <div id="newOrderModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Create New Sales Order</h3><button class="close-modal-btn text-gray-500">&times;</button></div><form id="newOrderForm"><div class="space-y-4"><div><label for="customer" class="block text-sm font-medium">Customer</label><input type="text" id="customer" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="product" class="block text-sm font-medium">Product</label><select id="product" class="mt-1 block w-full border-gray-300 rounded-md"><option value="DDGS">DDGS</option><option value="Corn Oil">Corn Oil</option></select></div><div class="grid grid-cols-2 gap-4"><div><label for="quantity" class="block text-sm font-medium">Quantity (MT)</label><input type="number" id="quantity" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="price" class="block text-sm font-medium">Price per Tonne (₹)</label><input type="number" id="price" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div><label for="logistics" class="block text-sm font-medium">Logistics</label><select id="logistics" class="mt-1 block w-full border-gray-300 rounded-md"><option value="Truck">Truck</option><option value="Rail">Rail</option></select></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border rounded-md">Cancel</button><button type="submit" class="ml-3 text-white bg-cyan-600 hover:bg-cyan-700 py-2 px-4 rounded-md">Create Order</button></div></form></div></div>
+    <div id="invoiceModal" class="modal-backdrop"><div id="invoiceModalContent" class="modal-content w-full max-w-4xl"></div></div>
+
+    <script>
+        lucide.createIcons();
+
+        let salesOrderData = [
+            { id: 'SO-25-078', customer: 'Krishna Feeds', product: 'DDGS', qty: 50, price: 24500, logistics: 'Truck', status: 'Pending', dispatchedQty: 0, vehicleNo: '' },
+            { id: 'SO-25-077', customer: 'Godavari Biofuels', product: 'Corn Oil', qty: 20, price: 92000, logistics: 'Rail', status: 'Dispatched', dispatchedQty: 20.1, vehicleNo: 'BRN-54321' },
+            { id: 'SO-25-076', customer: 'Deccan Poultry', product: 'DDGS', qty: 120, price: 24200, logistics: 'Truck', status: 'Delivered', dispatchedQty: 120.5, vehicleNo: 'MH 14 GH 5678' },
+            { id: 'SO-25-075', customer: 'Surat Agro', product: 'DDGS', qty: 80, price: 24600, logistics: 'Truck', status: 'Pending', dispatchedQty: 0, vehicleNo: '' },
+        ];
+
+        const ordersTableBody = document.getElementById('ordersTableBody');
+        const statusMap = {
+            Pending: { text: 'Pending', class: 'status-pending' },
+            Dispatched: { text: 'Dispatched', class: 'status-dispatched' },
+            Delivered: { text: 'Delivered', class: 'status-delivered' },
+            Cancelled: { text: 'Cancelled', class: 'status-cancelled' },
+        };
+
+        function renderOrdersTable() {
+            ordersTableBody.innerHTML = '';
+            salesOrderData.forEach(order => {
+                const statusInfo = statusMap[order.status];
+                const row = `
+                    <tr data-id="${order.id}" class="hover:bg-gray-50 cursor-pointer view-details-row">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${order.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${order.customer}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.product}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.qty} MT</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹${(order.qty * order.price).toLocaleString('en-IN')}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${statusInfo.class}">${statusInfo.text}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"><a href="#" class="text-cyan-600 hover:text-cyan-900">Details</a></td>
+                    </tr>`;
+                ordersTableBody.innerHTML += row;
+            });
+        }
+
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+            return modal;
+        }
+        
+        const orderDetailsModal = setupModal('orderDetailsModal', null);
+        const newOrderModal = setupModal('newOrderModal', 'openNewOrderModalBtn');
+        const invoiceModal = setupModal('invoiceModal', null);
+
+        document.getElementById('newOrderForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newOrder = {
+                id: `SO-25-${Math.floor(Math.random() * 100) + 100}`,
+                customer: document.getElementById('customer').value,
+                product: document.getElementById('product').value,
+                qty: parseInt(document.getElementById('quantity').value),
+                price: parseInt(document.getElementById('price').value),
+                logistics: document.getElementById('logistics').value,
+                status: 'Pending',
+                dispatchedQty: 0,
+                vehicleNo: ''
+            };
+            salesOrderData.unshift(newOrder);
+            renderOrdersTable();
+            newOrderModal.style.display = 'none';
+        });
+
+        ordersTableBody.addEventListener('click', e => {
+            if (e.target.closest('.view-details-row')) {
+                const orderId = e.target.closest('tr').dataset.id;
+                const order = salesOrderData.find(o => o.id === orderId);
+                renderOrderDetailsModal(order);
+                orderDetailsModal.style.display = 'block';
+            }
+        });
+
+        function renderOrderDetailsModal(order) {
+            let actionsHtml = '';
+            if (order.status === 'Pending') {
+                actionsHtml = `<form id="dispatchForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t pt-4 mt-4">
+                                <div><label class="block text-sm font-medium">Vehicle/Rail No.</label><input type="text" id="dispatchVehicleNo" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                                <div><label class="block text-sm font-medium">Weighed Qty (MT)</label><input type="number" step="0.01" id="dispatchQty" class="mt-1 block w-full border-gray-300 rounded-md" required></div>
+                                <div class="md:col-span-2 flex justify-end"><button type="submit" class="text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-md">Confirm Dispatch</button></div>
+                               </form>`;
+            } else if (order.status === 'Dispatched' || order.status === 'Delivered') {
+                actionsHtml = `<div class="border-t pt-4 mt-4 flex justify-end"><button id="generateInvoiceBtn" class="text-white bg-emerald-600 hover:bg-emerald-700 py-2 px-4 rounded-md">Generate Invoice</button></div>`;
+            }
+
+            document.getElementById('orderDetailsModalContent').innerHTML = `
+                <div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Order Details: ${order.id}</h3><button class="close-modal-btn text-gray-500">&times;</button></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><p class="text-sm text-gray-500">Customer</p><p class="font-semibold">${order.customer}</p></div>
+                    <div><p class="text-sm text-gray-500">Status</p><span class="status-badge ${statusMap[order.status].class}">${order.status}</span></div>
+                    <div><p class="text-sm text-gray-500">Product</p><p class="font-semibold">${order.product}</p></div>
+                    <div><p class="text-sm text-gray-500">Ordered Qty</p><p class="font-semibold">${order.qty} MT</p></div>
+                    <div><p class="text-sm text-gray-500">Total Value</p><p class="font-semibold">₹${(order.qty * order.price).toLocaleString('en-IN')}</p></div>
+                    <div><p class="text-sm text-gray-500">Logistics</p><p class="font-semibold">${order.logistics}</p></div>
+                    ${order.status !== 'Pending' ? `
+                    <div><p class="text-sm text-gray-500">Dispatched Qty</p><p class="font-semibold">${order.dispatchedQty} MT</p></div>
+                    <div><p class="text-sm text-gray-500">Vehicle No.</p><p class="font-semibold">${order.vehicleNo}</p></div>
+                    ` : ''}
+                </div>
+                ${actionsHtml}`;
+            
+            orderDetailsModal.querySelector('.close-modal-btn').onclick = () => orderDetailsModal.style.display = 'none';
+            
+            if (order.status === 'Pending') {
+                document.getElementById('dispatchForm').addEventListener('submit', e => {
+                    e.preventDefault();
+                    order.status = 'Dispatched';
+                    order.vehicleNo = document.getElementById('dispatchVehicleNo').value;
+                    order.dispatchedQty = parseFloat(document.getElementById('dispatchQty').value);
+                    renderOrdersTable();
+                    renderOrderDetailsModal(order);
+                });
+            } else if (order.status === 'Dispatched' || order.status === 'Delivered') {
+                document.getElementById('generateInvoiceBtn').onclick = () => {
+                    renderInvoice(order);
+                    invoiceModal.style.display = 'block';
+                };
+            }
+        }
+
+        function renderInvoice(order) {
+            const subtotal = order.dispatchedQty * order.price;
+            const gst = subtotal * 0.05; // Assuming 5% GST
+            const total = subtotal + gst;
+            document.getElementById('invoiceModalContent').innerHTML = `
+                <div class="bg-white p-8 rounded-lg shadow-2xl printable-area">
+                    <div class="flex justify-between items-center border-b pb-4">
+                        <div><h1 class="text-3xl font-bold">TAX INVOICE</h1><p class="text-gray-500">Distillery Name Pvt. Ltd.</p></div>
+                        <div class="text-right"><p class="font-semibold">Invoice #: INV-${order.id}</p><p>Date: ${new Date().toLocaleDateString('en-IN')}</p></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8 my-8">
+                        <div><p class="font-bold">Bill To:</p><p>${order.customer}</p><p>Customer Address, City</p></div>
+                        <div class="text-right"><p class="font-bold">Dispatch To:</p><p>${order.customer}</p><p>Delivery Address, City</p></div>
+                    </div>
+                    <table class="w-full text-left"><thead><tr class="bg-gray-100"><th class="p-2">Description</th><th class="p-2 text-right">Qty (MT)</th><th class="p-2 text-right">Rate (₹)</th><th class="p-2 text-right">Amount (₹)</th></tr></thead>
+                    <tbody><tr><td class="p-2 border-b">${order.product}</td><td class="p-2 border-b text-right">${order.dispatchedQty}</td><td class="p-2 border-b text-right">${order.price.toLocaleString('en-IN')}</td><td class="p-2 border-b text-right">${subtotal.toLocaleString('en-IN')}</td></tr></tbody>
+                    <tfoot>
+                        <tr><td colspan="2"></td><td class="p-2 font-bold text-right">Subtotal</td><td class="p-2 font-bold text-right">${subtotal.toLocaleString('en-IN')}</td></tr>
+                        <tr><td colspan="2"></td><td class="p-2 text-right">GST (5%)</td><td class="p-2 text-right">${gst.toLocaleString('en-IN')}</td></tr>
+                        <tr class="bg-gray-200"><td colspan="2"></td><td class="p-2 text-xl font-bold text-right">Total</td><td class="p-2 text-xl font-bold text-right">₹${total.toLocaleString('en-IN')}</td></tr>
+                    </tfoot>
+                    </table>
+                    <div class="mt-8 text-xs text-gray-500">Terms & Conditions apply. This is a computer generated invoice.</div>
+                </div>
+                <div class="mt-4 flex justify-end space-x-2 no-print">
+                    <button class="close-modal-btn bg-white py-2 px-4 border rounded-md">Close</button>
+                    <button onclick="window.print()" class="text-white bg-blue-600 py-2 px-4 rounded-md">Print Invoice</button>
+                </div>
+            `;
+            invoiceModal.querySelector('.close-modal-btn').onclick = () => invoiceModal.style.display = 'none';
+        }
+
+        renderOrdersTable();
+    </script>
+</body>
+</html>

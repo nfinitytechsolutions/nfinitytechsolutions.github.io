@@ -1,0 +1,79 @@
+{
+  "total_rows": 3,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "shipment:3322",
+      "key": "shipment:3322",
+      "value": {
+        "rev": "7-cdd476c94a2f917c36dea66dd4eef16f"
+      },
+      "doc": {
+        "_id": "shipment:3322",
+        "_rev": "7-cdd476c94a2f917c36dea66dd4eef16f",
+        "trackingNumber": "3322",
+        "orderId": "22332",
+        "customerName": "AAB",
+        "customerEmail": "",
+        "customerPhone": "",
+        "fromAddress": "Bagalkot Distilleries Pvt.Ltd, 123 Industrial Area, Bagalkot, Karnataka - 587201",
+        "fromCity": "Bagalkot",
+        "fromState": "Karnataka",
+        "fromZip": "587201",
+        "toAddress": "BGK",
+        "toCity": "",
+        "toState": "",
+        "toZip": "",
+        "carrier": "FedEx",
+        "service": "Ground",
+        "weight": 0,
+        "dimensions": "",
+        "cost": 0,
+        "status": "delivered",
+        "shipDate": "",
+        "estimatedDelivery": "",
+        "actualDelivery": "2025-08-03",
+        "notes": "",
+        "type": "shipment",
+        "created": "2025-08-03T18:09:49.932Z",
+        "updated": "2025-08-04T05:14:33.688Z"
+      }
+    },
+    {
+      "id": "shipment:SHIP-2025-001",
+      "key": "shipment:SHIP-2025-001",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "shipment:SHIP-2025-001",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "shipment",
+        "trackingNumber": "SHIP-2025-001",
+        "orderId": "SO-2025-002",
+        "customerName": "Global Beverages",
+        "status": "in_transit",
+        "created": "2025-08-19T10:00:00.000Z",
+        "updated": "2025-08-19T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "shipment:SHIP-2025-002",
+      "key": "shipment:SHIP-2025-002",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "shipment:SHIP-2025-002",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "shipment",
+        "trackingNumber": "SHIP-2025-002",
+        "orderId": "SO-2025-003",
+        "customerName": "Craft Distillers Inc.",
+        "status": "pending",
+        "created": "2025-08-20T11:00:00.000Z",
+        "updated": "2025-08-20T11:00:00.000Z"
+      }
+    }
+  ]
+}

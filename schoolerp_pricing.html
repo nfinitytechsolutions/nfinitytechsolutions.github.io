@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Fee Calculator</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for checkmark icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #8b5cf6; /* a nice purple */
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #8b5cf6;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .pricing-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="#" class="flex items-center">
+                <img src="logo.png" alt="Nfinity Infotech Logo" class="h-12 w-auto">
+            </a> <!--nfinity<span class="text-blue-600">infotech</span> -->
+            </div>
+            
+            <a href="mailto:info@nfinityinfotech.com" id="proceed-button" class="hidden md:block px-5 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                Get a Quote
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4">
+            <a href="#services" class="block py-2 text-gray-600 hover:text-blue-600">Services</a>
+            <a href="#why-us" class="block py-2 text-gray-600 hover:text-blue-600">Why Us</a>
+            <a href="#tech-stack" class="block py-2 text-gray-600 hover:text-blue-600">Tech Stack</a>
+            <a href="#contact" class="block py-2 text-gray-600 hover:text-blue-600">Contact</a>
+            <a href="#contact" class="block mt-2 w-full text-center px-5 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">Get a Quote</a>
+        </div>
+    </header>
+
+   <div class="container mx-auto px-4 py-12">
+        
+        <!-- Title & Duration Toggle Section -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 sm:text-4xl">Choose the Plan That's Right for You</h2>
+            <p class="mt-2 text-lg text-gray-600 max-w-2xl mx-auto">All plans are flexible and can be customized to your school's needs.</p>
+            
+            <!-- Duration Toggle Switch -->
+            <div class="mt-8 flex justify-center">
+                <div id="duration-toggle" class="relative w-72 h-14 bg-gray-200 rounded-full p-1 flex items-center cursor-pointer">
+                    <div class="w-1/2 h-full flex items-center justify-center z-10">
+                        <span id="duration-label-1" class="font-bold text-gray-500 transition-colors duration-300">1 Year</span>
+                    </div>
+                    <div class="w-1/2 h-full flex items-center justify-center z-10">
+                         <span id="duration-label-2" class="font-bold text-white transition-colors duration-300">2 Years</span>
+                    </div>
+                    <div id="duration-thumb" class="absolute top-1 left-1 w-1/2 h-12 bg-purple-600 rounded-full shadow-md transition-transform duration-300 ease-in-out"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Table Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Base Plan -->
+            <div id="plan-base" class="pricing-card bg-white rounded-2xl shadow-lg border-2 border-transparent p-8 flex flex-col cursor-pointer">
+                <h3 class="text-2xl font-bold text-gray-800">Base</h3>
+                <p class="text-gray-500">Essential features to get you started.</p>
+                <div class="my-6">
+                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="base">168</span></p>
+                    <p class="text-gray-500">per child / <span class="duration-text">year</span></p>
+                    <div class="flex items-center justify-center space-x-2 mt-1">
+                        <p class="text-gray-500 line-through">₹<span class="original-price-display" data-plan="base">280</span></p>
+                        <span class="discount-badge text-xs font-semibold bg-red-100 text-red-700 px-2 py-1 rounded-full">40% OFF</span>
+                    </div>
+                </div>
+                <ul class="space-y-4 text-gray-600 flex-grow">
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Student Admission</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Student Information System</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Basic Fee Collection</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Attendance Management</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Basic Reporting</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Parent/Student Portal</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Email Support</li>
+                </ul>
+                <button class="mt-8 w-full font-bold py-3 px-6 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">Select Plan</button>
+            </div>
+
+            <!-- Value Plan (Most Popular) -->
+            <div id="plan-value" class="pricing-card bg-white rounded-2xl shadow-2xl border-2 border-purple-500 p-8 flex flex-col relative cursor-pointer">
+                <span class="absolute top-0 -translate-y-1/2 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Most Popular</span>
+                <h3 class="text-2xl font-bold text-purple-600">Value</h3>
+                <p class="text-gray-500">Advanced features for growing schools.</p>
+                <div class="my-6">
+                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="value">210</span></p>
+                    <p class="text-gray-500">per child / <span class="duration-text">year</span></p>
+                    <div class="flex items-center justify-center space-x-2 mt-1">
+                        <p class="text-gray-500 line-through">₹<span class="original-price-display" data-plan="value">350</span></p>
+                        <span class="discount-badge text-xs font-semibold bg-red-100 text-red-700 px-2 py-1 rounded-full">40% OFF</span>
+                    </div>
+                </div>
+                <ul class="space-y-4 text-gray-600 flex-grow">
+                    <li class="flex items-center font-semibold"><i class="fas fa-check-circle text-purple-500 mr-3"></i> Everything in Base, plus:</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Online Fee Payment Gateway</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Examination & Marksheets</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Timetable Management</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Homework & Assignments</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Library Management</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Mobile App for Parents</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Priority Chat Support</li>
+                </ul>
+                <button class="mt-8 w-full font-bold py-3 px-6 rounded-lg bg-purple-500 text-white hover:bg-purple-600">Select Plan</button>
+            </div>
+
+            <!-- Pro Plan -->
+            <div id="plan-pro" class="pricing-card bg-white rounded-2xl shadow-lg border-2 border-transparent p-8 flex flex-col cursor-pointer">
+                <h3 class="text-2xl font-bold text-gray-800">Pro</h3>
+                <p class="text-gray-500">Complete solution for large institutions.</p>
+                <div class="my-6">
+                    <p class="text-4xl font-extrabold text-gray-900">₹<span class="price-display" data-plan="pro">252</span></p>
+                    <p class="text-gray-500">per child / <span class="duration-text">year</span></p>
+                    <div class="flex items-center justify-center space-x-2 mt-1">
+                        <p class="text-gray-500 line-through">₹<span class="original-price-display" data-plan="pro">420</span></p>
+                        <span class="discount-badge text-xs font-semibold bg-red-100 text-red-700 px-2 py-1 rounded-full">40% OFF</span>
+                    </div>
+                </div>
+                <ul class="space-y-4 text-gray-600 flex-grow">
+                    <li class="flex items-center font-semibold"><i class="fas fa-check-circle text-purple-500 mr-3"></i> Everything in Value, plus:</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Transport Management (GPS)</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Hostel Management</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> HR & Payroll Management</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Inventory Management</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Multi-Branch Support</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Dedicated Account Manager</li>
+                    <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> 24/7 Priority Support</li>
+                </ul>
+                <button class="mt-8 w-full font-bold py-3 px-6 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">Select Plan</button>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+             <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Calculate Your Subscription</h2>
+             <p class="text-center text-gray-500 mb-8">Adjust the options below to see your personalized price.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <!-- Left Side: Controls -->
+                <div class="space-y-8">
+                    <!-- Number of Students -->
+                    <div>
+                        <label for="students-input" class="block text-sm font-medium text-gray-700 mb-2">Number of Students</label>
+                        <input type="number" id="students-input" value="10" min="1" max="2000" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition">
+                        <input type="range" id="students-slider" min="1" max="2000" value="10" class="w-full mt-4 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>1</span>
+                            <span>500</span>
+                            <span>1000</span>
+                            <span>1500</span>
+                            <span>2000</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Plan Selection Dropdown -->
+                    <div>
+                        <label for="plan-select" class="block text-sm font-medium text-gray-700 mb-2">Select the Plan</label>
+                        <select id="plan-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition bg-white">
+                            <option value="base">Base</option>
+                            <option value="value" selected>Value</option>
+                            <option value="pro">Pro</option>
+                        </select>
+                    </div>
+
+                    <!-- Duration Selection Dropdown -->
+                    <div>
+                        <label for="duration-select" class="block text-sm font-medium text-gray-700 mb-2">Select the Duration</label>
+                        <select id="duration-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition bg-white">
+                            <option value="1year">1 Year</option>
+                            <option value="2year" selected>2 Years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Right Side: Price Display -->
+                <div class="flex flex-col items-center justify-center">
+                    <div class="w-full max-w-sm">
+                        <div id="savings-banner" class="bg-green-100 text-green-800 text-center p-3 rounded-t-xl font-semibold transition-all duration-300">
+                            Yay! You will save ₹<span id="savings-amount">0</span>! 😊
+                        </div>
+                        <div class="bg-white border-2 border-green-200 shadow-2xl rounded-b-xl p-6 text-center">
+                            <p class="text-gray-600">Your subscription fee is</p>
+                            <h2 class="text-5xl font-extrabold text-gray-800 my-4">
+                                ₹<span id="total-price">0</span>
+                            </h2>
+                            <p class="text-gray-500 font-medium">
+                                For the <span id="selected-plan-display" class="font-bold text-purple-600">Value</span> plan
+                            </p>
+                            <!-- CORRECTED BUTTON WRAPPED IN ANCHOR TAG -->
+                            <a id="proceed-link" href="#">
+                                <button class="mt-6 w-full bg-red-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-600 transition-transform transform hover:scale-105 pointer-events-none">
+                                    Grab This Offer
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+	
+	<!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-1">
+                    <h3 class="text-xl font-bold">nfinity<span class="text-blue-400">infotech</span></h3>
+                    
+                    
+                </div>
+
+                
+            </div>
+
+            <div class="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 nfinity infotech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- DOM ELEMENT REFERENCES ---
+        const studentsInput = document.getElementById('students-input');
+        const studentsSlider = document.getElementById('students-slider');
+        const planSelect = document.getElementById('plan-select');
+        const durationSelect = document.getElementById('duration-select');
+        const totalPriceEl = document.getElementById('total-price');
+        const savingsAmountEl = document.getElementById('savings-amount');
+        const selectedPlanDisplayEl = document.getElementById('selected-plan-display');
+        const proceedLink = document.getElementById('proceed-link');
+        
+        // Duration Toggle Elements
+        const durationToggle = document.getElementById('duration-toggle');
+        const durationThumb = document.getElementById('duration-thumb');
+        const durationLabel1 = document.getElementById('duration-label-1');
+        const durationLabel2 = document.getElementById('duration-label-2');
+
+        const planCards = {
+            base: document.getElementById('plan-base'),
+            value: document.getElementById('plan-value'),
+            pro: document.getElementById('plan-pro')
+        };
+        const priceDisplayEls = document.querySelectorAll('.price-display');
+        const originalPriceDisplayEls = document.querySelectorAll('.original-price-display');
+        const durationTextEls = document.querySelectorAll('.duration-text');
+        const discountBadgeEls = document.querySelectorAll('.discount-badge'); // Select all discount badges
+
+        // --- STATE & PRICING DATA (UPDATED) ---
+        const pricingData = {
+            '2year': { base: { price: 280, original: 560 }, value: { price: 350, original: 700 }, pro: { price: 420, original: 840 } },
+            '1year': { base: { price: 168, original: 280 }, value: { price: 210, original: 350 }, pro: { price: 252, original: 420 } }
+        };
+
+        // --- UI UPDATE & SYNC FUNCTIONS ---
+        function updatePricingCards() {
+            const selectedDuration = durationSelect.value;
+            const durationLabel = selectedDuration === '1year' ? 'year' : '2 years';
+            const discountText = selectedDuration === '1year' ? '40% OFF' : '50% OFF'; // Determine discount text
+            
+            durationTextEls.forEach(el => { el.textContent = durationLabel; });
+            priceDisplayEls.forEach(el => { el.textContent = pricingData[selectedDuration][el.dataset.plan].price; });
+            originalPriceDisplayEls.forEach(el => { el.textContent = pricingData[selectedDuration][el.dataset.plan].original; });
+            
+            // Update the text of each discount badge
+            discountBadgeEls.forEach(el => { el.textContent = discountText; });
+        }
+        
+        function syncAndHighlightPlan() {
+            const selectedPlan = planSelect.value;
+            for (const plan in planCards) {
+                planCards[plan].classList.remove('border-purple-500', 'shadow-2xl');
+                planCards[plan].classList.add('border-transparent');
+            }
+            planCards[selectedPlan].classList.add('border-purple-500', 'shadow-2xl');
+            planCards[selectedPlan].classList.remove('border-transparent');
+            
+            selectedPlanDisplayEl.textContent = selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1);
+        }
+
+        function syncDurationToggle() {
+            const isTwoYears = durationSelect.value === '2year';
+            if (isTwoYears) {
+                durationThumb.style.transform = 'translateX(100%)';
+                durationLabel1.classList.replace('text-white', 'text-gray-500');
+                durationLabel2.classList.replace('text-gray-500', 'text-white');
+            } else {
+                durationThumb.style.transform = 'translateX(0%)';
+                durationLabel1.classList.replace('text-gray-500', 'text-white');
+                durationLabel2.classList.replace('text-white', 'text-gray-500');
+            }
+        }
+
+        // --- CALCULATION & MAILTO LOGIC ---
+        function calculateAndUpdate() {
+            const studentCount = parseInt(studentsInput.value, 10) || 0;
+            const selectedDuration = durationSelect.value;
+            const selectedPlan = planSelect.value;
+            
+            const priceInfo = pricingData[selectedDuration][selectedPlan];
+            const totalFee = studentCount * priceInfo.price;
+            const totalOriginalPrice = studentCount * priceInfo.original;
+            const totalSavings = totalOriginalPrice - totalFee;
+
+            totalPriceEl.textContent = totalFee.toLocaleString('en-IN');
+            savingsAmountEl.textContent = totalSavings.toLocaleString('en-IN');
+
+            // --- DYNAMICALLY UPDATE MAILTO LINK ---
+            const planText = planSelect.options[planSelect.selectedIndex].text;
+            const durationText = durationSelect.options[durationSelect.selectedIndex].text;
+            const totalPriceText = totalFee.toLocaleString('en-IN');
+
+            const recipient = 'info@nfinityinfotech.com';
+            const subject = `Price Inquiry: ${planText} Plan for ${studentCount} Students`;
+            const body = `Hello,\n\nI am interested in a price quote based on my selection on your website.\n\nHere are the details:\n- Plan: ${planText}\n- Duration: ${durationText}\n- Number of Students: ${studentCount}\n- Calculated Total Fee: ₹${totalPriceText}\n\nPlease provide me with the next steps.\n\nThank you,\n[Please enter your name]`;
+
+            const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            proceedLink.href = mailtoLink;
+        }
+
+        // --- EVENT LISTENERS ---
+        studentsSlider.addEventListener('input', (e) => {
+            studentsInput.value = e.target.value;
+            calculateAndUpdate();
+        });
+
+        studentsInput.addEventListener('input', (e) => {
+            let value = parseInt(e.target.value, 10);
+            if (isNaN(value)) value = 1;
+            if (value > 2000) value = 2000;
+            if (value < 1) value = 1;
+            studentsInput.value = value;
+            studentsSlider.value = value;
+            calculateAndUpdate();
+        });
+        
+        planSelect.addEventListener('change', () => {
+            syncAndHighlightPlan();
+            calculateAndUpdate();
+        });
+        
+        durationSelect.addEventListener('change', () => {
+             syncDurationToggle();
+             updatePricingCards();
+             calculateAndUpdate();
+        });
+
+        durationToggle.addEventListener('click', () => {
+            durationSelect.value = durationSelect.value === '2year' ? '1year' : '2year';
+            durationSelect.dispatchEvent(new Event('change'));
+        });
+        
+        for (const plan in planCards) {
+            planCards[plan].addEventListener('click', () => {
+                planSelect.value = plan;
+                planSelect.dispatchEvent(new Event('change'));
+            });
+        }
+
+        // --- INITIALIZATION ---
+        window.addEventListener('load', () => {
+            syncAndHighlightPlan();
+            syncDurationToggle();
+            updatePricingCards();
+            calculateAndUpdate(); // This will also set the initial mailto link
+        });
+
+    </script>
+
+</body>
+</html>

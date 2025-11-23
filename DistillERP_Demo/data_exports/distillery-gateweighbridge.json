@@ -1,0 +1,198 @@
+{
+  "total_rows": 6,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "weighbridge:WB-2025-001",
+      "key": "weighbridge:WB-2025-001",
+      "value": {
+        "rev": "1-af63e740f2ef0e943959c6d03e4c7aa8"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-001",
+        "_rev": "1-af63e740f2ef0e943959c6d03e4c7aa8",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-001",
+        "vehicleNumber": "KA-01-AB-1234",
+        "driverName": "Raman Kumar",
+        "driverPhone": "+91-9876543210",
+        "driverLicense": "KA1234567890",
+        "supplierId": "supplier:SUP001",
+        "supplierName": "Sahyadri Agro Traders",
+        "materialType": "corn",
+        "challanNumber": "CH-001-2025",
+        "tareWeight": 8500,
+        "grossWeight": 28500,
+        "netWeight": 20000,
+        "entryTime": "2025-08-02T20:12:33.744Z",
+        "exitTime": null,
+        "status": "weighed_full",
+        "weighbridgeOperator": "Operator 1",
+        "gateGuard": "Guard A",
+        "remarks": "Good quality corn, moisture content checked",
+        "qualitySampled": true,
+        "sampleNumber": "QS-2025-001",
+        "vehicleType": "truck",
+        "created": "2025-08-02T20:12:33.744Z",
+        "updated": "2025-08-02T20:12:33.744Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-002",
+      "key": "weighbridge:WB-2025-002",
+      "value": {
+        "rev": "1-ca01fe026e41468f1cbcd7aa5da7e011"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-002",
+        "_rev": "1-ca01fe026e41468f1cbcd7aa5da7e011",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-002",
+        "vehicleNumber": "KA-02-CD-5678",
+        "driverName": "Suresh Patil",
+        "driverPhone": "+91-9876543211",
+        "driverLicense": "KA1234567891",
+        "supplierId": "supplier:SUP002",
+        "supplierName": "Deccan Grains Pvt. Ltd.",
+        "materialType": "wheat",
+        "challanNumber": "CH-002-2025",
+        "tareWeight": 9200,
+        "grossWeight": 0,
+        "netWeight": 0,
+        "entryTime": "2025-08-02T20:12:33.744Z",
+        "exitTime": null,
+        "status": "in_yard",
+        "weighbridgeOperator": "Operator 2",
+        "gateGuard": "Guard B",
+        "remarks": "Vehicle waiting for loading",
+        "qualitySampled": false,
+        "sampleNumber": "",
+        "vehicleType": "trailer",
+        "created": "2025-08-02T20:12:33.744Z",
+        "updated": "2025-08-02T20:12:33.744Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-003",
+      "key": "weighbridge:WB-2025-003",
+      "value": {
+        "rev": "1-631a7fbe15e4a1066e0e55ac41705648"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-003",
+        "_rev": "1-631a7fbe15e4a1066e0e55ac41705648",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-003",
+        "vehicleNumber": "KA-03-EF-9012",
+        "driverName": "Manjunath Gowda",
+        "driverPhone": "+91-9876543212",
+        "driverLicense": "KA1234567892",
+        "supplierId": "supplier:SUP003",
+        "supplierName": "Patil Krishi Udyog",
+        "materialType": "rice",
+        "challanNumber": "CH-003-2025",
+        "tareWeight": 7800,
+        "grossWeight": 22800,
+        "netWeight": 15000,
+        "entryTime": "2025-08-01T20:12:33.744Z",
+        "exitTime": "2025-08-02T20:12:33.744Z",
+        "status": "completed",
+        "weighbridgeOperator": "Operator 1",
+        "gateGuard": "Guard A",
+        "remarks": "Delivery completed successfully",
+        "qualitySampled": true,
+        "sampleNumber": "QS-2025-002",
+        "vehicleType": "truck",
+        "created": "2025-08-01T20:12:33.744Z",
+        "updated": "2025-08-02T20:12:33.744Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-004",
+      "key": "weighbridge:WB-2025-004",
+      "value": {
+        "rev": "1-ff195d62a5e9f93e9be15e9b6eccb10a"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-004",
+        "_rev": "1-ff195d62a5e9f93e9be15e9b6eccb10a",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-004",
+        "vehicleNumber": "KA-04-GH-3456",
+        "driverName": "Krishnamurthy S",
+        "driverPhone": "+91-9876543213",
+        "driverLicense": "KA1234567893",
+        "supplierId": "supplier:SUP004",
+        "supplierName": "Godavari Feeds & Grains",
+        "materialType": "barley",
+        "challanNumber": "CH-004-2025",
+        "tareWeight": 8200,
+        "grossWeight": 0,
+        "netWeight": 0,
+        "entryTime": "2025-08-02T20:12:33.744Z",
+        "exitTime": null,
+        "status": "pending_entry",
+        "weighbridgeOperator": "",
+        "gateGuard": "Guard C",
+        "remarks": "Waiting for gate clearance",
+        "qualitySampled": false,
+        "sampleNumber": "",
+        "vehicleType": "bulker",
+        "created": "2025-08-02T20:12:33.744Z",
+        "updated": "2025-08-02T20:12:33.744Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-006",
+      "key": "weighbridge:WB-2025-006",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-006",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-006",
+        "vehicleNumber": "TN-22-XY-7890",
+        "driverName": "Lakshmi Menon",
+        "materialType": "molasses",
+        "tareWeight": 7500,
+        "grossWeight": 27500,
+        "netWeight": 20000,
+        "entryTime": "2025-08-18T11:00:00.000Z",
+        "exitTime": "2025-08-18T11:30:00.000Z",
+        "status": "completed",
+        "weighbridgeOperator": "Operator 2",
+        "remarks": "Molasses delivery for rum production.",
+        "created": "2025-08-18T11:00:00.000Z",
+        "updated": "2025-08-18T11:30:00.000Z"
+      }
+    },
+    {
+      "id": "weighbridge:WB-2025-007",
+      "key": "weighbridge:WB-2025-007",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "weighbridge:WB-2025-007",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "weighbridge_ticket",
+        "ticketNumber": "WB-2025-007",
+        "vehicleNumber": "AP-16-DE-4567",
+        "driverName": "Ravi Teja",
+        "materialType": "bottles",
+        "tareWeight": 5000,
+        "grossWeight": 15000,
+        "netWeight": 10000,
+        "entryTime": "2025-08-19T09:00:00.000Z",
+        "exitTime": "2025-08-19T09:30:00.000Z",
+        "status": "completed",
+        "weighbridgeOperator": "Operator 1",
+        "remarks": "Delivery of new 750ml bottles.",
+        "created": "2025-08-19T09:00:00.000Z",
+        "updated": "2025-08-19T09:30:00.000Z"
+      }
+    }
+  ]
+}

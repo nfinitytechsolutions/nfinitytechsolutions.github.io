@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Financial Reporting</title>
+     <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .report-header {
+            background-color: #f9fafb;
+        }
+        .report-table th {
+            background-color: #f3f4f6;
+        }
+        .report-table .total-row {
+            font-weight: bold;
+            border-top: 2px solid #e5e7eb;
+            background-color: #f9fafb;
+        }
+        /* Print Styles */
+        @media print {
+            body * { visibility: hidden; }
+            .printable-area, .printable-area * { visibility: visible; }
+            .printable-area { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none; }
+        }
+    </style>
+	<script src="auth.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+				<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="mb-8 no-print">
+                <a href="finance.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Back to Finance & Accounting
+                </a>
+                <h1 class="text-3xl font-bold leading-tight text-gray-900 mt-2">Financial Reporting</h1>
+                <p class="mt-1 text-md text-gray-500">Generate and review key financial statements.</p>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg">
+                <!-- Report Controls -->
+                <div class="p-4 border-b flex flex-wrap items-center justify-between gap-4 no-print">
+                    <div class="flex items-center gap-4">
+                        <select id="reportType" class="border-gray-300 rounded-md">
+                            <option value="pnl">Profit & Loss Statement</option>
+                            <option value="balance-sheet">Balance Sheet</option>
+                        </select>
+                        <select id="reportPeriod" class="border-gray-300 rounded-md">
+                            <option value="year">This Financial Year</option>
+                            <option value="quarter">Last Quarter</option>
+                            <option value="month">Last Month</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="window.print()" class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            <i data-lucide="printer" class="h-4 w-4 mr-2"></i>Print
+                        </button>
+                         <button class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            <i data-lucide="file-down" class="h-4 w-4 mr-2"></i>Export PDF
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Report Display Area -->
+                <div id="reportContainer" class="p-8 printable-area">
+                    <!-- Report will be injected here by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="profile_dropdown.js"></script>
+    <script>
+        lucide.createIcons();
+
+        const reportContainer = document.getElementById('reportContainer');
+        const reportTypeSelect = document.getElementById('reportType');
+        const reportPeriodSelect = document.getElementById('reportPeriod');
+
+        const reportsData = {
+            pnl: {
+                year: {
+                    title: 'Profit & Loss Statement', period: 'For the Year Ended 31 March 2025',
+                    sections: [
+                        { title: 'Revenue', items: [{ name: 'Ethanol Sales', amount: 150000000 }, { name: 'Co-Product Sales', amount: 34000000 }], total: 184000000 },
+                        { title: 'Cost of Goods Sold', items: [{ name: 'Raw Material Cost', amount: 75000000 }, { name: 'Direct Labour', amount: 9000000 }], total: 84000000 },
+                        { title: 'Gross Profit', isSubTotal: true, total: 100000000 },
+                        { title: 'Operating Expenses', items: [{ name: 'Salaries and Wages', amount: 18500000 }, { name: 'Maintenance', amount: 5000000 }, { name: 'Admin Expenses', amount: 7500000 }], total: 31000000 },
+                        { title: 'Operating Profit (EBITDA)', isSubTotal: true, total: 69000000 },
+                        { title: 'Depreciation', items: [], total: 12000000},
+                        { title: 'Profit Before Tax', isSubTotal: true, total: 57000000 },
+                        { title: 'Tax (25%)', items: [], total: 14250000},
+                        { title: 'Net Profit', isTotal: true, total: 42750000 },
+                    ]
+                },
+                quarter: {
+                    title: 'Profit & Loss Statement', period: 'For the Quarter Ended 30 June 2025',
+                    sections: [
+                        { title: 'Revenue', items: [{ name: 'Ethanol Sales', amount: 45000000 }, { name: 'Co-Product Sales', amount: 8500000 }], total: 53500000 },
+                        { title: 'Cost of Goods Sold', items: [{ name: 'Raw Material Cost', amount: 22500000 }, { name: 'Direct Labour', amount: 2250000 }], total: 24750000 },
+                        { title: 'Gross Profit', isSubTotal: true, total: 28750000 },
+                        { title: 'Operating Expenses', items: [{ name: 'Salaries and Wages', amount: 4625000 }, { name: 'Maintenance', amount: 1250000 }, { name: 'Admin Expenses', amount: 1875000 }], total: 7750000 },
+                        { title: 'Operating Profit (EBITDA)', isSubTotal: true, total: 21000000 },
+                        { title: 'Depreciation', items: [], total: 3000000},
+                        { title: 'Profit Before Tax', isSubTotal: true, total: 18000000 },
+                        { title: 'Tax (25%)', items: [], total: 4500000},
+                        { title: 'Net Profit', isTotal: true, total: 13500000 },
+                    ]
+                },
+                month: {
+                    title: 'Profit & Loss Statement', period: 'For the Month of June 2025',
+                    sections: [
+                        { title: 'Revenue', items: [{ name: 'Ethanol Sales', amount: 15000000 }, { name: 'Co-Product Sales', amount: 2800000 }], total: 17800000 },
+                        { title: 'Cost of Goods Sold', items: [{ name: 'Raw Material Cost', amount: 7500000 }, { name: 'Direct Labour', amount: 750000 }], total: 8250000 },
+                        { title: 'Gross Profit', isSubTotal: true, total: 9550000 },
+                        { title: 'Operating Expenses', items: [{ name: 'Salaries and Wages', amount: 1540000 }, { name: 'Maintenance', amount: 410000 }, { name: 'Admin Expenses', amount: 620000 }], total: 2570000 },
+                        { title: 'Operating Profit (EBITDA)', isSubTotal: true, total: 6980000 },
+                        { title: 'Depreciation', items: [], total: 1000000},
+                        { title: 'Profit Before Tax', isSubTotal: true, total: 5980000 },
+                        { title: 'Tax (25%)', items: [], total: 1495000},
+                        { title: 'Net Profit', isTotal: true, total: 4485000 },
+                    ]
+                }
+            },
+            'balance-sheet': {
+                year: {
+                    title: 'Balance Sheet', period: 'As at 31 March 2025',
+                    sections: [
+                        { title: 'Assets', items: [{ name: 'Cash and Bank', amount: 50000000 }, { name: 'Accounts Receivable', amount: 12000000 }, { name: 'Inventory', amount: 25000000 }, { name: 'Plant & Machinery', amount: 150000000 }], total: 237000000 },
+                        { title: 'Liabilities', items: [{ name: 'Accounts Payable', amount: 8000000 }, { name: 'Term Loans', amount: 86250000 }], total: 94250000 },
+                        { title: 'Equity', items: [{ name: 'Share Capital', amount: 100000000 }, { name: 'Retained Earnings', amount: 42750000 }], total: 142750000 },
+                        { title: 'Total Liabilities & Equity', isTotal: true, total: 237000000 },
+                    ]
+                },
+                quarter: {
+                    title: 'Balance Sheet', period: 'As at 30 June 2025',
+                    sections: [
+                        { title: 'Assets', items: [{ name: 'Cash and Bank', amount: 55000000 }, { name: 'Accounts Receivable', amount: 15000000 }, { name: 'Inventory', amount: 28000000 }, { name: 'Plant & Machinery', amount: 147000000 }], total: 245000000 },
+                        { title: 'Liabilities', items: [{ name: 'Accounts Payable', amount: 9000000 }, { name: 'Term Loans', amount: 83250000 }], total: 92250000 },
+                        { title: 'Equity', items: [{ name: 'Share Capital', amount: 100000000 }, { name: 'Retained Earnings', amount: 52750000 }], total: 152750000 },
+                        { title: 'Total Liabilities & Equity', isTotal: true, total: 245000000 },
+                    ]
+                },
+                 month: {
+                    title: 'Balance Sheet', period: 'As at 30 June 2025',
+                    sections: [
+                        { title: 'Assets', items: [{ name: 'Cash and Bank', amount: 55000000 }, { name: 'Accounts Receivable', amount: 15000000 }, { name: 'Inventory', amount: 28000000 }, { name: 'Plant & Machinery', amount: 147000000 }], total: 245000000 },
+                        { title: 'Liabilities', items: [{ name: 'Accounts Payable', amount: 9000000 }, { name: 'Term Loans', amount: 83250000 }], total: 92250000 },
+                        { title: 'Equity', items: [{ name: 'Share Capital', amount: 100000000 }, { name: 'Retained Earnings', amount: 52750000 }], total: 152750000 },
+                        { title: 'Total Liabilities & Equity', isTotal: true, total: 245000000 },
+                    ]
+                }
+            }
+        };
+
+        function renderReport() {
+            const reportType = reportTypeSelect.value;
+            const reportPeriod = reportPeriodSelect.value;
+            const data = reportsData[reportType][reportPeriod];
+            
+            let html = `<div class="report-header text-center mb-8"><h2 class="text-2xl font-bold">${data.title}</h2><p class="text-gray-500">${data.period}</p></div>`;
+            html += `<table class="w-full report-table">`;
+            data.sections.forEach(section => {
+                if(section.isSubTotal) {
+                    html += `<tr class="total-row"><td class="p-2">${section.title}</td><td class="p-2 text-right">₹${section.total.toLocaleString('en-IN')}</td></tr>`;
+                } else if (section.isTotal) {
+                     html += `<tr class="total-row border-t-4 border-gray-300"><td class="p-2">${section.title}</td><td class="p-2 text-right">₹${section.total.toLocaleString('en-IN')}</td></tr>`;
+                } else {
+                    html += `<tr><th colspan="2" class="p-2 text-left">${section.title}</th></tr>`;
+                    section.items.forEach(item => {
+                        html += `<tr class="border-b"><td class="p-2 pl-8">${item.name}</td><td class="p-2 text-right">${item.amount.toLocaleString('en-IN')}</td></tr>`;
+                    });
+                    if(section.items.length > 0) {
+                         html += `<tr class="border-b"><td class="p-2 pl-8 font-semibold">Total ${section.title}</td><td class="p-2 text-right font-semibold">${section.total.toLocaleString('en-IN')}</td></tr>`;
+                    }
+                }
+            });
+            html += `</table>`;
+            reportContainer.innerHTML = html;
+        }
+
+        reportTypeSelect.addEventListener('change', renderReport);
+        reportPeriodSelect.addEventListener('change', renderReport);
+
+        // Initial Render
+        renderReport();
+    </script>
+</body>
+</html>

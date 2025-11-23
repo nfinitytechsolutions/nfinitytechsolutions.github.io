@@ -1,0 +1,38 @@
+{
+  "total_rows": 2,
+  "offset": 0,
+  "rows": [
+    {
+      "id": "settings:system",
+      "key": "settings:system",
+      "value": {
+        "rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+      },
+      "doc": {
+        "_id": "settings:system",
+        "_rev": "1-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6",
+        "type": "settings",
+        "settings": {
+          "system_name": "DistillERP",
+          "version": "1.0.0",
+          "last_backup": "2025-08-17T12:00:00.000Z"
+        }
+      }
+    },
+    {
+      "id": "notification:welcome",
+      "key": "notification:welcome",
+      "value": {
+        "rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7"
+      },
+      "doc": {
+        "_id": "notification:welcome",
+        "_rev": "1-b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7",
+        "type": "notification",
+        "message": "Welcome to DistillERP! The system is now live.",
+        "level": "info",
+        "timestamp": "2025-08-17T00:00:00.000Z"
+      }
+    }
+  ]
+}

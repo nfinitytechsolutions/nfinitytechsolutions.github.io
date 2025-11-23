@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Production & Process Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .kpi-card {
+            border-left: 4px solid #f97316; /* orange-500 */
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25em 0.6em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 9999px;
+        }
+        .status-mixing { background-color: #dbeafe; color: #1e40af; }
+        .status-pumping { background-color: #ffedd5; color: #9a3412; }
+        .status-complete { background-color: #dcfce7; color: #166534; }
+        .status-ready { background-color: #e0e7ff; color: #3730a3; } /* New Status */
+
+        .recipe-card {
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        /* Modal Styles */
+        .modal-backdrop { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+        .modal-content { position: relative; margin: 5% auto; animation: slideIn 0.4s; }
+        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+        @keyframes slideIn { from {top: -100px; opacity: 0} to {top: 0; opacity: 1} }
+
+        /* Tab Styles */
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: #6b7280; /* gray-500 */
+        }
+        .tab-btn.active {
+            border-color: #f97316; /* orange-500 */
+            color: #f97316; /* orange-500 */
+            font-weight: 600;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+   <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+                <div class="flex items-center space-x-5">
+                    
+                    <!-- MODIFIED: Changed id to userProfileTrigger -->
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        <!-- This content will be replaced by auth.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-10">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="md:flex md:items-center md:justify-between mb-8">
+			
+                <div class="flex-1 min-w-0">
+				<a href="milling.html" class="text-sm font-medium text-gray-500 hover:text-gray-700 flex items-center">
+                    <i data-lucide="arrow-left" class="h-4 w-4 mr-1"></i>
+                    Milling & Slurry Preparation
+                </a>
+                    <h1 class="text-3xl font-bold leading-tight text-gray-900">Production & Process Control</h1>
+                    <p class="mt-1 text-md text-gray-500">Control and monitor corn consumption, meal production, and mash recipes.</p>
+                </div>
+                <div class="mt-4 flex md:mt-0 md:ml-4">
+                    <button id="openNewBatchModalBtn" type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+                        <i data-lucide="play-circle" class="mr-2 h-5 w-5"></i>
+                        Start New Mash Batch
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Dashboard -->
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-orange-100 rounded-md p-3"><i data-lucide="arrow-down-circle" class="h-6 w-6 text-orange-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Corn Consumed (Today)</dt><dd id="cornConsumedToday" class="text-3xl font-bold text-gray-900">1,250 MT</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-yellow-100 rounded-md p-3"><i data-lucide="archive" class="h-6 w-6 text-yellow-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Available Corn</dt><dd id="availableCornDisplay" class="text-3xl font-bold text-gray-900">2000 MT</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-blue-100 rounded-md p-3"><i data-lucide="beaker" class="h-6 w-6 text-blue-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Active Mash Batches</dt><dd id="activeBatchesCount" class="text-3xl font-bold text-gray-900">3</dd></dl></div></div></div>
+                <div class="kpi-card bg-white overflow-hidden shadow rounded-lg p-5"><div class="flex items-center"><div class="flex-shrink-0 bg-teal-100 rounded-md p-3"><i data-lucide="history" class="h-6 w-6 text-teal-600"></i></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Batches Completed (Today)</dt><dd id="completedBatchesCount" class="text-3xl font-bold text-gray-900">2</dd></dl></div></div></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Mash Batches Section with Tabs -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white shadow-md rounded-lg">
+                        <div class="border-b border-gray-200">
+                            <nav id="tabs" class="-mb-px flex space-x-4 px-4" aria-label="Tabs">
+                                <button class="tab-btn active" data-tab="active">Active</button>
+                                <button class="tab-btn" data-tab="history">History</button>
+                            </nav>
+                        </div>
+                        
+                        <!-- Active Batches Tab Content -->
+                        <div id="active-tab-content" class="tab-content active">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch ID</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Time</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recipe</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Corn Consumed</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th><th class="relative px-6 py-3"><span class="sr-only">Action</span></th></tr></thead>
+                                    <tbody id="activeBatchesTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- History Batches Tab Content -->
+                        <div id="history-tab-content" class="tab-content">
+                             <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Batch ID</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Time</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recipe</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Corn Consumed</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Final Yield</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th></tr></thead>
+                                    <tbody id="historyBatchesTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recipe Management -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white p-6 shadow-md rounded-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold text-gray-800">Recipe Book</h2>
+                            <button id="openNewRecipeModalBtn" class="text-sm font-medium text-orange-600 hover:text-orange-800">New Recipe</button>
+                        </div>
+                        <div id="recipeBookContainer" class="space-y-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="newBatchModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Start New Mash Batch</h3><button class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl">&times;</button></div><form id="newBatchForm"><div class="space-y-4"><div><label for="recipeSelect" class="block text-sm font-medium text-gray-700">Select Recipe</label><select id="recipeSelect" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500"></select></div><div><label for="cornAmount" class="block text-sm font-medium text-gray-700">Corn to Consume (MT)</label><input type="number" id="cornAmount" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500" required></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">Cancel</button><button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700">Start Batch</button></div></form></div></div>
+    <div id="newRecipeModal" class="modal-backdrop"><div class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-lg"><div class="flex justify-between items-center border-b pb-3 mb-4"><h3 class="text-2xl font-bold text-gray-800">Create New Recipe</h3><button class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl">&times;</button></div><form id="newRecipeForm"><div class="space-y-4"><div><label for="recipeName" class="block text-sm font-medium text-gray-700">Recipe Name</label><input type="text" id="recipeName" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required></div><div class="grid grid-cols-3 gap-4"><div><label for="mealRatio" class="block text-sm font-medium text-gray-700">Meal</label><input type="number" id="mealRatio" value="1" class="mt-1 block w-full border-gray-300 rounded-md bg-gray-100" readonly></div><div><label for="waterRatio" class="block text-sm font-medium text-gray-700">Water</label><input type="number" id="waterRatio" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="backsetRatio" class="block text-sm font-medium text-gray-700">Backset</label><input type="number" id="backsetRatio" step="0.1" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div><div class="border-t pt-4 mt-4"><p class="text-sm font-medium text-gray-700 mb-2">Enzyme Dosages</p><div class="grid grid-cols-2 gap-4"><div><label for="alphaAmylase" class="block text-sm font-medium text-gray-700">Alpha-Amylase (L/MT)</label><input type="number" id="alphaAmylase" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md" required></div><div><label for="glucoamylase" class="block text-sm font-medium text-gray-700">Glucoamylase (L/MT)</label><input type="number" id="glucoamylase" step="0.01" class="mt-1 block w-full border-gray-300 rounded-md" required></div></div></div></div><div class="mt-6 flex justify-end"><button type="button" class="close-modal-btn bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm">Cancel</button><button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border-transparent text-white bg-orange-600 hover:bg-orange-700 rounded-md">Save Recipe</button></div></form></div></div>
+    <div id="detailsModal" class="modal-backdrop"><div id="detailsModalContent" class="modal-content bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl"></div></div>
+    
+    <script>
+        lucide.createIcons();
+
+        // --- DATA ---
+        let availableCorn = 2000;
+
+        let activeBatches = [
+            { id: 'MASH-0702-04', startTime: '08:15 AM', recipe: 'Standard Yield', corn: 150, status: 'pumping', tankLevel: 95, temp: 85 },
+            { id: 'MASH-0702-05', startTime: '09:30 AM', recipe: 'Standard Yield', corn: 150, status: 'mixing', tankLevel: 50, temp: 60 },
+            { id: 'MASH-0702-06', startTime: '10:45 AM', recipe: 'High Starch Corn', corn: 120, status: 'mixing', tankLevel: 45, temp: 58 },
+        ];
+
+        let historyBatches = [
+            { id: 'MASH-0702-03', startTime: '07:00 AM', endTime: '08:05 AM', recipe: 'Standard Yield', corn: 150, finalYield: '99.6%', status: 'complete' },
+            { id: 'MASH-0701-15', startTime: '10:10 PM', endTime: '11:40 PM', recipe: 'High Starch Corn', corn: 120, finalYield: '99.5%', status: 'complete' },
+        ];
+
+        let recipeData = [
+            { name: 'Standard Yield', meal: 1, water: 2.5, backset: 0.5, alphaAmylase: 0.30, glucoamylase: 0.45 },
+            { name: 'High Starch Corn', meal: 1, water: 2.2, backset: 0.4, alphaAmylase: 0.35, glucoamylase: 0.50 },
+            { name: 'Quick Mash', meal: 1, water: 3.0, backset: 0.6, alphaAmylase: 0.28, glucoamylase: 0.42 },
+        ];
+
+        const statusMap = {
+            mixing: { text: 'Mixing', class: 'status-mixing' },
+            pumping: { text: 'Pumping to Liq.', class: 'status-pumping' },
+            ready: { text: 'Ready for Fermentation', class: 'status-ready' },
+            complete: { text: 'Complete', class: 'status-complete' },
+        };
+
+        // --- DOM ELEMENTS ---
+        const activeBatchesTableBody = document.getElementById('activeBatchesTableBody');
+        const historyBatchesTableBody = document.getElementById('historyBatchesTableBody');
+        const recipeBookContainer = document.getElementById('recipeBookContainer');
+        const recipeSelect = document.getElementById('recipeSelect');
+        const activeBatchesCount = document.getElementById('activeBatchesCount');
+        const completedBatchesCount = document.getElementById('completedBatchesCount');
+        const cornConsumedToday = document.getElementById('cornConsumedToday');
+        const availableCornDisplay = document.getElementById('availableCornDisplay');
+
+        // --- RENDER FUNCTIONS ---
+        function renderAll() {
+            renderActiveTable();
+            renderHistoryTable();
+            renderRecipeBook();
+            updateKPIs();
+        }
+
+        function renderActiveTable() {
+            activeBatchesTableBody.innerHTML = '';
+            activeBatches.forEach(batch => {
+                const statusInfo = statusMap[batch.status] || { text: 'Unknown', class: '' };
+                const actionButton = batch.status === 'pumping' 
+                    ? `<button data-id="${batch.id}" class="promote-btn inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">Promote</button>`
+                    : `<a href="#" class="text-orange-600 hover:text-orange-900 details-btn">Details</a>`;
+
+                const row = `
+                    <tr data-id="${batch.id}">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${batch.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${batch.startTime}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${batch.recipe}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${batch.corn} MT</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${statusInfo.class}">${statusInfo.text}</span></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">${actionButton}</td>
+                    </tr>`;
+                activeBatchesTableBody.innerHTML += row;
+            });
+        }
+        
+        function renderHistoryTable() {
+            historyBatchesTableBody.innerHTML = '';
+            historyBatches.forEach(batch => {
+                const statusInfo = statusMap[batch.status] || { text: 'Unknown', class: '' };
+                const row = `
+                    <tr data-id="${batch.id}">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${batch.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${batch.endTime}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${batch.recipe}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">${batch.corn} MT</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-semibold">${batch.finalYield}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm"><span class="status-badge ${statusInfo.class}">${statusInfo.text}</span></td>
+                    </tr>`;
+                historyBatchesTableBody.innerHTML += row;
+            });
+        }
+
+        function renderRecipeBook() {
+            recipeBookContainer.innerHTML = '';
+            recipeSelect.innerHTML = '';
+            recipeData.forEach(recipe => {
+                const card = `<div class="recipe-card p-4 rounded-lg"><h3 class="font-bold text-gray-800">${recipe.name}</h3><p class="text-sm text-gray-500">Meal:Water:Backset</p><p class="text-lg font-semibold text-gray-700">${recipe.meal}:${recipe.water}:${recipe.backset}</p><div class="text-xs text-gray-600 mt-2">α-Amylase: ${recipe.alphaAmylase} L/MT<br>Glucoamylase: ${recipe.glucoamylase} L/MT</div></div>`;
+                recipeBookContainer.innerHTML += card;
+                const option = `<option value="${recipe.name}">${recipe.name}</option>`;
+                recipeSelect.innerHTML += option;
+            });
+        }
+        
+        function updateKPIs() {
+            activeBatchesCount.textContent = activeBatches.length;
+            completedBatchesCount.textContent = historyBatches.length;
+            const totalCorn = [...activeBatches, ...historyBatches].reduce((sum, b) => sum + Number(b.corn), 0);
+            cornConsumedToday.textContent = `${totalCorn} MT`;
+            availableCornDisplay.textContent = `${availableCorn} MT`;
+        }
+
+        // --- MODAL & TABS SETUP ---
+        function setupModal(modalId, openBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            if (openBtn) openBtn.onclick = () => modal.style.display = 'block';
+            modal.querySelectorAll('.close-modal-btn').forEach(btn => btn.onclick = () => modal.style.display = 'none');
+            window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+        }
+        
+        setupModal('newBatchModal', 'openNewBatchModalBtn');
+        setupModal('newRecipeModal', 'openNewRecipeModalBtn');
+        const detailsModal = document.getElementById('detailsModal');
+        
+        document.getElementById('tabs').addEventListener('click', (e) => {
+            if (e.target.matches('.tab-btn')) {
+                const tab = e.target.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                e.target.classList.add('active');
+                document.getElementById(`${tab}-tab-content`).classList.add('active');
+            }
+        });
+
+        // --- EVENT LISTENERS ---
+        document.getElementById('newBatchForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const cornAmount = Number(document.getElementById('cornAmount').value);
+            
+            if (cornAmount > availableCorn) {
+                // NOTE: alert() can be unreliable in some iframe environments.
+                // A custom modal for errors would be a more robust solution.
+                alert(`Error: Corn required (${cornAmount} MT) exceeds available inventory (${availableCorn} MT).`);
+                return;
+            }
+
+            availableCorn -= cornAmount;
+            const now = new Date();
+            const newBatch = {
+                id: `MASH-${now.getDate().toString().padStart(2,'0')}${(now.getMonth()+1).toString().padStart(2,'0')}-${String(Math.floor(Math.random()*90)+10)}`,
+                startTime: now.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit', hour12: true}),
+                recipe: document.getElementById('recipeSelect').value,
+                corn: cornAmount,
+                status: 'mixing',
+                tankLevel: 10,
+                temp: 35,
+            };
+            activeBatches.unshift(newBatch);
+            renderAll();
+            document.getElementById('newBatchModal').style.display = 'none';
+            e.target.reset();
+        });
+
+        document.getElementById('newRecipeForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newRecipe = {
+                name: document.getElementById('recipeName').value,
+                meal: 1,
+                water: document.getElementById('waterRatio').value,
+                backset: document.getElementById('backsetRatio').value,
+                alphaAmylase: document.getElementById('alphaAmylase').value,
+                glucoamylase: document.getElementById('glucoamylase').value,
+            };
+            recipeData.push(newRecipe);
+            renderRecipeBook();
+            document.getElementById('newRecipeModal').style.display = 'none';
+            e.target.reset();
+        });
+        
+        activeBatchesTableBody.addEventListener('click', e => {
+            const target = e.target;
+            const batchId = target.closest('tr').dataset.id;
+            
+            if (target.classList.contains('promote-btn')) {
+                const batchIndex = activeBatches.findIndex(b => b.id === batchId);
+                if (batchIndex > -1) {
+                    const [batchToPromote] = activeBatches.splice(batchIndex, 1);
+                    
+                    batchToPromote.status = 'ready';
+                    batchToPromote.endTime = new Date().toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit', hour12: true});
+                    batchToPromote.finalYield = `${(Math.random() * (99.8 - 99.2) + 99.2).toFixed(1)}%`; // Simulate yield
+                    
+                    historyBatches.unshift(batchToPromote);
+                    renderAll();
+                }
+            }
+            
+            if (target.classList.contains('details-btn')) {
+                const batch = activeBatches.find(b => b.id === batchId);
+                const recipe = recipeData.find(r => r.name === batch.recipe);
+                if (batch) {
+                    const content = `
+                        <div class="flex justify-between items-center border-b pb-3 mb-4">
+                            <h3 class="text-2xl font-bold text-gray-800">Batch Details: ${batch.id}</h3>
+                            <button class="close-modal-btn text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><p class="text-sm text-gray-500">Recipe</p><p class="font-semibold">${batch.recipe}</p></div>
+                            <div><p class="text-sm text-gray-500">Status</p><span class="status-badge ${statusMap[batch.status].class}">${statusMap[batch.status].text}</span></div>
+                            <div><p class="text-sm text-gray-500">Corn Consumed</p><p class="font-semibold">${batch.corn} MT</p></div>
+                            <div><p class="text-sm text-gray-500">Start Time</p><p class="font-semibold">${batch.startTime}</p></div>
+                            <div class="col-span-1 md:col-span-2 border-t mt-2 pt-2"></div>
+                            <div><p class="text-sm text-gray-500">Slurry Tank Level</p><p class="font-semibold">${batch.tankLevel}%</p></div>
+                            <div><p class="text-sm text-gray-500">Temperature</p><p class="font-semibold">${batch.temp}°C</p></div>
+                            ${recipe ? `
+                            <div class="col-span-1 md:col-span-2 border-t mt-2 pt-2">
+                                <p class="text-sm font-medium text-gray-600">Recipe Parameters</p>
+                                <div class="grid grid-cols-2 gap-x-4">
+                                    <p class="text-sm text-gray-500">α-Amylase: <span class="font-semibold">${recipe.alphaAmylase} L/MT</span></p>
+                                    <p class="text-sm text-gray-500">Glucoamylase: <span class="font-semibold">${recipe.glucoamylase} L/MT</span></p>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <div class="mt-6 flex justify-end"><button class="close-modal-btn bg-white py-2 px-4 border border-gray-300 rounded-md">Close</button></div>
+                    `;
+                    document.getElementById('detailsModalContent').innerHTML = content;
+                    detailsModal.style.display = 'block';
+                    
+                    detailsModal.querySelectorAll('.close-modal-btn').forEach(btn => {
+                        btn.onclick = () => {
+                            detailsModal.style.display = 'none';
+                        };
+                    });
+                }
+            }
+        });
+
+        window.addEventListener('click', e => { if (e.target === detailsModal) detailsModal.style.display = 'none'; });
+
+        // --- INITIAL RENDER ---
+        renderAll();
+    </script>
+</body>
+</html>

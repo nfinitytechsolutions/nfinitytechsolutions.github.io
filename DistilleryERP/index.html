@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DistillERP - Main Dashboard</title>
+    <script src="libs/libs.js"></script>
+    <link href="libs/css2.css" rel="stylesheet">
+    <script src="libs/lucide.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .main-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .module-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e5e7eb;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #3b82f6;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+				<div class="flex items-center space-x-3">
+					<div class="h-8 w-8 flex-shrink-0">
+						<img src="logo1.png" alt="Logo" class="h-full w-full object-contain" />
+					</div>
+					<span class="text-2xl font-bold text-gray-800">Bagalkot<span class="text-blue-600"> Distilleries Pvt.Ltd</span></span>
+				</div>
+
+
+                <div class="flex items-center space-x-5">
+				
+					<div id="notificationContainer" class="relative">
+                        <button id="notificationBell" class="relative text-gray-500 hover:text-gray-700 focus:outline-none">
+                            <i data-lucide="bell" class="h-6 w-6"></i>
+                            <span id="notificationBadge" class="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white ring-2 ring-white">
+                                +3
+                            </span>
+                        </button>
+                        <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 z-10">
+                            <div class="px-4 py-2 text-xs text-gray-400 border-b">Notifications</div>
+                            <a href="#" class="flex items-start px-4 py-3 hover:bg-gray-50">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i data-lucide="info" class="h-5 w-5 text-blue-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-800">New contract with Green Farms approved.</p>
+                                    <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+                                </div>
+                            </a>
+                            <a href="#" class="flex items-start px-4 py-3 hover:bg-gray-50">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i data-lucide="alert-triangle" class="h-5 w-5 text-orange-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-800">Low stock alert for Ethanol (less than 500L).</p>
+                                    <p class="text-xs text-gray-500 mt-1">Yesterday</p>
+                                </div>
+                            </a>
+                            <a href="#" class="flex items-start px-4 py-3 hover:bg-gray-50">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-800">Production batch #1024 completed successfully.</p>
+                                    <p class="text-xs text-gray-500 mt-1">3 days ago</p>
+                                </div>
+                            </a>
+                            <div class="border-t">
+                                <a href="notifications.html" class="block px-4 py-2 text-sm text-blue-600 hover:text-blue-800 text-center">View all notifications</a>
+                            </div>
+                        </div>
+                    
+					&nbsp;
+                    <button class="relative text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <a href="admin_settings.html"><i data-lucide="settings" class="h-6 w-6"></i></a>
+                    </button>
+					</div>
+                    <div id="userProfileTrigger" class="flex items-center space-x-2">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="bg-white rounded-xl shadow-md p-6 md:p-8 mb-10 border-l-4 border-blue-500">
+                <h1 class="text-3xl font-bold text-gray-800">Welcome back!</h1>
+                <p class="mt-2 text-lg text-gray-600">Here's the operational overview of your distillery. Select a module to manage and monitor its processes.</p>
+            </div>
+
+            <div class="module-section">
+                <h2 class="text-2xl font-semibold text-gray-700 section-title">From Field to Factory</h2>
+                <div class="main-dashboard-grid">
+                    <a href="pr_contracts.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-green-100 rounded-lg mb-4">
+                            <i data-lucide="file-text" class="h-8 w-8 text-green-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Procurement & Contracts</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Manage grain suppliers, contracts, and pricing.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="gate_weighbridge.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-blue-100 rounded-lg mb-4">
+                            <i data-lucide="truck" class="h-8 w-8 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Gate & Weighbridge</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Monitor live gate operations and weighments.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="lims.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-purple-100 rounded-lg mb-4">
+                            <i data-lucide="flask-conical" class="h-8 w-8 text-purple-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Quality Lab (LIMS)</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Track quality for raw materials and products.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="silomanagement.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-yellow-100 rounded-lg mb-4">
+                            <i data-lucide="database" class="h-8 w-8 text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Silo & Inventory</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Manage real-time grain and material stocks.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="module-section mt-12">
+                <h2 class="text-2xl font-semibold text-gray-700 section-title">Core Production</h2>
+                <div class="main-dashboard-grid">
+                    <a href="milling.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-orange-100 rounded-lg mb-4">
+                            <i data-lucide="blender" class="h-8 w-8 text-orange-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Milling & Slurry</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Control milling process and mash creation.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="fermentation.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-indigo-100 rounded-lg mb-4">
+                            <i data-lucide="beaker" class="h-8 w-8 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Fermentation</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Manage fermentation batches and recipes.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="distillation.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-red-100 rounded-lg mb-4">
+                            <i data-lucide="flame" class="h-8 w-8 text-red-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Distillation</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Monitor yield accounting and spirit production.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="coprod.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-cyan-100 rounded-lg mb-4">
+                            <i data-lucide="recycle" class="h-8 w-8 text-cyan-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Co-Product Management</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Track DDGS, corn oil, and other byproducts.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="module-section mt-12">
+                <h2 class="text-2xl font-semibold text-gray-700 section-title">Business & Support</h2>
+                <div class="main-dashboard-grid">
+                    <a href="sales_main.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-teal-100 rounded-lg mb-4">
+                            <i data-lucide="bar-chart-2" class="h-8 w-8 text-teal-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Sales & Logistics</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Manage sales orders and finished product shipping.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="finance.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-gray-200 rounded-lg mb-4">
+                            <i data-lucide="landmark" class="h-8 w-8 text-gray-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Finance & Accounting</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Oversee general ledger, AP/AR, and financials.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="plant_maintain.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-rose-100 rounded-lg mb-4">
+                            <i data-lucide="wrench" class="h-8 w-8 text-rose-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Plant Maintenance</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Schedule maintenance and manage work orders.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="St_compliance_and_reporting.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-amber-100 rounded-lg mb-4">
+                            <i data-lucide="shield-check" class="h-8 w-8 text-amber-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Compliance & Reporting</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Generate regulatory reports and view dashboards.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <a href="emp_main.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-fuchsia-100 rounded-lg mb-4">
+                            <i data-lucide="users-2" class="h-8 w-8 text-fuchsia-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Employee Management</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Manage employee profiles, payroll, and HR tasks.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+					
+					<!-- NEW: Company Vehicles Management Card -->
+                    <a href="vehicles.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-pink-100 rounded-lg mb-4">
+                            <i data-lucide="truck" class="h-8 w-8 text-pink-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Vehicles Management</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Track company vehicles, trips, and maintenance.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    <!-- NEW: Canteen Management Card -->
+                    <a href="canteen.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-lime-100 rounded-lg mb-4">
+                            <i data-lucide="utensils-crossed" class="h-8 w-8 text-lime-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">Canteen Management</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Manage daily menu, stock, and canteen expenses.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+					
+                    <a href="my_leave.html" class="module-card bg-white rounded-xl p-6 flex flex-col items-start">
+                        <div class="p-3 bg-sky-100 rounded-lg mb-4">
+                            <i data-lucide="calendar-check" class="h-8 w-8 text-sky-600"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">My Leave</h3>
+                        <p class="text-sm text-gray-500 mt-1 flex-grow">Manage your leave requests and view leave balance.</p>
+                        <span class="mt-4 text-sm font-semibold text-blue-600 hover:text-blue-800">Open Module &rarr;</span>
+                    </a>
+                    
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="mt-12 py-6 bg-white border-t">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            <p>&copy; 2025 DistillERP. All Rights Reserved. A modern solution for a modern industry.</p>
+        </div>
+    </footer>
+    
+    <script src="auth.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Notification Bell Toggle
+        const notificationBell = document.getElementById('notificationBell');
+        const notificationDropdown = document.getElementById('notificationDropdown');
+        const notificationBadge = document.getElementById('notificationBadge');
+
+        notificationBell.addEventListener('click', function() {
+            notificationDropdown.classList.toggle('hidden');
+            // Hide the badge when the dropdown is opened
+            if (!notificationDropdown.classList.contains('hidden')) {
+                notificationBadge.style.display = 'none';
+            }
+        });
+
+        // Close the dropdown if the user clicks outside of it
+        window.addEventListener('click', function(event) {
+            if (!notificationBell.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                notificationDropdown.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
