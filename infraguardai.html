@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfraGuardAI - Smart Infrastructure Health & Safety Monitoring | Nfinity Infotech</title>
+    <meta name="description" content="InfraGuardAI is a hardware + software + AI-powered platform for real-time structural health monitoring and safety management for infrastructure.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 60px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #4a4a4a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #4a4a4a;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle:hover {
+            color: #1a1a1a;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 12px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            padding: 8px 0;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #4a4a4a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(0, 0, 0, 0.03);
+            color: #1a1a1a;
+        }
+
+        .arrow-down {
+            font-size: 12px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 60px 120px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .product-label {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            color: #4a4a4a;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 400;
+            color: #4a4a4a;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: #fafafa;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #6a6a6a;
+            margin-bottom: 60px;
+            max-width: 800px;
+        }
+
+        /* Problem Statement */
+        .problem-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .problem-content p {
+            font-size: 1.15rem;
+            color: #4a4a4a;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .problem-highlight {
+            margin-top: 40px;
+            padding: 40px;
+            background: rgba(220, 53, 69, 0.05);
+            border-left: 4px solid #dc3545;
+            border-radius: 4px;
+        }
+
+        .problem-highlight h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .problem-highlight ul {
+            list-style: none;
+        }
+
+        .problem-highlight li {
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+            color: #4a4a4a;
+            font-size: 1rem;
+        }
+
+        .problem-highlight li:before {
+            content: "⚠";
+            position: absolute;
+            left: 0;
+            color: #dc3545;
+        }
+
+        /* Solution Section */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .solution-card {
+            padding: 40px 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            transform: translateY(-4px);
+        }
+
+        .solution-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .solution-card p {
+            font-size: 0.95rem;
+            color: #6a6a6a;
+            line-height: 1.6;
+        }
+
+        /* Technology Section */
+        .tech-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tech-list {
+            list-style: none;
+        }
+
+        .tech-list li {
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .tech-list li:first-child {
+            padding-top: 0;
+        }
+
+        .tech-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tech-list h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .tech-list p {
+            font-size: 1rem;
+            color: #6a6a6a;
+            line-height: 1.7;
+        }
+
+        /* Use Cases */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .use-case-card {
+            padding: 30px 24px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .use-case-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .use-case-card p {
+            font-size: 0.9rem;
+            color: #6a6a6a;
+            line-height: 1.6;
+        }
+
+        /* Roadmap */
+        .roadmap-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .roadmap-stages {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .roadmap-stage {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .stage-number {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: #1a1a1a;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .stage-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .stage-content p {
+            font-size: 1rem;
+            color: #6a6a6a;
+            line-height: 1.7;
+        }
+
+        /* R&D Section */
+        .rd-highlight {
+            max-width: 900px;
+            margin: 60px auto 0;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 12px;
+        }
+
+        .rd-highlight h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .rd-highlight ul {
+            list-style: none;
+        }
+
+        .rd-highlight li {
+            padding: 14px 0;
+            padding-left: 32px;
+            position: relative;
+            color: #4a4a4a;
+            font-size: 1.05rem;
+        }
+
+        .rd-highlight li:before {
+            content: "◆";
+            position: absolute;
+            left: 0;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        /* Contact CTA */
+        .contact-cta {
+            padding: 100px 60px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .contact-cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 16px 40px;
+            background: #1a1a1a;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 60px 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #6a6a6a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .footer-copyright {
+            color: #9a9a9a;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 140px 20px 80px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .contact-cta {
+                padding: 60px 20px;
+            }
+
+            .footer {
+                padding: 40px 20px 30px;
+            }
+
+            .solution-grid,
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .roadmap-stage {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .rd-highlight {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><img src='12.32.09_7732daef-.png' alt='Nfinity Infotech Logo' /></div>
+                <span>Nfinity Infotech</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <div class="dropdown-toggle">
+                        <span>Products</span>
+                        <span class="arrow-down">▾</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="infraguardai.html">InfraGuardAI</a>
+                    </div>
+                </li>
+                <li><a href="index.html#approach">Engineering Philosophy</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="product-label">Product</div>
+        <h1 class="hero-title">InfraGuardAI</h1>
+        <p class="hero-subtitle">A hardware + software + AI-powered platform for real-time structural health monitoring and safety management of critical infrastructure.</p>
+    </section>
+
+    <!-- Problem Statement Section -->
+    <section class="section">
+        <h2 class="section-title">The Problem</h2>
+        <p class="section-subtitle">Infrastructure in India suffers from aging, maintenance neglect, and safety risks.</p>
+
+        <div class="problem-content">
+            <p>Bridges, water tanks, industrial plants, and multi-story buildings across India face critical challenges. Aging infrastructure combined with limited real-time monitoring creates significant safety risks and leads to expensive reactive repairs.</p>
+
+            <p>Maintenance teams often lack visibility into structural health, relying on periodic manual inspections that can miss early warning signs of failure. By the time issues are detected, the damage is often severe, costly to repair, and poses serious safety threats.</p>
+
+            <div class="problem-highlight">
+                <h3>Key Challenges</h3>
+                <ul>
+                    <li>Limited real-time visibility into infrastructure health</li>
+                    <li>Reactive maintenance leading to disasters and expensive repairs</li>
+                    <li>Manual inspection processes that miss early warning signs</li>
+                    <li>Difficulty in compliance and regulatory reporting</li>
+                    <li>Safety risks for personnel and the public</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="section section-alt">
+        <h2 class="section-title">The Solution</h2>
+        <p class="section-subtitle">InfraGuardAI provides continuous, intelligent monitoring of critical infrastructure.</p>
+
+        <div class="solution-grid">
+            <div class="solution-card">
+                <h3>Real-Time Monitoring</h3>
+                <p>Continuous data collection from IoT sensors tracking vibration, stress, load, corrosion, and environmental factors.</p>
+            </div>
+
+            <div class="solution-card">
+                <h3>AI-Driven Predictive Maintenance</h3>
+                <p>Machine learning models detect anomalies, predict potential failures, and generate proactive maintenance alerts.</p>
+            </div>
+
+            <div class="solution-card">
+                <h3>Safety Alerts & Risk Scoring</h3>
+                <p>Automated risk assessment with instant alerts for critical conditions, enabling rapid response to potential issues.</p>
+            </div>
+
+            <div class="solution-card">
+                <h3>Historical Analytics</h3>
+                <p>Track trends over time, understand degradation patterns, and make data-driven maintenance decisions.</p>
+            </div>
+
+            <div class="solution-card">
+                <h3>Compliance & Reporting</h3>
+                <p>Automated reporting for regulatory compliance with exportable data and audit trails.</p>
+            </div>
+
+            <div class="solution-card">
+                <h3>Dashboard & Mobile Access</h3>
+                <p>Web and mobile interfaces for facility managers and engineers to monitor status from anywhere.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology & Innovation Section -->
+    <section class="section">
+        <h2 class="section-title">Technology & Innovation</h2>
+        <p class="section-subtitle">Deep-tech integration across hardware, software, and AI.</p>
+
+        <div class="tech-content">
+            <ul class="tech-list">
+                <li>
+                    <h4>IoT Sensors & Hardware</h4>
+                    <p>Modular sensor nodes measuring vibration, stress/strain, load, corrosion, environmental conditions, and tilt. Custom sensor modules designed for harsh environments with data acquisition and transmission capabilities.</p>
+                </li>
+
+                <li>
+                    <h4>Edge Computing & Cloud</h4>
+                    <p>Distributed architecture with edge processing for real-time analysis and cloud storage for historical data. Secure data transmission with offline buffering and failover mechanisms.</p>
+                </li>
+
+                <li>
+                    <h4>AI & Machine Learning</h4>
+                    <p>Anomaly detection algorithms trained on infrastructure behavior patterns. Predictive models for failure prediction and risk scoring. Continuous learning from new data.</p>
+                </li>
+
+                <li>
+                    <h4>Data Analytics & Visualization</h4>
+                    <p>Time-series data processing with real-time dashboards showing infrastructure health. Trend analysis, pattern recognition, and exportable reports.</p>
+                </li>
+
+                <li>
+                    <h4>Optional Computer Vision Integration</h4>
+                    <p>Drone-based periodic image inspection with computer vision for hard-to-access structures. Sensor fusion combining image data with physical measurements.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="section section-alt">
+        <h2 class="section-title">Applications & Use Cases</h2>
+        <p class="section-subtitle">Designed for diverse infrastructure monitoring needs across industries.</p>
+
+        <div class="use-cases-grid">
+            <div class="use-case-card">
+                <h3>Municipal Bridges & Flyovers</h3>
+                <p>Structural health monitoring for aging urban infrastructure</p>
+            </div>
+
+            <div class="use-case-card">
+                <h3>Industrial Plants</h3>
+                <p>Safety monitoring for manufacturing and processing facilities</p>
+            </div>
+
+            <div class="use-case-card">
+                <h3>Warehouses</h3>
+                <p>Load monitoring and structural integrity for storage facilities</p>
+            </div>
+
+            <div class="use-case-card">
+                <h3>Water Tanks & Reservoirs</h3>
+                <p>Monitoring for water infrastructure and storage systems</p>
+            </div>
+
+            <div class="use-case-card">
+                <h3>Multi-Story Buildings</h3>
+                <p>Continuous monitoring for commercial and residential structures</p>
+            </div>
+
+            <div class="use-case-card">
+                <h3>Factory Maintenance</h3>
+                <p>Preventive maintenance for operational reliability</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="section">
+        <h2 class="section-title">Product Roadmap</h2>
+        <p class="section-subtitle">Our path from prototype to scaled deployment.</p>
+
+        <div class="roadmap-content">
+            <div class="roadmap-stages">
+                <div class="roadmap-stage">
+                    <div class="stage-number">1</div>
+                    <div class="stage-content">
+                        <h3>Prototype Development</h3>
+                        <p>Building and testing sensor modules, edge computing units, and core analytics platform. Developing AI models for anomaly detection and predictive maintenance.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-stage">
+                    <div class="stage-number">2</div>
+                    <div class="stage-content">
+                        <h3>Pilot Installations</h3>
+                        <p>Deploying at select sites (municipal bridge, factory, or water infrastructure) to validate technology in real-world conditions and gather operational data.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-stage">
+                    <div class="stage-number">3</div>
+                    <div class="stage-content">
+                        <h3>Scaling & Commercialization</h3>
+                        <p>Expanding to multiple clients and geographies. Refining based on pilot learnings. Building operational infrastructure for deployment and support.</p>
+                    </div>
+                </div>
+
+                <div class="roadmap-stage">
+                    <div class="stage-number">4</div>
+                    <div class="stage-content">
+                        <h3>Advanced Modules</h3>
+                        <p>Adding drone-vision integration, water/environmental sensors, automated compliance reporting, and expanded analytics capabilities.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rd-highlight">
+                <h3>R&D & IP Potential</h3>
+                <ul>
+                    <li>Custom sensor modules for infrastructure monitoring</li>
+                    <li>Anomaly detection algorithms for structural health</li>
+                    <li>Sensor fusion logic combining multiple data sources</li>
+                    <li>Predictive models for infrastructure failure patterns</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA Section -->
+    <section class="contact-cta">
+        <div class="contact-cta-content">
+            <h2 class="section-title">Interested in InfraGuardAI?</h2>
+            <p class="section-subtitle">Learn more about pilot programs, deployment options, or partnership opportunities.</p>
+            <a href="mailto:info@nfinityinfotech.com?subject=InfraGuardAI%20Inquiry" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="infraguardai.html">Products</a>
+            <a href="index.html#approach">Engineering Philosophy</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="privacypolicy.html">Privacy Policy</a>
+            <a href="termsofuse.html">Terms of Use</a>
+        </div>
+        <div class="footer-copyright">
+            © 2024 Nfinity Infotech Pvt. Ltd. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

@@ -3,43 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nfinity InfoTech - Precision-Built Software at Unmatched Speed</title>
+    <title>Nfinity Infotech Pvt. Ltd. - AI-First Product-Driven Technology Company</title>
+    <meta name="description" content="Nfinity Infotech is an AI-first technology company focused on building scalable, AI-powered product-driven systems for complex real-world problems.">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            overflow-x: hidden;
-            cursor: auto;
-            color: #ffffff;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
         }
-        
-        #canvas {
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            cursor: auto;
-        }
-        
-        .content-overlay {
-            position: relative;
-            z-index: 10;
-            pointer-events: none;
-        }
-        
-        .interactive {
-            pointer-events: auto;
-        }
-        
+
         /* Header */
         .header {
             position: fixed;
@@ -47,37 +28,36 @@
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 20px 40px;
-            background: rgba(15, 15, 35, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 60px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
-        
+
         .nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 24px;
-            font-weight: 800;
-            color: #4ecdc4;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
         }
-        
+
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            color: #0f0f23;
         }
 
         .logo-icon img {
@@ -85,676 +65,840 @@
             height: 100%;
             object-fit: contain;
         }
-        
+
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 40px;
             list-style: none;
+            align-items: center;
         }
-        
+
         .nav-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: #4a4a4a;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 15px;
+            transition: color 0.2s ease;
+            position: relative;
         }
-        
+
         .nav-links a:hover {
-            color: #4ecdc4;
+            color: #1a1a1a;
         }
-        
-        .cta-button {
-            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
-            color: #0f0f23;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 14px;
+
+        .nav-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: relative;
             cursor: pointer;
-            transition: all 0.3s ease;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #4a4a4a;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle:hover {
+            color: #1a1a1a;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 12px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            padding: 8px 0;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #4a4a4a;
             text-decoration: none;
-            display: inline-block;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background 0.2s ease, color 0.2s ease;
         }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+
+        .dropdown-menu a:hover {
+            background: rgba(0, 0, 0, 0.03);
+            color: #1a1a1a;
         }
-        
+
+        .arrow-down {
+            font-size: 12px;
+        }
+
         /* Hero Section */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 180px 60px 60px;
+            max-width: 1000px;
+            margin: 0 auto;
             text-align: center;
-            padding: 0 40px;
         }
-        
+
+        .hero-image {
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            margin: 40px auto 0;
+            display: block;
+            border-radius: 12px;
+        }
+
         .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 900;
-            line-height: 1.1;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.2;
             margin-bottom: 30px;
-            background: linear-gradient(135deg, #ffffff, #4ecdc4, #45b7d1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #1a1a1a;
         }
-        
+
         .hero-subtitle {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            font-weight: 300;
-            margin-bottom: 40px;
-            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            font-weight: 400;
+            color: #4a4a4a;
             max-width: 800px;
+            margin: 0 auto 20px;
         }
-        
-        .hero-cta {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
+
+        .hero-emphasis {
+            font-size: 1rem;
+            color: #6a6a6a;
+            margin-top: 20px;
         }
-        
-        .hero-cta .cta-button {
-            padding: 18px 36px;
-            font-size: 16px;
-        }
-        
-        .hero-cta .secondary-button {
-            background: transparent;
-            color: #4ecdc4;
-            border: 2px solid #4ecdc4;
-        }
-        
-        .hero-cta .secondary-button:hover {
-            background: #4ecdc4;
-            color: #0f0f23;
-        }
-        
-        /* Services Section */
-        .services {
-            padding: 100px 40px;
-            max-width: 1400px;
+
+        /* Section Styles */
+        .section {
+            padding: 60px 60px;
+            max-width: 1200px;
             margin: 0 auto;
         }
-        
+
+        .section-alt {
+            background: #fafafa;
+        }
+
         .section-title {
-            text-align: center;
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2rem, 4vw, 2.8rem);
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #1a1a1a;
         }
-        
+
         .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 80px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 1.1rem;
+            color: #6a6a6a;
+            margin-bottom: 60px;
+            max-width: 800px;
         }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-bottom: 100px;
-        }
-        
-        .service-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(78, 205, 196, 0.3);
-            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.1);
-        }
-        
-        .service-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        .service-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-        
-        .service-card p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-        
-        /* Tech Stack */
-        .tech-stack {
-            padding: 100px 40px;
-            background: rgba(255, 255, 255, 0.02);
-            text-align: center;
-        }
-        
-        .tech-strip {
-            overflow: hidden;
-            white-space: nowrap;
-            margin: 0 auto;
+
+        .section-image {
+            max-width: 900px;
             width: 100%;
+            height: auto;
+            margin: 50px auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
         }
-        
-        .tech-track {
-            display: inline-flex;
-            gap: 30px;
-            animation: scroll-horizontal 60s linear infinite;
-            will-change: transform;
-        }
-        
-        .tech-track:hover {
-            animation-play-state: paused;
-        }
-        
-        @keyframes scroll-horizontal {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-        
-        .tech-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px 30px;
-            border-radius: 15px;
-            font-weight: 600;
-            color: #4ecdc4;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            flex-shrink: 0;
-            white-space: nowrap;
-            min-width: 120px;
-            text-align: center;
-        }
-        
-        .tech-item:hover {
-            transform: translateY(-5px);
-            background: rgba(78, 205, 196, 0.1);
-            border-color: #4ecdc4;
-        }
-        
-        /* Features */
-        .features {
-            padding: 100px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .features-grid {
+
+        /* What We Build - Product Categories */
+        .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
-        
-        .feature {
-            text-align: center;
+
+        .category-card {
+            padding: 40px 30px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
-        
-        .feature-icon {
+
+        .category-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin: 0 auto 20px auto;
-            color: #0f0f23;
+            margin: 0 auto 20px;
+            display: block;
+            object-fit: contain;
         }
-        
-        .feature h3 {
-            font-size: 1.4rem;
+
+        .category-card:hover {
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            transform: translateY(-4px);
+        }
+
+        .category-card h3 {
+            font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            color: #ffffff;
+            margin-bottom: 12px;
+            color: #1a1a1a;
         }
-        
-        .feature p {
-            color: rgba(255, 255, 255, 0.7);
+
+        .category-card p {
+            font-size: 0.95rem;
+            color: #6a6a6a;
             line-height: 1.6;
         }
-        
-        /* Contact Section */
-        .contact {
-            padding: 100px 40px;
-            background: rgba(255, 255, 255, 0.02);
-            text-align: center;
-        }
-        
-        .contact-info {
-            max-width: 600px;
-            margin: 0 auto 60px auto;
-        }
-        
-        .contact-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .contact-item h4 {
-            color: #4ecdc4;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .contact-item p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        /* Footer */
-        .footer {
-            padding: 60px 40px 30px 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
+
+        /* Product Approach */
+        .approach-content {
+            max-width: 1000px;
             margin: 0 auto;
         }
-        
+
+        .approach-section {
+            margin-bottom: 50px;
+        }
+
+        .approach-section h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .approach-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .approach-section p {
+            font-size: 1rem;
+            color: #4a4a4a;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .approach-section ul {
+            list-style: none;
+            margin: 20px 0;
+            padding-left: 0;
+        }
+
+        .approach-section li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            color: #4a4a4a;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .approach-section li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #1a1a1a;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .approach-highlight {
+            background: rgba(0, 0, 0, 0.02);
+            padding: 25px 30px;
+            border-radius: 8px;
+            border-left: 4px solid #1a1a1a;
+            margin: 25px 0;
+        }
+
+        .approach-highlight p {
+            color: #1a1a1a;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .approach-highlight p:last-child {
+            margin-bottom: 0;
+        }
+
+        .approach-quote {
+            margin: 30px 0;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.02);
+            border-left: 4px solid #1a1a1a;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #4a4a4a;
+            border-radius: 4px;
+        }
+
+        /* Flagship Products */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .product-card {
+            padding: 50px 40px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            border-color: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-6px);
+        }
+
+        .product-card h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+        }
+
+        .product-card p {
+            font-size: 1rem;
+            color: #6a6a6a;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .product-link {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #1a1a1a;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .product-link:hover {
+            background: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-placeholder {
+            opacity: 0.5;
+        }
+
+        /* Engineering Focus */
+        .engineering-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+
+        .engineering-item {
+            text-align: center;
+        }
+
+        .engineering-item h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .engineering-item p {
+            font-size: 0.95rem;
+            color: #6a6a6a;
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .about-highlights {
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+        }
+
+        .about-highlights h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .about-highlights ul {
+            list-style: none;
+        }
+
+        .about-highlights li {
+            padding: 12px 0;
+            padding-left: 28px;
+            position: relative;
+            color: #4a4a4a;
+            font-size: 1rem;
+        }
+
+        .about-highlights li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 60px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            margin-top: 50px;
+        }
+
+        .contact-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-item h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .contact-item p {
+            font-size: 1.1rem;
+            color: #4a4a4a;
+        }
+
+        .contact-item a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 60px 60px 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-        
+
         .footer-links a {
-            color: rgba(255, 255, 255, 0.6);
+            color: #6a6a6a;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
         }
-        
+
         .footer-links a:hover {
-            color: #4ecdc4;
+            color: #1a1a1a;
         }
-        
+
         .footer-copyright {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 14px;
+            color: #9a9a9a;
+            font-size: 0.85rem;
         }
-        
-        /* 3D Visualization Controls */
-        .viz-controls {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .viz-button {
-            background: rgba(78, 205, 196, 0.9);
-            border: none;
-            color: #0f0f23;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 18px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-        }
-        
-        .viz-button:hover {
-            background: rgba(78, 205, 196, 1);
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
-        }
-        
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .header {
                 padding: 15px 20px;
             }
-            
+
             .nav-links {
                 display: none;
             }
-            
+
             .hero {
-                padding: 0 20px;
+                padding: 140px 20px 80px;
             }
-            
-            .services, .features, .contact {
+
+            .section {
                 padding: 60px 20px;
             }
-            
-            .services-grid {
+
+            .contact {
+                padding: 60px 20px;
+            }
+
+            .footer {
+                padding: 40px 20px 30px;
+            }
+
+            .categories-grid,
+            .products-grid,
+            .engineering-grid {
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
-            
-            .tech-track {
-                gap: 20px;
-            }
-            
-            .tech-item {
-                min-width: 100px;
-                padding: 15px 20px;
-            }
-            
-            .hero-cta {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .viz-controls {
-                bottom: 20px;
-                right: 20px;
-            }
-        }
-        
-        /* Loading Animation */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 0.8s ease;
-        }
-        
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(78, 205, 196, 0.3);
-            border-top: 3px solid #4ecdc4;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .loading-text {
-            color: #4ecdc4;
-            font-weight: 600;
-            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading" id="loading">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Something awesome is brewing...</div>
-    </div>
-    
-    <!-- 3D Canvas -->
-    <canvas id="canvas"></canvas>
-    
-    <!-- Content Overlay -->
-    <div class="content-overlay">
-        <!-- Header -->
-        <header class="header interactive">
-            <nav class="nav">
-                <div class="logo">
-                    <div class="logo-icon"><img src='12.32.09_7732daef-.png' alt='Nfinity InfoTech Logo' /></div>
-                    <span>nfinity<strong>infotech</strong></span>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><img src='12.32.09_7732daef-.png' alt='Nfinity Infotech Logo' /></div>
+                <span>Nfinity Infotech</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <div class="dropdown-toggle">
+                        <span>Products</span>
+                        <span class="arrow-down">▾</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="infraguardai.html">InfraGuardAI</a>
+                    </div>
+                </li>
+                <li><a href="#approach">Engineering Philosophy</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">AI-First Product-Driven Systems for Complex Real-World Problems</h1>
+        <p class="hero-subtitle">Nfinity Infotech Pvt. Ltd. is an AI-first technology company focused on designing, building, and commercializing proprietary AI-powered technology products that solve complex challenges.</p>
+        <p class="hero-emphasis">AI-First · Engineering Excellence · Systems Thinking · Long-Term Products</p>
+        <!--<img src="image1.png" alt="Smart Infrastructure Monitoring" class="hero-image"> -->
+    </section>
+
+    <!-- What We Build Section -->
+    <section class="section">
+        <h2 class="section-title">What We Build</h2>
+        <p class="section-subtitle">We focus on developing AI-powered technology products across specific domains where artificial intelligence, engineering depth, and systems thinking create transformative value.</p>
+
+        <!-- <img src="image6.jpg" alt="Technology Product Categories" class="section-image"> -->
+
+        <div class="categories-grid">
+            <div class="category-card">
+			<img src="image1.png" alt="Automation Icon" class="category-icon">
+                <h3>AI-Powered Intelligent Infrastructure Systems</h3>
+                <p>Real-time monitoring and safety platforms for critical infrastructure using AI, IoT, machine learning, and advanced data analytics.</p>
+            </div>
+
+            <div class="category-card">
+                <img src="image2.png" alt="Automation Icon" class="category-icon">
+                <h3>AI-Driven Automation & Decision Platforms</h3>
+                <p>Intelligent systems that leverage AI and machine learning to combine operational data with autonomous decision-making, reducing manual overhead.</p>
+            </div>
+
+            <div class="category-card">
+                <img src="image2.png" alt="Data Systems Icon" class="category-icon">
+                <h3>AI-Enhanced Data-Driven Operational Systems</h3>
+                <p>Platforms powered by AI that transform complex operational workflows into intelligent, scalable, and efficient software solutions.</p>
+            </div>
+
+            <div class="category-card">
+                <img src="image3.png" alt="Security Icon" class="category-icon">
+                <h3>AI-Based Safety-Critical & Reliability-Focused Software</h3>
+                <p>AI-powered systems designed for environments where reliability, accuracy, predictive maintenance, and uptime are non-negotiable.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Approach Section -->
+    <section class="section section-alt" id="approach">
+        <h2 class="section-title">Our AI-First Product Approach</h2>
+        <p class="section-subtitle">How We Think About Building AI-Powered Products</p>
+
+        <div class="approach-content">
+            <div class="approach-section">
+                <h3>1. AI-First, Product-First — Never Project-First</h3>
+                <p>We do not build AI as a feature, demo, or short-term client deliverable.<br>
+                We build products with intelligence embedded at the core, designed for repeated use, compounding improvement, and long-term ownership.</p>
+
+                <div class="approach-highlight">
+                    <p>Projects optimize for speed and completion.<br>
+                    Products optimize for learning, durability, and evolution.</p>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#features">Why Us</a></li>
-                    <li><a href="#tech">Tech Stack</a></li>
-                    <li><a href="#contact">Contact</a></li>
+
+                <p>Every system we build is treated as:</p>
+                <ul>
+                    <li>A living product, not a one-off solution</li>
+                    <li>An asset that compounds through data, feedback, and iteration</li>
+                    <li>Something we own end-to-end, technically and intellectually</li>
                 </ul>
-                <a href="#contact" class="cta-button">Get Started</a>
-            </nav>
-        </header>
-        
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1 class="hero-title">Precision-Built Software<br>at Unmatched Speed</h1>
-            <p class="hero-subtitle">We turn your complex business challenges into simple, scalable, and high-performance digital solutions—fast.</p>
-            <div class="hero-cta interactive">
-                <a href="mailto:info@nfinityinfotech.com?subject=Turn My Idea Into Software&body=Hi, I'd like to discuss turning my idea into software. Please contact me to get started." class="cta-button">Turn Your Idea Into Software</a>
-                <a href="#services" class="cta-button secondary-button">Explore Services</a>
+
+                <p><strong>AI is not added later—it defines the product architecture from day one.</strong></p>
             </div>
-        </section>
-        
-        <!-- Services Section -->
-        <section class="services" id="services">
-            <h2 class="section-title">What We Do</h2>
-            <p class="section-subtitle">We don't just write code—we deliver business leverage. Our specialties are designed to solve your exact problems and fuel your growth.</p>
-            
-            <div class="services-grid interactive">
-                <div class="service-card">
-                    <div class="service-icon">⚡</div>
-                    <h3>Rapid Custom Development</h3>
-                    <p>End-to-end software delivery in weeks, not months, using agile pods and proven rapid development frameworks.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">🏭</div>
-                    <h3>Industry-Specific Solutions</h3>
-                    <p>Accelerated delivery for manufacturing, healthcare, retail, and fintech with tailored, not templated, solutions.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">🔄</div>
-                    <h3>Legacy Modernization</h3>
-                    <p>Transition from clunky, outdated systems to sleek, modern platforms with minimal business disruption.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">🔗</div>
-                    <h3>Integration-First Architecture</h3>
-                    <p>We build APIs and systems that plug seamlessly into your existing workflows, ERPs, or third-party apps.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">🎨</div>
-                    <h3>UI/UX Excellence</h3>
-                    <p>We combine functional clarity with visual simplicity to create software people actually enjoy using.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">📈</div>
-                    <h3>Scalability for Growth</h3>
-                    <p>Start with an MVP delivered in weeks, with an architecture built from the ground up to scale as your business grows.</p>
+
+            <div class="approach-section">
+                <h3>2. Intelligence as the Core, Not an Add-On</h3>
+                <p>Artificial intelligence and machine learning are not "integrations" in our systems; they are foundational layers.</p>
+
+                <p>From the beginning, we design:</p>
+                <ul>
+                    <li>Data flows before UI flows</li>
+                    <li>Learning loops before dashboards</li>
+                    <li>Feedback signals before automation rules</li>
+                </ul>
+
+                <p>This ensures that every product:</p>
+                <ul>
+                    <li>Improves with usage rather than degrading</li>
+                    <li>Adapts to real-world variability</li>
+                    <li>Develops behavior, not just functionality</li>
+                </ul>
+
+                <div class="approach-quote">
+                    We ask first:<br>
+                    "What should this system learn over time?"<br>
+                    Only then do we ask how it should look or scale.
                 </div>
             </div>
-        </section>
-        
-        <!-- Features Section -->
-        <section class="features" id="features">
-            <h2 class="section-title">What Makes Us Different</h2>
-            <p class="section-subtitle">Our approach is simple: deliver exceptional value with speed and transparency. We are problem-led, not tech-led.</p>
-            
-            <div class="features-grid interactive">
-                <div class="feature">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Speed with Discipline</h3>
-                    <p>We follow a Lean + Modular approach—building only what matters and leaving room for rapid iteration without cutting corners.</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">🏆</div>
-                    <h3>Built for Your Business</h3>
-                    <p>We create solutions tailored specifically to your operational needs, ensuring complete alignment with your business processes.</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">💬</div>
-                    <h3>Transparent Communication</h3>
-                    <p>Weekly demos, clear milestone tracking, and zero jargon. We keep you informed and in control throughout the project.</p>
-                </div>
+
+            <div class="approach-section">
+                <h3>3. Long-Term Ownership of Intelligent Systems</h3>
+                <p>We believe intelligent systems should be owned, understood, and evolved, not outsourced and forgotten.</p>
+
+                <p>Long-term ownership means:</p>
+                <ul>
+                    <li>Control over model behavior, data pipelines, and failure modes</li>
+                    <li>Deep understanding of how intelligence emerges in the system</li>
+                    <li>Responsibility for safety, bias, drift, and edge cases</li>
+                </ul>
+
+                <p>We avoid black-box dependence where learning systems behave in ways no one can explain or correct.</p>
+
+                <p>Every AI system we ship must be:</p>
+                <ul>
+                    <li>Observable</li>
+                    <li>Controllable</li>
+                    <li>Auditable</li>
+                    <li>Evolvable</li>
+                </ul>
+
+                <p><strong>Ownership is what turns AI from a risk into a strategic advantage.</strong></p>
             </div>
-        </section>
-        
-        <!-- Tech Stack Section -->
-        <section class="tech-stack" id="tech">
-            <h2 class="section-title">Our Tech Stack Expertise</h2>
-            <p class="section-subtitle">We use modern, robust, and scalable technologies to build future-proof software.</p>
-            
-            <div class="tech-strip interactive">
-                <div class="tech-track">
-                    <div class="tech-item">React</div>
-                    <div class="tech-item">Node.js</div>
-                    <div class="tech-item">Python</div>
-                    <div class="tech-item">AWS</div>
-                    <div class="tech-item">Flutter</div>
-                    <div class="tech-item">Docker</div>
-                    <div class="tech-item">Kubernetes</div>
-                    <div class="tech-item">PostgreSQL</div>
-                    <div class="tech-item">MongoDB</div>
-                    <div class="tech-item">Redis</div>
-                    <div class="tech-item">GraphQL</div>
-                    <div class="tech-item">TypeScript</div>
-                    <div class="tech-item">Vue.js</div>
-                    <div class="tech-item">Next.js</div>
-                    <div class="tech-item">Express.js</div>
-                    <div class="tech-item">FastAPI</div>
-                    <div class="tech-item">Go</div>
-                    <div class="tech-item">Rust</div>
-                    <div class="tech-item">TensorFlow</div>
-                    <div class="tech-item">PyTorch</div>
-                    <div class="tech-item">Elasticsearch</div>
-                    <div class="tech-item">Apache Kafka</div>
-                    <div class="tech-item">Jenkins</div>
-                    <div class="tech-item">GitHub Actions</div>
-                    <div class="tech-item">Terraform</div>
-                    <div class="tech-item">Azure</div>
-                    <div class="tech-item">GCP</div>
-                    <div class="tech-item">Nginx</div>
-                    <div class="tech-item">RabbitMQ</div>
-                    <div class="tech-item">Prometheus</div>
-                    
-                    <!-- Duplicate for seamless loop -->
-                    <div class="tech-item">React</div>
-                    <div class="tech-item">Node.js</div>
-                    <div class="tech-item">Python</div>
-                    <div class="tech-item">AWS</div>
-                    <div class="tech-item">Flutter</div>
-                    <div class="tech-item">Docker</div>
-                    <div class="tech-item">Kubernetes</div>
-                    <div class="tech-item">PostgreSQL</div>
-                    <div class="tech-item">MongoDB</div>
-                    <div class="tech-item">Redis</div>
-                    <div class="tech-item">GraphQL</div>
-                    <div class="tech-item">TypeScript</div>
-                    <div class="tech-item">Vue.js</div>
-                    <div class="tech-item">Next.js</div>
-                    <div class="tech-item">Express.js</div>
-                    <div class="tech-item">FastAPI</div>
-                    <div class="tech-item">Go</div>
-                    <div class="tech-item">Rust</div>
-                    <div class="tech-item">TensorFlow</div>
-                    <div class="tech-item">PyTorch</div>
-                    <div class="tech-item">Elasticsearch</div>
-                    <div class="tech-item">Apache Kafka</div>
-                    <div class="tech-item">Jenkins</div>
-                    <div class="tech-item">GitHub Actions</div>
-                    <div class="tech-item">Terraform</div>
-                    <div class="tech-item">Azure</div>
-                    <div class="tech-item">GCP</div>
-                    <div class="tech-item">Nginx</div>
-                    <div class="tech-item">RabbitMQ</div>
-                    <div class="tech-item">Prometheus</div>
-                </div>
+
+            <div class="approach-section">
+                <h3>4. AI Research → Prototype → Validation → Scale</h3>
+                <p>Our development process mirrors how intelligence itself evolves.</p>
+
+                <h4>Research</h4>
+                <p>We start by deeply understanding the problem, not just the solution space.<br>
+                This includes domain knowledge, constraints, failure modes, and human behavior.</p>
+
+                <h4>Prototype</h4>
+                <p>We build fast, focused prototypes to test learning assumptions—not polish interfaces.<br>
+                Early systems exist to answer:</p>
+                <ul>
+                    <li>Can this learn?</li>
+                    <li>Does feedback improve outcomes?</li>
+                    <li>Where does it fail?</li>
+                </ul>
+
+                <h4>Validation</h4>
+                <p>We validate intelligence, not just accuracy metrics.<br>
+                We test real-world behavior, edge cases, and adaptation over time.</p>
+
+                <h4>Scale</h4>
+                <p>Only after learning proves durable do we scale infrastructure, users, and automation.<br>
+                Scaling happens after intelligence stabilizes, not before.</p>
             </div>
-        </section>
-        
-        <!-- Contact Section -->
-        <section class="contact" id="contact">
-            <h2 class="section-title">Ready to Scale Your Operations?</h2>
-            <p class="section-subtitle">Partner with us to optimize your production workflows and streamline your commodity operations with custom software solutions.</p>
-            
-            <div class="contact-info interactive">
+
+            <div class="approach-section">
+                <h3>5. Engineering Depth Over Speed</h3>
+                <p>We intentionally prioritize engineering depth and AI rigor over superficial velocity.</p>
+
+                <div class="approach-highlight">
+                    <p>Fast AI breaks quietly.<br>
+                    Shallow systems collapse under real-world complexity.</p>
+                </div>
+
+                <p>We invest heavily in:</p>
+                <ul>
+                    <li>Robust data pipelines</li>
+                    <li>Model observability and monitoring</li>
+                    <li>Fail-safe behaviors and fallback logic</li>
+                    <li>Systems that degrade gracefully instead of catastrophically</li>
+                </ul>
+
+                <p><strong>Speed without depth creates technical debt that compounds exponentially in AI systems.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flagship Products Section -->
+    <section class="section">
+        <h2 class="section-title">Our AI-Powered Products</h2>
+        <p class="section-subtitle">Introducing our flagship AI-powered products designed to solve complex infrastructure and operational challenges through intelligent automation and machine learning.</p>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <h3>InfraGuardAI</h3>
+                <p>An AI-powered real-time infrastructure health and safety monitoring platform that uses machine learning for predictive maintenance and intelligent alerting.</p>
+                <a href="infraguardai.html" class="product-link">View Product →</a>
+            </div>
+
+            <div class="product-card product-placeholder">
+                <h3>Future AI Products</h3>
+                <p>More AI-powered products in development. Stay tuned.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Engineering Focus Section -->
+    <section class="section section-alt">
+        <h2 class="section-title">AI-Driven Engineering & Systems Focus</h2>
+        <p class="section-subtitle">We build AI-powered technology with depth, intelligence, reliability, and scalability at the core.</p>
+
+        <img src="image4.jpg" alt="Engineering Excellence" class="section-image">
+
+        <div class="engineering-grid">
+            <div class="engineering-item">
+                <h3>AI & Machine Learning</h3>
+                <p>Integrating artificial intelligence and machine learning algorithms to create intelligent, adaptive systems that learn and improve over time.</p>
+            </div>
+
+            <div class="engineering-item">
+                <h3>Systems Thinking</h3>
+                <p>Understanding how AI components interact with traditional systems and designing for intelligent, holistic solutions.</p>
+            </div>
+
+            <div class="engineering-item">
+                <h3>AI-Powered Reliability & Safety</h3>
+                <p>Building intelligent systems with AI-driven monitoring, predictive failure detection, and autonomous recovery mechanisms.</p>
+            </div>
+
+            <div class="engineering-item">
+                <h3>Scalable AI Architecture</h3>
+                <p>Architecting AI solutions that scale with data growth and computational demand without requiring complete rewrites.</p>
+            </div>
+
+            <div class="engineering-item">
+                <h3>AI-Driven Data Design</h3>
+                <p>Leveraging machine learning for real-time insights, predictive analytics, and intelligent decision-making based on data patterns.</p>
+            </div>
+
+            <div class="engineering-item">
+                <h3>Modular AI Systems</h3>
+                <p>Creating AI-enabled systems with clear boundaries and interfaces that allow individual ML models to evolve independently.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">About Nfinity Infotech</h2>
+
+        <div class="about-content">
+            <p>We are an AI-first, product-focused technology company committed to building and owning the intelligent systems we create. Our approach is grounded in artificial intelligence, engineering principles, systems thinking, and a long-term outlook.</p>
+
+            <p>We believe in creating AI-powered technology that solves meaningful problems—intelligent systems that are reliable, scalable, and built to last. We don't chase trends or build for short-term gains. Instead, we invest in understanding complex domains deeply, leveraging AI and machine learning to create products that make a lasting impact.</p>
+
+            <div class="about-highlights">
+                <h3>Our AI-First Commitment</h3>
+                <ul>
+                    <li>Building AI-powered proprietary products, not one-off projects</li>
+                    <li>Leveraging artificial intelligence and machine learning at the core</li>
+                    <li>Long-term ownership and continuous AI-driven improvement</li>
+                    <li>Engineering excellence with AI and technical depth</li>
+                    <li>Creating transformative value through AI innovation</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">Interested in our products or want to learn more about what we're building?</p>
+
+            <div class="contact-info">
                 <div class="contact-item">
-                    <h4>Email Us</h4>
-                    <p>info@nfinityinfotech.com</p>
+                    <h4>Email</h4>
+                    <p><a href="mailto:info@nfinityinfotech.com">info@nfinityinfotech.com</a></p>
                 </div>
-                
+
                 <div class="contact-item">
-                    <h4>Visit Our Office</h4>
-                    <p>3rd Floor, SLV Sunrise<br>Police station road, Varthur<br>Bangalore India 560087</p><br><p>phone: +91 98862 25140</p>
+                    <h4>Location</h4>
+                    <p>Bangalore, India</p>
                 </div>
             </div>
-            <div class="hero-cta interactive">
-                <a href="mailto:info@nfinityinfotech.com?subject=Turn My Idea Into Software&body=Hi, I'd like to discuss turning my idea into software. Please contact me to get started." class="cta-button">Let's Go!!</a>
-                
-            </div>
-            
-        </section>
-       
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-links interactive">
-                    <a href="#services">Services</a>
-                    <a href="#features">Why Us</a>
-                    <a href="#tech">Tech Stack</a>
-                    <a href="#contact">Contact</a>
-                    <a href="privacypolicy.html">Privacy Policy</a>
-                    <a href="termsofuse.html">Terms of Use</a>
-                </div>
-                <div class="footer-copyright">
-                    © 2024 nfinity infotech. All rights reserved.
-                </div>
-            </div>
-        </footer>
-    </div>
-    
-    <!-- 3D Visualization Controls -->
-    <div class="viz-controls interactive">
-        <button class="viz-button" id="switchTheme" title="Switch Theme">🎨</button>
-    </div>
-    
-    
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="nfinity-infotech.js"></script>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="infraguardai.html">Products</a>
+            <a href="#approach">Engineering Philosophy</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="privacypolicy.html">Privacy Policy</a>
+            <a href="termsofuse.html">Terms of Use</a>
+        </div>
+        <div class="footer-copyright">
+            © 2025 Nfinity Infotech Pvt. Ltd. All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>
