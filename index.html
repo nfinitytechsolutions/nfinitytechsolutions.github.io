@@ -5,21 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nfinity Infotech Pvt. Ltd. - AI-First Product-Driven Technology Company</title>
     <meta name="description" content="Nfinity Infotech is an AI-first technology company focused on building scalable, AI-powered product-driven systems for complex real-world problems.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.6;
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --accent: #06b6d4;
+            --accent-light: #22d3ee;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: rgba(255, 255, 255, 0.08);
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+            --gradient-2: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            --glow: 0 0 60px rgba(99, 102, 241, 0.3);
         }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow-1 { top: -200px; right: -200px; }
+        .bg-glow-2 { bottom: -300px; left: -200px; background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%); }
 
         /* Header */
         .header {
@@ -29,9 +77,9 @@
             right: 0;
             z-index: 100;
             padding: 20px 60px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
         }
 
         .nav {
@@ -46,18 +94,20 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a1a;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
             text-decoration: none;
+            letter-spacing: -0.02em;
         }
 
         .logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 10px;
         }
 
         .logo-icon img {
@@ -74,20 +124,31 @@
         }
 
         .nav-links a {
-            color: #4a4a4a;
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
             font-size: 15px;
-            transition: color 0.2s ease;
+            transition: color 0.3s ease;
             position: relative;
         }
 
         .nav-links a:hover {
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
-        .nav-item {
-            position: relative;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .dropdown {
@@ -99,31 +160,32 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            color: #4a4a4a;
+            color: var(--text-secondary);
             font-weight: 500;
             font-size: 15px;
             cursor: pointer;
+            transition: color 0.3s ease;
         }
 
         .dropdown-toggle:hover {
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .dropdown-menu {
             position: absolute;
             top: 100%;
-            left: 0;
-            margin-top: 12px;
-            background: #ffffff;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            left: -20px;
+            margin-top: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             min-width: 220px;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
-            transition: all 0.2s ease;
-            padding: 8px 0;
+            transition: all 0.3s ease;
+            padding: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .dropdown:hover .dropdown-menu {
@@ -134,332 +196,631 @@
 
         .dropdown-menu a {
             display: block;
-            padding: 12px 20px;
-            color: #4a4a4a;
+            padding: 12px 16px;
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
             font-size: 14px;
-            transition: background 0.2s ease, color 0.2s ease;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
 
         .dropdown-menu a:hover {
-            background: rgba(0, 0, 0, 0.03);
-            color: #1a1a1a;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-primary);
+        }
+
+        .dropdown-menu a::after {
+            display: none;
         }
 
         .arrow-down {
-            font-size: 12px;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .nav-cta::after {
+            display: none;
         }
 
         /* Hero Section */
         .hero {
-            padding: 180px 60px 60px;
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 60px 100px;
+            overflow: hidden;
         }
 
-        .hero-image {
-            max-width: 600px;
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
             width: 100%;
-            height: auto;
-            margin: 40px auto 0;
-            display: block;
-            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 30px;
-            color: #1a1a1a;
+            font-size: clamp(2.8rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 28px;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-title .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            font-size: 1.2rem;
             font-weight: 400;
-            color: #4a4a4a;
-            max-width: 800px;
-            margin: 0 auto 20px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.7;
         }
 
-        .hero-emphasis {
-            font-size: 1rem;
-            color: #6a6a6a;
-            margin-top: 20px;
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 24px;
+            box-shadow: var(--glow), 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--gradient-1);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
 
         /* Section Styles */
         .section {
-            padding: 60px 60px;
-            max-width: 1200px;
+            padding: 120px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-container {
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .section-alt {
-            background: #fafafa;
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
         .section-title {
-            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-size: clamp(2.2rem, 4vw, 3rem);
             font-weight: 800;
             margin-bottom: 20px;
-            color: #1a1a1a;
+            letter-spacing: -0.02em;
         }
 
         .section-subtitle {
-            font-size: 1.1rem;
-            color: #6a6a6a;
-            margin-bottom: 60px;
-            max-width: 800px;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
-        .section-image {
-            max-width: 900px;
-            width: 100%;
-            height: auto;
-            margin: 50px auto;
-            display: block;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        /* What We Build - Product Categories */
+        /* What We Build Section */
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
         }
 
         .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             padding: 40px 30px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .category-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            display: block;
-            object-fit: contain;
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .category-card:hover {
-            border-color: rgba(0, 0, 0, 0.15);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .category-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 12px;
-            color: #1a1a1a;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+            line-height: 1.4;
         }
 
         .category-card p {
             font-size: 0.95rem;
-            color: #6a6a6a;
+            color: var(--text-secondary);
             line-height: 1.6;
         }
 
-        /* Product Approach */
-        .approach-content {
-            max-width: 1000px;
-            margin: 0 auto;
+        /* Products Section */
+        .products-section {
+            background: var(--gradient-2);
         }
 
-        .approach-section {
-            margin-bottom: 50px;
-        }
-
-        .approach-section h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .approach-section h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-top: 25px;
-            margin-bottom: 12px;
-        }
-
-        .approach-section p {
-            font-size: 1rem;
-            color: #4a4a4a;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .approach-section ul {
-            list-style: none;
-            margin: 20px 0;
-            padding-left: 0;
-        }
-
-        .approach-section li {
-            padding: 8px 0 8px 28px;
-            position: relative;
-            color: #4a4a4a;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        .approach-section li:before {
-            content: "•";
-            position: absolute;
-            left: 8px;
-            color: #1a1a1a;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .approach-highlight {
-            background: rgba(0, 0, 0, 0.02);
-            padding: 25px 30px;
-            border-radius: 8px;
-            border-left: 4px solid #1a1a1a;
-            margin: 25px 0;
-        }
-
-        .approach-highlight p {
-            color: #1a1a1a;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .approach-highlight p:last-child {
-            margin-bottom: 0;
-        }
-
-        .approach-quote {
-            margin: 30px 0;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.02);
-            border-left: 4px solid #1a1a1a;
-            font-size: 1.1rem;
-            font-style: italic;
-            color: #4a4a4a;
-            border-radius: 4px;
-        }
-
-        /* Flagship Products */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 40px;
-            margin-top: 60px;
         }
 
         .product-card {
-            padding: 50px 40px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
 
         .product-card:hover {
-            border-color: rgba(0, 0, 0, 0.2);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-            transform: translateY(-6px);
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-8px);
+            box-shadow: var(--glow);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product-content {
+            padding: 40px;
+        }
+
+        .product-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
         }
 
         .product-card h3 {
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 16px;
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .product-card p {
             font-size: 1rem;
-            color: #6a6a6a;
+            color: var(--text-secondary);
             line-height: 1.7;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
         .product-link {
-            display: inline-block;
-            padding: 12px 28px;
-            background: #1a1a1a;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-light);
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 15px;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
         .product-link:hover {
-            background: #000000;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: var(--accent-light);
+            gap: 12px;
         }
 
         .product-placeholder {
             opacity: 0.5;
         }
 
-        /* Engineering Focus */
+        /* Approach Section */
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            align-items: start;
+        }
+
+        .approach-content {
+            position: sticky;
+            top: 120px;
+        }
+
+        .approach-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .approach-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .approach-step:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: var(--bg-card-hover);
+        }
+
+        .approach-step.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            color: white;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            padding-left: 52px;
+        }
+
+        /* Approach Image Container */
+        .approach-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/10;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .approach-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+            opacity: 0;
+            transform: scale(1.05);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .approach-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .approach-image-caption {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .caption-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 12px;
+        }
+
+        .caption-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Engineering Section */
+        .engineering-image {
+            width: 100%;
+            border-radius: 24px;
+            margin-bottom: 60px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
         .engineering-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 50px;
-            margin-top: 60px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
 
         .engineering-item {
             text-align: center;
+            padding: 40px 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .engineering-item:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .engineering-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: var(--gradient-1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
         }
 
         .engineering-item h3 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 12px;
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .engineering-item p {
-            font-size: 0.95rem;
-            color: #6a6a6a;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
             line-height: 1.6;
         }
 
         /* About Section */
-        .about-content {
-            max-width: 900px;
-            margin: 0 auto;
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: var(--glow);
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
         }
 
         .about-content p {
             font-size: 1.1rem;
-            color: #4a4a4a;
+            color: var(--text-secondary);
             line-height: 1.8;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .about-highlights {
-            margin-top: 50px;
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 8px;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
         }
 
         .about-highlights h3 {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 20px;
-            color: #1a1a1a;
+            color: var(--primary-light);
         }
 
         .about-highlights ul {
@@ -467,98 +828,191 @@
         }
 
         .about-highlights li {
-            padding: 12px 0;
+            padding: 10px 0;
             padding-left: 28px;
             position: relative;
-            color: #4a4a4a;
-            font-size: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
         }
 
-        .about-highlights li:before {
-            content: "→";
+        .about-highlights li::before {
+            content: '';
             position: absolute;
             left: 0;
-            color: #1a1a1a;
-            font-weight: 700;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--gradient-1);
+            border-radius: 50%;
         }
 
         /* Contact Section */
-        .contact {
-            padding: 100px 60px;
-            text-align: center;
-            background: #fafafa;
+        .contact-section {
+            background: var(--gradient-2);
         }
 
-        .contact-content {
+        .contact-container {
+            text-align: center;
             max-width: 700px;
             margin: 0 auto;
         }
 
         .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
             margin-top: 50px;
+            flex-wrap: wrap;
         }
 
         .contact-item {
-            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
         }
 
         .contact-item h4 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #1a1a1a;
+            color: var(--text-muted);
             margin-bottom: 8px;
         }
 
-        .contact-item p {
-            font-size: 1.1rem;
-            color: #4a4a4a;
-        }
-
+        .contact-item p,
         .contact-item a {
-            color: #1a1a1a;
+            font-size: 1.1rem;
+            color: var(--text-primary);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .contact-item a:hover {
-            text-decoration: underline;
+            color: var(--primary-light);
         }
 
         /* Footer */
         .footer {
             padding: 60px 60px 40px;
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-            text-align: center;
+            border-top: 1px solid var(--border);
+            background: var(--bg-dark);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
         }
 
         .footer-links {
             display: flex;
-            justify-content: center;
             gap: 30px;
-            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: #6a6a6a;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 14px;
             transition: color 0.2s ease;
         }
 
         .footer-links a:hover {
-            color: #1a1a1a;
+            color: var(--text-primary);
         }
 
         .footer-copyright {
-            color: #9a9a9a;
-            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
         }
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .engineering-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .stat-item {
+                text-align: center;
+            }
+
+            .hero-image {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .approach-grid,
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .approach-content {
+                position: static;
+            }
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 15px 20px;
@@ -568,37 +1022,87 @@
                 display: none;
             }
 
+            .mobile-menu-btn {
+                display: block;
+            }
+
             .hero {
-                padding: 140px 20px 80px;
+                padding: 120px 20px 80px;
             }
 
             .section {
-                padding: 60px 20px;
-            }
-
-            .contact {
-                padding: 60px 20px;
-            }
-
-            .footer {
-                padding: 40px 20px 30px;
+                padding: 80px 20px;
             }
 
             .categories-grid,
             .products-grid,
             .engineering-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                flex-direction: column;
                 gap: 30px;
             }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
     <!-- Header -->
     <header class="header">
         <nav class="nav">
             <a href="index.html" class="logo">
-                <div class="logo-icon"><img src='12.32.09_7732daef-.png' alt='Nfinity Infotech Logo' /></div>
+                <div class="logo-icon"><img src="12.32.09_7732daef-.png" alt="Nfinity Infotech Logo"></div>
                 <span>Nfinity Infotech</span>
             </a>
             <ul class="nav-links">
@@ -606,7 +1110,7 @@
                 <li class="dropdown">
                     <div class="dropdown-toggle">
                         <span>Products</span>
-                        <span class="arrow-down">▾</span>
+                        <span class="arrow-down">&#9662;</span>
                     </div>
                     <div class="dropdown-menu">
                         <a href="infraguardai.html">InfraGuardAI</a>
@@ -614,290 +1118,375 @@
                 </li>
                 <li><a href="#approach">Engineering Philosophy</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-cta">Contact Us</a></li>
             </ul>
+            <button class="mobile-menu-btn">&#9776;</button>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1 class="hero-title">AI-First Product-Driven Systems for Complex Real-World Problems</h1>
-        <p class="hero-subtitle">Nfinity Infotech Pvt. Ltd. is an AI-first technology company focused on designing, building, and commercializing proprietary AI-powered technology products that solve complex challenges.</p>
-        <p class="hero-emphasis">AI-First · Engineering Excellence · Systems Thinking · Long-Term Products</p>
-        <!--<img src="image1.png" alt="Smart Infrastructure Monitoring" class="hero-image"> -->
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">AI-First Technology Company</div>
+                <h1 class="hero-title">
+                    Building <span class="gradient-text">Intelligent Systems</span> for Complex Real-World Problems
+                </h1>
+                <p class="hero-subtitle">
+                    Nfinity Infotech is an AI-first technology company focused on designing, building, and commercializing proprietary AI-powered products that solve complex challenges.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn btn-primary">
+                        Explore Products
+                        <span>&#8594;</span>
+                    </a>
+                    <a href="#approach" class="btn btn-secondary">
+                        Our Approach
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">AI-First</div>
+                        <div class="stat-label">Core Philosophy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Product</div>
+                        <div class="stat-label">Driven Development</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Systems</div>
+                        <div class="stat-label">Thinking Approach</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero_ai_tech.jpg" alt="AI Technology Visualization">
+            </div>
+        </div>
     </section>
 
     <!-- What We Build Section -->
     <section class="section">
-        <h2 class="section-title">What We Build</h2>
-        <p class="section-subtitle">We focus on developing AI-powered technology products across specific domains where artificial intelligence, engineering depth, and systems thinking create transformative value.</p>
-
-        <!-- <img src="image6.jpg" alt="Technology Product Categories" class="section-image"> -->
-
-        <div class="categories-grid">
-            <div class="category-card">
-			<img src="image1.png" alt="Automation Icon" class="category-icon">
-                <h3>AI-Powered Intelligent Infrastructure Systems</h3>
-                <p>Real-time monitoring and safety platforms for critical infrastructure using AI, IoT, machine learning, and advanced data analytics.</p>
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-badge">Our Focus Areas</div>
+                <h2 class="section-title">What We Build</h2>
+                <p class="section-subtitle">
+                    We develop AI-powered technology products across specific domains where artificial intelligence, engineering depth, and systems thinking create transformative value.
+                </p>
             </div>
 
-            <div class="category-card">
-                <img src="image2.png" alt="Automation Icon" class="category-icon">
-                <h3>AI-Driven Automation & Decision Platforms</h3>
-                <p>Intelligent systems that leverage AI and machine learning to combine operational data with autonomous decision-making, reducing manual overhead.</p>
-            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <img src="images/infrastructure_ai.jpg" alt="Infrastructure AI">
+                    </div>
+                    <h3>AI-Powered Intelligent Infrastructure</h3>
+                    <p>Real-time monitoring and safety platforms for critical infrastructure using AI, IoT, machine learning, and advanced data analytics.</p>
+                </div>
 
-            <div class="category-card">
-                <img src="image2.png" alt="Data Systems Icon" class="category-icon">
-                <h3>AI-Enhanced Data-Driven Operational Systems</h3>
-                <p>Platforms powered by AI that transform complex operational workflows into intelligent, scalable, and efficient software solutions.</p>
-            </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <img src="images/automation_ai.jpg" alt="Automation AI">
+                    </div>
+                    <h3>AI-Driven Automation Platforms</h3>
+                    <p>Intelligent systems that leverage AI and machine learning to combine operational data with autonomous decision-making.</p>
+                </div>
 
-            <div class="category-card">
-                <img src="image3.png" alt="Security Icon" class="category-icon">
-                <h3>AI-Based Safety-Critical & Reliability-Focused Software</h3>
-                <p>AI-powered systems designed for environments where reliability, accuracy, predictive maintenance, and uptime are non-negotiable.</p>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <img src="images/data_systems.jpg" alt="Data Systems">
+                    </div>
+                    <h3>AI-Enhanced Data Systems</h3>
+                    <p>Platforms powered by AI that transform complex operational workflows into intelligent, scalable solutions.</p>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <img src="images/safety_systems.jpg" alt="Safety Systems">
+                    </div>
+                    <h3>Safety-Critical Software</h3>
+                    <p>AI-powered systems designed for environments where reliability, accuracy, and uptime are non-negotiable.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Product Approach Section -->
-    <section class="section section-alt" id="approach">
-        <h2 class="section-title">Our AI-First Product Approach</h2>
-        <p class="section-subtitle">How We Think About Building AI-Powered Products</p>
+    <!-- Products Section -->
+    <section class="section products-section" id="products">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-badge">Our Products</div>
+                <h2 class="section-title">AI-Powered Solutions</h2>
+                <p class="section-subtitle">
+                    Flagship AI-powered products designed to solve complex infrastructure and operational challenges through intelligent automation.
+                </p>
+            </div>
 
-        <div class="approach-content">
-            <div class="approach-section">
-                <h3>1. AI-First, Product-First — Never Project-First</h3>
-                <p>We do not build AI as a feature, demo, or short-term client deliverable.<br>
-                We build products with intelligence embedded at the core, designed for repeated use, compounding improvement, and long-term ownership.</p>
-
-                <div class="approach-highlight">
-                    <p>Projects optimize for speed and completion.<br>
-                    Products optimize for learning, durability, and evolution.</p>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="images/infraguard_hero.jpg" alt="InfraGuardAI" class="product-image">
+                    <div class="product-content">
+                        <div class="product-badge">Flagship Product</div>
+                        <h3>InfraGuardAI</h3>
+                        <p>An AI-powered real-time infrastructure health and safety monitoring platform that uses machine learning for predictive maintenance and intelligent alerting.</p>
+                        <a href="infraguardai.html" class="product-link">
+                            Learn More <span>&#8594;</span>
+                        </a>
+                    </div>
                 </div>
 
-                <p>Every system we build is treated as:</p>
-                <ul>
-                    <li>A living product, not a one-off solution</li>
-                    <li>An asset that compounds through data, feedback, and iteration</li>
-                    <li>Something we own end-to-end, technically and intellectually</li>
-                </ul>
-
-                <p><strong>AI is not added later—it defines the product architecture from day one.</strong></p>
-            </div>
-
-            <div class="approach-section">
-                <h3>2. Intelligence as the Core, Not an Add-On</h3>
-                <p>Artificial intelligence and machine learning are not "integrations" in our systems; they are foundational layers.</p>
-
-                <p>From the beginning, we design:</p>
-                <ul>
-                    <li>Data flows before UI flows</li>
-                    <li>Learning loops before dashboards</li>
-                    <li>Feedback signals before automation rules</li>
-                </ul>
-
-                <p>This ensures that every product:</p>
-                <ul>
-                    <li>Improves with usage rather than degrading</li>
-                    <li>Adapts to real-world variability</li>
-                    <li>Develops behavior, not just functionality</li>
-                </ul>
-
-                <div class="approach-quote">
-                    We ask first:<br>
-                    "What should this system learn over time?"<br>
-                    Only then do we ask how it should look or scale.
+                <div class="product-card product-placeholder">
+                    <img src="images/ai_network.jpg" alt="Future Products" class="product-image">
+                    <div class="product-content">
+                        <div class="product-badge">Coming Soon</div>
+                        <h3>Future AI Products</h3>
+                        <p>More AI-powered products in development. We're building the next generation of intelligent systems for complex challenges.</p>
+                        <span class="product-link" style="opacity: 0.5;">
+                            Stay Tuned <span>&#8594;</span>
+                        </span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="approach-section">
-                <h3>3. Long-Term Ownership of Intelligent Systems</h3>
-                <p>We believe intelligent systems should be owned, understood, and evolved, not outsourced and forgotten.</p>
-
-                <p>Long-term ownership means:</p>
-                <ul>
-                    <li>Control over model behavior, data pipelines, and failure modes</li>
-                    <li>Deep understanding of how intelligence emerges in the system</li>
-                    <li>Responsibility for safety, bias, drift, and edge cases</li>
-                </ul>
-
-                <p>We avoid black-box dependence where learning systems behave in ways no one can explain or correct.</p>
-
-                <p>Every AI system we ship must be:</p>
-                <ul>
-                    <li>Observable</li>
-                    <li>Controllable</li>
-                    <li>Auditable</li>
-                    <li>Evolvable</li>
-                </ul>
-
-                <p><strong>Ownership is what turns AI from a risk into a strategic advantage.</strong></p>
-            </div>
-
-            <div class="approach-section">
-                <h3>4. AI Research → Prototype → Validation → Scale</h3>
-                <p>Our development process mirrors how intelligence itself evolves.</p>
-
-                <h4>Research</h4>
-                <p>We start by deeply understanding the problem, not just the solution space.<br>
-                This includes domain knowledge, constraints, failure modes, and human behavior.</p>
-
-                <h4>Prototype</h4>
-                <p>We build fast, focused prototypes to test learning assumptions—not polish interfaces.<br>
-                Early systems exist to answer:</p>
-                <ul>
-                    <li>Can this learn?</li>
-                    <li>Does feedback improve outcomes?</li>
-                    <li>Where does it fail?</li>
-                </ul>
-
-                <h4>Validation</h4>
-                <p>We validate intelligence, not just accuracy metrics.<br>
-                We test real-world behavior, edge cases, and adaptation over time.</p>
-
-                <h4>Scale</h4>
-                <p>Only after learning proves durable do we scale infrastructure, users, and automation.<br>
-                Scaling happens after intelligence stabilizes, not before.</p>
-            </div>
-
-            <div class="approach-section">
-                <h3>5. Engineering Depth Over Speed</h3>
-                <p>We intentionally prioritize engineering depth and AI rigor over superficial velocity.</p>
-
-                <div class="approach-highlight">
-                    <p>Fast AI breaks quietly.<br>
-                    Shallow systems collapse under real-world complexity.</p>
-                </div>
-
-                <p>We invest heavily in:</p>
-                <ul>
-                    <li>Robust data pipelines</li>
-                    <li>Model observability and monitoring</li>
-                    <li>Fail-safe behaviors and fallback logic</li>
-                    <li>Systems that degrade gracefully instead of catastrophically</li>
-                </ul>
-
-                <p><strong>Speed without depth creates technical debt that compounds exponentially in AI systems.</strong></p>
             </div>
         </div>
     </section>
 
-    <!-- Flagship Products Section -->
-    <section class="section">
-        <h2 class="section-title">Our AI-Powered Products</h2>
-        <p class="section-subtitle">Introducing our flagship AI-powered products designed to solve complex infrastructure and operational challenges through intelligent automation and machine learning.</p>
-
-        <div class="products-grid">
-            <div class="product-card">
-                <h3>InfraGuardAI</h3>
-                <p>An AI-powered real-time infrastructure health and safety monitoring platform that uses machine learning for predictive maintenance and intelligent alerting.</p>
-                <a href="infraguardai.html" class="product-link">View Product →</a>
+    <!-- Approach Section -->
+    <section class="section" id="approach">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-badge">Our Philosophy</div>
+                <h2 class="section-title">AI-First Product Approach</h2>
+                <p class="section-subtitle">
+                    How we think about building AI-powered products that create lasting value.
+                </p>
             </div>
 
-            <div class="product-card product-placeholder">
-                <h3>Future AI Products</h3>
-                <p>More AI-powered products in development. Stay tuned.</p>
+            <div class="approach-grid">
+                <div class="approach-content">
+                    <div class="approach-image-container">
+                        <img src="images/hero_ai_tech.jpg" alt="AI-First, Product-First" class="approach-image active" data-step="1">
+                        <img src="images/data_systems.jpg" alt="Intelligence as the Core" class="approach-image" data-step="2">
+                        <img src="images/company_vision.jpg" alt="Long-Term Ownership" class="approach-image" data-step="3">
+                        <img src="images/automation_ai.jpg" alt="Research to Scale" class="approach-image" data-step="4">
+                        <img src="images/infrastructure_ai.jpg" alt="Engineering Depth" class="approach-image" data-step="5">
+                    </div>
+                    <div class="approach-image-caption">
+                        <h4 class="caption-title">AI-First, Product-First</h4>
+                        <p class="caption-text">We don't build AI as a feature or demo. We build products with intelligence embedded at the core, designed for repeated use and long-term ownership.</p>
+                    </div>
+                </div>
+
+                <div class="approach-steps">
+                    <div class="approach-step active" data-step="1" data-title="AI-First, Product-First" data-caption="We don't build AI as a feature or demo. We build products with intelligence embedded at the core, designed for repeated use and long-term ownership.">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-title">AI-First, Product-First</div>
+                        </div>
+                        <p class="step-description">We build products with intelligence embedded at the core, designed for repeated use, compounding improvement, and long-term ownership.</p>
+                    </div>
+
+                    <div class="approach-step" data-step="2" data-title="Intelligence as the Core" data-caption="AI and machine learning are foundational layers. We design data flows before UI flows, learning loops before dashboards, feedback signals before automation rules.">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Intelligence as the Core</div>
+                        </div>
+                        <p class="step-description">AI and machine learning are foundational layers, not add-ons. We design data flows before UI flows, learning loops before dashboards.</p>
+                    </div>
+
+                    <div class="approach-step" data-step="3" data-title="Long-Term Ownership" data-caption="We believe intelligent systems should be owned, understood, and evolved. Every AI system we ship is observable, controllable, auditable, and evolvable.">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Long-Term Ownership</div>
+                        </div>
+                        <p class="step-description">Every AI system we ship is observable, controllable, auditable, and evolvable. Ownership turns AI from a risk into strategic advantage.</p>
+                    </div>
+
+                    <div class="approach-step" data-step="4" data-title="Research to Scale" data-caption="Our development process mirrors how intelligence evolves: Research deeply, prototype fast, validate intelligence, then scale after it stabilizes.">
+                        <div class="step-header">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Research to Scale</div>
+                        </div>
+                        <p class="step-description">Our process: Research deeply, prototype fast, validate intelligence, then scale. Scaling happens after intelligence stabilizes.</p>
+                    </div>
+
+                    <div class="approach-step" data-step="5" data-title="Engineering Depth" data-caption="We prioritize engineering depth over speed. Fast AI breaks quietly. We invest in robust data pipelines, model observability, and fail-safe behaviors.">
+                        <div class="step-header">
+                            <div class="step-number">5</div>
+                            <div class="step-title">Engineering Depth</div>
+                        </div>
+                        <p class="step-description">We prioritize engineering depth over speed. Robust data pipelines, model observability, and fail-safe behaviors that degrade gracefully.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Engineering Focus Section -->
-    <section class="section section-alt">
-        <h2 class="section-title">AI-Driven Engineering & Systems Focus</h2>
-        <p class="section-subtitle">We build AI-powered technology with depth, intelligence, reliability, and scalability at the core.</p>
-
-        <img src="image4.jpg" alt="Engineering Excellence" class="section-image">
-
-        <div class="engineering-grid">
-            <div class="engineering-item">
-                <h3>AI & Machine Learning</h3>
-                <p>Integrating artificial intelligence and machine learning algorithms to create intelligent, adaptive systems that learn and improve over time.</p>
+    <!-- Engineering Section -->
+    <section class="section" style="background: var(--gradient-2);">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-badge">Technical Excellence</div>
+                <h2 class="section-title">AI-Driven Engineering Focus</h2>
+                <p class="section-subtitle">
+                    We build AI-powered technology with depth, intelligence, reliability, and scalability at the core.
+                </p>
             </div>
 
-            <div class="engineering-item">
-                <h3>Systems Thinking</h3>
-                <p>Understanding how AI components interact with traditional systems and designing for intelligent, holistic solutions.</p>
-            </div>
+            <img src="images/engineering_team.jpg" alt="Engineering Excellence" class="engineering-image">
 
-            <div class="engineering-item">
-                <h3>AI-Powered Reliability & Safety</h3>
-                <p>Building intelligent systems with AI-driven monitoring, predictive failure detection, and autonomous recovery mechanisms.</p>
-            </div>
+            <div class="engineering-grid">
+                <div class="engineering-item">
+                    <div class="engineering-icon">&#129302;</div>
+                    <h3>AI & Machine Learning</h3>
+                    <p>Integrating AI algorithms to create intelligent, adaptive systems that learn and improve over time.</p>
+                </div>
 
-            <div class="engineering-item">
-                <h3>Scalable AI Architecture</h3>
-                <p>Architecting AI solutions that scale with data growth and computational demand without requiring complete rewrites.</p>
-            </div>
+                <div class="engineering-item">
+                    <div class="engineering-icon">&#128300;</div>
+                    <h3>Systems Thinking</h3>
+                    <p>Understanding how AI components interact with traditional systems for holistic solutions.</p>
+                </div>
 
-            <div class="engineering-item">
-                <h3>AI-Driven Data Design</h3>
-                <p>Leveraging machine learning for real-time insights, predictive analytics, and intelligent decision-making based on data patterns.</p>
-            </div>
+                <div class="engineering-item">
+                    <div class="engineering-icon">&#128737;</div>
+                    <h3>Reliability & Safety</h3>
+                    <p>AI-driven monitoring, predictive failure detection, and autonomous recovery mechanisms.</p>
+                </div>
 
-            <div class="engineering-item">
-                <h3>Modular AI Systems</h3>
-                <p>Creating AI-enabled systems with clear boundaries and interfaces that allow individual ML models to evolve independently.</p>
+                <div class="engineering-item">
+                    <div class="engineering-icon">&#128640;</div>
+                    <h3>Scalable Architecture</h3>
+                    <p>AI solutions that scale with data growth without requiring complete rewrites.</p>
+                </div>
+
+                <div class="engineering-item">
+                    <div class="engineering-icon">&#128202;</div>
+                    <h3>Data-Driven Design</h3>
+                    <p>Leveraging ML for real-time insights, predictive analytics, and intelligent decision-making.</p>
+                </div>
+
+                <div class="engineering-item">
+                    <div class="engineering-icon">&#128736;</div>
+                    <h3>Modular AI Systems</h3>
+                    <p>Clear boundaries and interfaces that allow ML models to evolve independently.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
     <section class="section" id="about">
-        <h2 class="section-title">About Nfinity Infotech</h2>
+        <div class="section-container">
+            <div class="about-grid">
+                <img src="images/tech_innovation.jpg" alt="About Nfinity" class="about-image">
 
-        <div class="about-content">
-            <p>We are an AI-first, product-focused technology company committed to building and owning the intelligent systems we create. Our approach is grounded in artificial intelligence, engineering principles, systems thinking, and a long-term outlook.</p>
+                <div class="about-content">
+                    <div class="section-badge">About Us</div>
+                    <h2>Nfinity Infotech</h2>
+                    <p>We are an AI-first, product-focused technology company committed to building and owning the intelligent systems we create. Our approach is grounded in AI principles, engineering excellence, systems thinking, and a long-term outlook.</p>
+                    <p>We believe in creating technology that solves meaningful problems -- intelligent systems that are reliable, scalable, and built to last. We invest in understanding complex domains deeply.</p>
 
-            <p>We believe in creating AI-powered technology that solves meaningful problems—intelligent systems that are reliable, scalable, and built to last. We don't chase trends or build for short-term gains. Instead, we invest in understanding complex domains deeply, leveraging AI and machine learning to create products that make a lasting impact.</p>
-
-            <div class="about-highlights">
-                <h3>Our AI-First Commitment</h3>
-                <ul>
-                    <li>Building AI-powered proprietary products, not one-off projects</li>
-                    <li>Leveraging artificial intelligence and machine learning at the core</li>
-                    <li>Long-term ownership and continuous AI-driven improvement</li>
-                    <li>Engineering excellence with AI and technical depth</li>
-                    <li>Creating transformative value through AI innovation</li>
-                </ul>
+                    <div class="about-highlights">
+                        <h3>Our AI-First Commitment</h3>
+                        <ul>
+                            <li>Building AI-powered proprietary products, not one-off projects</li>
+                            <li>Leveraging AI and machine learning at the core</li>
+                            <li>Long-term ownership and continuous improvement</li>
+                            <li>Engineering excellence with technical depth</li>
+                            <li>Creating transformative value through AI innovation</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-content">
-            <h2 class="section-title">Get in Touch</h2>
-            <p class="section-subtitle">Interested in our products or want to learn more about what we're building?</p>
+    <section class="section contact-section" id="contact">
+        <div class="section-container">
+            <div class="contact-container">
+                <div class="section-badge">Get In Touch</div>
+                <h2 class="section-title">Let's Build Together</h2>
+                <p class="section-subtitle">
+                    Interested in our products or want to learn more about what we're building?
+                </p>
 
-            <div class="contact-info">
-                <div class="contact-item">
-                    <h4>Email</h4>
-                    <p><a href="mailto:info@nfinityinfotech.com">info@nfinityinfotech.com</a></p>
-                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">&#9993;</div>
+                        <h4>Email</h4>
+                        <a href="mailto:info@nfinityinfotech.com">info@nfinityinfotech.com</a>
+                    </div>
 
-                <div class="contact-item">
-                    <h4>Location</h4>
-                    <p>Bangalore, India</p>
+                    <div class="contact-item">
+                        <div class="contact-icon">&#128205;</div>
+                        <h4>Location</h4>
+                        <p>Bangalore, India</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Philosophy Section Interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const approachSteps = document.querySelectorAll('.approach-step');
+            const approachImages = document.querySelectorAll('.approach-image');
+            const captionTitle = document.querySelector('.caption-title');
+            const captionText = document.querySelector('.caption-text');
+
+            approachSteps.forEach(step => {
+                step.addEventListener('click', function() {
+                    const stepNum = this.dataset.step;
+                    const title = this.dataset.title;
+                    const caption = this.dataset.caption;
+
+                    // Remove active class from all steps and images
+                    approachSteps.forEach(s => s.classList.remove('active'));
+                    approachImages.forEach(img => img.classList.remove('active'));
+
+                    // Add active class to clicked step
+                    this.classList.add('active');
+
+                    // Show corresponding image
+                    const targetImage = document.querySelector(`.approach-image[data-step="${stepNum}"]`);
+                    if (targetImage) {
+                        targetImage.classList.add('active');
+                    }
+
+                    // Update caption
+                    if (captionTitle && captionText) {
+                        captionTitle.textContent = title;
+                        captionText.textContent = caption;
+                    }
+                });
+            });
+        });
+    </script>
+
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-links">
-            <a href="index.html">Home</a>
-            <a href="infraguardai.html">Products</a>
-            <a href="#approach">Engineering Philosophy</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-            <a href="privacypolicy.html">Privacy Policy</a>
-            <a href="termsofuse.html">Terms of Use</a>
+        <div class="footer-container">
+            <a href="index.html" class="footer-logo">
+                <div class="logo-icon" style="width: 32px; height: 32px;">
+                    <img src="12.32.09_7732daef-.png" alt="Nfinity Infotech Logo">
+                </div>
+                <span>Nfinity Infotech</span>
+            </a>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="infraguardai.html">Products</a>
+                <a href="#approach">Engineering Philosophy</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="privacypolicy.html">Privacy Policy</a>
+                <a href="termsofuse.html">Terms of Use</a>
+            </div>
         </div>
         <div class="footer-copyright">
-            © 2025 Nfinity Infotech Pvt. Ltd. All rights reserved.
+            &copy; 2025 Nfinity Infotech Pvt. Ltd. All rights reserved.
         </div>
     </footer>
 </body>
