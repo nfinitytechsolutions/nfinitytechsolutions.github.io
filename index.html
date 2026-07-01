@@ -1090,10 +1090,80 @@
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
+
+        /* ===== Intro logo splash ===== */
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.6s ease, opacity 0.5s ease;
+        }
+
+        /* Reveal phase: fade the dark backdrop away so the page shows through */
+        #intro-overlay.reveal {
+            background: transparent;
+            pointer-events: none;
+        }
+
+        #intro-overlay.done {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Square window that shows the rotating logo video, centred in the viewport */
+        #intro-logo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: min(340px, 60vmin);
+            aspect-ratio: 1 / 1;
+            border-radius: 16px;
+            overflow: hidden;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            /* transform target set inline via JS; this drives the "fly to corner" motion */
+            transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1), border-radius 1s ease;
+        }
+
+        #intro-logo video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Once the logo has landed in the header, fade the video out to hand off
+           to the real (static) header logo underneath. */
+        #intro-logo.handoff {
+            transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        html.intro-active,
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #intro-logo { transition: none; }
+        }
     </style>
 </head>
     <script src="https://t.nfinityinfotech.com/t.js" async></script>
 <body>
+    <!-- Intro logo splash: rotating logo video centred on a dark backdrop,
+         then it flies up to the header before the page is revealed. -->
+    <div id="intro-overlay">
+        <div id="intro-logo">
+            <video id="intro-video" src="logo.mp4" muted playsinline autoplay preload="auto"></video>
+        </div>
+    </div>
+    <script>document.documentElement.classList.add('intro-active');</script>
+
     <!-- Background Effects -->
     <div class="bg-grid"></div>
     <div class="bg-glow bg-glow-1"></div>
@@ -1103,7 +1173,7 @@
     <header class="header">
         <nav class="nav">
             <a href="index.html" class="logo">
-                <div class="logo-icon"><img src="12.32.09_7732daef-.png" alt="Nfinity Infotech Logo"></div>
+                <div class="logo-icon"><img src="logo_new.png" alt="Nfinity Infotech Logo"></div>
                 <span>Nfinity Infotech</span>
             </a>
             <ul class="nav-links">
@@ -1491,5 +1561,107 @@
             &copy; 2025 Nfinity Infotech Pvt. Ltd. All rights reserved.
         </div>
     </footer>
+
+    <!-- Intro logo splash controller -->
+    <script>
+        (function () {
+            var overlay = document.getElementById('intro-overlay');
+            var logoBox = document.getElementById('intro-logo');
+            var video = document.getElementById('intro-video');
+            var html = document.documentElement;
+
+            if (!overlay || !logoBox || !video) { return; }
+
+            var finished = false;
+            var flying = false;
+
+            function unlock() {
+                html.classList.remove('intro-active');
+                document.body.classList.remove('intro-active');
+            }
+
+            // Tear everything down and hand control back to the normal page.
+            function finishIntro() {
+                if (finished) { return; }
+                finished = true;
+                unlock();
+                if (overlay && overlay.parentNode) {
+                    overlay.parentNode.removeChild(overlay);
+                }
+            }
+
+            // Reduced-motion / no-JS-animation escape hatch: skip the splash.
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                finishIntro();
+                return;
+            }
+
+            document.body.classList.add('intro-active');
+
+            // Move the logo box from the centre of the screen up into the header slot,
+            // then reveal the page and fade the video out onto the static header logo.
+            function flyToCorner() {
+                if (flying || finished) { return; }
+                flying = true;
+
+                var target = document.querySelector('.header .logo-icon');
+                var boxRect = logoBox.getBoundingClientRect();
+
+                if (!target || !boxRect.width) {
+                    // Can't locate the header logo — just reveal the page.
+                    overlay.classList.add('reveal');
+                    setTimeout(finishIntro, 500);
+                    return;
+                }
+
+                var t = target.getBoundingClientRect();
+                var targetCX = t.left + t.width / 2;
+                var targetCY = t.top + t.height / 2;
+                var dx = targetCX - window.innerWidth / 2;
+                var dy = targetCY - window.innerHeight / 2;
+                var scale = t.width / boxRect.width;
+
+                logoBox.style.borderRadius = '10px';
+                logoBox.style.transform =
+                    'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(' + scale + ')';
+
+                // Reveal the page a touch before the logo lands so it settles into place.
+                setTimeout(function () { overlay.classList.add('reveal'); }, 550);
+
+                // Hand off to the real header logo, then remove the overlay.
+                setTimeout(function () { logoBox.classList.add('handoff'); }, 1000);
+                setTimeout(finishIntro, 1500);
+            }
+
+            // Kick off the fly-to-corner once the logo has shown for a bit.
+            // Cap the rotation at ~5s so the intro never drags, but let a short
+            // video finish naturally.
+            var holdMs = 5000;
+            var holdTimer = null;
+
+            function scheduleHold() {
+                var d = video.duration;
+                var wait = (isFinite(d) && d > 0) ? Math.min(d * 1000, holdMs) : holdMs;
+                clearTimeout(holdTimer);
+                holdTimer = setTimeout(flyToCorner, wait);
+            }
+
+            video.addEventListener('loadedmetadata', scheduleHold);
+            video.addEventListener('ended', flyToCorner);
+            // If the video can't be played/loaded, don't trap the user behind the splash.
+            video.addEventListener('error', finishIntro);
+
+            // Best-effort autoplay (muted autoplay is allowed by browsers).
+            var p = video.play();
+            if (p && typeof p.catch === 'function') {
+                p.catch(function () { /* stays on the poster frame; hold timer still runs */ });
+            }
+
+            // If metadata never arrives, start the hold timer anyway.
+            setTimeout(function () { if (!flying && !holdTimer) { scheduleHold(); } }, 1200);
+            // Absolute safety net: never leave the splash up for more than ~10s.
+            setTimeout(finishIntro, 10000);
+        })();
+    </script>
 </body>
 </html>
