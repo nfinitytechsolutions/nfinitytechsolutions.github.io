@@ -1136,6 +1136,37 @@
             display: block;
         }
 
+        /* Tagline shown under the rotating logo during the intro */
+        #intro-caption {
+            position: fixed;
+            left: 50%;
+            top: calc(50% + min(190px, 34vmin));
+            transform: translateX(-50%);
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: clamp(15px, 2.4vw, 22px);
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            text-align: center;
+            white-space: nowrap;
+            opacity: 0;
+            animation: introCaptionIn 0.9s ease 0.5s forwards;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        @keyframes introCaptionIn {
+            from { opacity: 0; transform: translate(-50%, 12px); }
+            to   { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        /* Fades out once the logo starts flying to the header */
+        #intro-caption.hide {
+            opacity: 0;
+            animation: none;
+        }
+
         /* Once the logo has landed in the header, fade the video out to hand off
            to the real (static) header logo underneath. */
         #intro-logo.handoff {
@@ -1161,6 +1192,7 @@
         <div id="intro-logo">
             <video id="intro-video" src="logo.mp4" muted playsinline autoplay preload="auto"></video>
         </div>
+        <p id="intro-caption">human judgment over AI systems</p>
     </div>
     <script>document.documentElement.classList.add('intro-active');</script>
 
@@ -1603,6 +1635,9 @@
             function flyToCorner() {
                 if (flying || finished) { return; }
                 flying = true;
+
+                var caption = document.getElementById('intro-caption');
+                if (caption) { caption.classList.add('hide'); }
 
                 var target = document.querySelector('.header .logo-icon');
                 var boxRect = logoBox.getBoundingClientRect();
