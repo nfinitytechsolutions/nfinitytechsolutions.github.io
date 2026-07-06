@@ -1,6 +1,15 @@
 # Project Status
 
 ## Completed
+- [x] Product lineup swapped for ELEVATE Shakti 2026 pitch (2026-07-06)
+  - Removed InfraGuardAI and AI PageBuilder cards from `index.html` products section
+  - Added single **PV ICSR Assistant** card in the same format (image: `images/safety_systems.jpg`), linking to https://pv.nfinityinfotech.com
+  - Products grid now renders one centered card (max-width 680px)
+  - Nav dropdown + footer links updated on `index.html`, `privacypolicy.html`, `termsofuse.html` (no remaining links to old product pages)
+  - Products section subtitle updated: "infrastructure" → "regulatory" challenges
+  - Old pages `infraguardai.html` / `aipagebuilder.html` left in repo but unlinked (still reachable by direct URL)
+  - Verified in-browser: card renders, dropdown + Learn More both point to pv.nfinityinfotech.com
+
 - [x] Intro logo splash on `index.html`
   - Copied `C:\Users\ADMIN\Videos\logo.mp4` into project root as `logo.mp4`
   - Rotating logo video plays centered on a full-screen dark backdrop on page open
