@@ -1,11 +1,11 @@
 # Project Status
 
 ## Completed
-- [x] Intro splash sped up 2x + video compressed (2026-07-06)
-  - `logo.mp4` re-encoded at 2x speed: 6.4s → 3.3s, and 18 MB → 0.55 MB (CRF 21, x264, faststart)
-  - Splash hold time is driven by video duration, so intro now completes in ~4.9s (was ~6.5s+)
-  - No JS changes needed; original video backed up in session scratchpad
-  - Verified in-browser: rotation plays faster, page reveals cleanly at ~4.9s
+- [x] Intro splash sped up 3x + video compressed (2026-07-06)
+  - `logo.mp4` re-encoded at 3x speed from the original: 6.4s → 2.2s, and 18 MB → 0.4 MB (CRF 21, x264, faststart)
+  - Splash hold time is driven by video duration, so intro now completes in ~3.9s (was ~6.5s+)
+  - No JS changes needed; original 6.4s video backed up in session scratchpad
+  - Verified in-browser: rotation plays faster, page reveals cleanly at ~3.9s
 
 - [x] Product lineup swapped for ELEVATE Shakti 2026 pitch (2026-07-06)
   - Removed InfraGuardAI and AI PageBuilder cards from `index.html` products section
