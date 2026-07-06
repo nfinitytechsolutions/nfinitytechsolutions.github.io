@@ -535,10 +535,24 @@
             background: var(--gradient-2);
         }
 
+        .products-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .products-intro {
+            text-align: left;
+        }
+
+        .products-intro .section-subtitle {
+            margin-top: 0;
+        }
+
         .products-grid {
             display: grid;
-            grid-template-columns: minmax(0, 680px);
-            justify-content: center;
+            grid-template-columns: 1fr;
             gap: 40px;
         }
 
@@ -1010,8 +1024,13 @@
             }
 
             .approach-grid,
-            .about-grid {
+            .about-grid,
+            .products-layout {
                 grid-template-columns: 1fr;
+            }
+
+            .products-layout {
+                gap: 40px;
             }
 
             .approach-content {
@@ -1324,15 +1343,16 @@
     <!-- Products Section -->
     <section class="section products-section" id="products">
         <div class="section-container">
-            <div class="section-header">
-                <div class="section-badge">Our Products</div>
-                <h2 class="section-title">AI-Powered Solutions</h2>
-                <p class="section-subtitle">
-                    Flagship AI-powered products designed to solve complex regulatory and operational challenges through intelligent automation.
-                </p>
-            </div>
+            <div class="products-layout">
+                <div class="products-intro">
+                    <div class="section-badge">Our Products</div>
+                    <h2 class="section-title">AI-Powered Solutions</h2>
+                    <p class="section-subtitle">
+                        Flagship AI-powered products designed to solve complex regulatory and operational challenges through intelligent automation.
+                    </p>
+                </div>
 
-            <div class="products-grid">
+                <div class="products-grid">
                 <div class="product-card">
                     <img src="images/safety_systems.jpg" alt="PV ICSR Assistant" class="product-image">
                     <div class="product-content">
@@ -1343,6 +1363,7 @@
                             Learn More <span>&#8594;</span>
                         </a>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

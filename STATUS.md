@@ -1,6 +1,11 @@
 # Project Status
 
 ## Completed
+- [x] Products section relayout (2026-07-06)
+  - Split into two columns: "AI-Powered Solutions" heading + subtext left-aligned on the left, product card on the right (was all centered)
+  - New `.products-layout` grid (1fr / 1.15fr, vertically centered); stacks to one column ≤1024px
+  - Verified in-browser at desktop and 820px widths
+
 - [x] Intro splash sped up 3x + video compressed (2026-07-06)
   - `logo.mp4` re-encoded at 3x speed from the original: 6.4s → 2.2s, and 18 MB → 0.4 MB (CRF 21, x264, faststart)
   - Splash hold time is driven by video duration, so intro now completes in ~3.9s (was ~6.5s+)
